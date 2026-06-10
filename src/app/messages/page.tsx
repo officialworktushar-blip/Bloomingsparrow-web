@@ -40,92 +40,92 @@ export default function MessagesPage() {
   };
 
   return (
-    <main className={`inner-page msg-layout ${activeThread ? 'thread-selected' : ''}`} id="main-content">
+    <main className="flex flex-col md:flex-row gap-0 p-0 max-w-none h-auto md:h-[calc(100vh-62px)] overflow-visible md:overflow-hidden w-full mx-auto" id="main-content">
       {/* Thread list */}
-      <div className="msg-sidebar" id="msg-sidebar" role="list" aria-label="Message threads">
-        <div className="msg-sidebar-header">
-          <h1 className="page-title" style={{ fontSize: '1.5rem' }}>Messages</h1>
+      <div className="w-full md:w-[320px] md:min-w-[260px] shrink-0 border-b md:border-b-0 md:border-r border-gray-200 flex flex-col bg-white overflow-y-auto" id="msg-sidebar" role="list" aria-label="Message threads">
+        <div className="pt-5 pb-3 px-5 border-b border-gray-200">
+          <h1 className="font-serif text-gray-900 font-normal" style={{ fontSize: '1.5rem' }}>Messages</h1>
         </div>
 
-        <div className={`msg-thread ${activeThread === 1 ? 'active' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(1)} aria-label="Blooming Sparrow Team">
-          <div className="thread-avatar"><img src="/images/logo.png" alt="Blooming Sparrow" /></div>
-          <div className="thread-info">
-            <div className="thread-name">Blooming Sparrow Team</div>
-            <div className="thread-preview">Your enquiry about "Brass Temple Bell" has been received…</div>
+        <div className={`flex items-center gap-3.5 py-4 px-5 cursor-pointer transition-all duration-[220ms] border-b border-gray-200 hover:bg-[#FAFAFA] ${activeThread === 1 ? '!bg-[#F5EDD8]' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(1)} aria-label="Blooming Sparrow Team">
+          <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 bg-[#FAFAFA]"><img className="w-full h-full object-contain" src="/images/logo.png" alt="Blooming Sparrow" /></div>
+          <div className="flex-1 min-w-0">
+            <div className="text-[0.9rem] font-medium text-gray-900 mb-1 whitespace-nowrap overflow-hidden text-ellipsis">Blooming Sparrow Team</div>
+            <div className="text-[0.8rem] text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis">Your enquiry about "Brass Temple Bell" has been received…</div>
           </div>
-          <div className="thread-meta">
-            <div className="thread-time">2h ago</div>
-            <div className="thread-badge">2</div>
-          </div>
-        </div>
-
-        <div className={`msg-thread ${activeThread === 2 ? 'active' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(2)} aria-label="Khatri Family Workshop">
-          <div className="thread-avatar thread-avatar--art"><img src="/images/rogan_1.png" alt="Rogan Art" /></div>
-          <div className="thread-info">
-            <div className="thread-name">Khatri Family Workshop</div>
-            <div className="thread-preview">Namaste! We are happy to answer your questions about…</div>
-          </div>
-          <div className="thread-meta">
-            <div className="thread-time">Yesterday</div>
+          <div className="flex flex-col items-end gap-1.5 shrink-0">
+            <div className="text-[0.72rem] text-gray-400">2h ago</div>
+            <div className="bg-[#C8A96E] text-white text-[0.7rem] font-semibold py-[0.15rem] px-2 rounded-[10px] min-w-[20px] text-center">2</div>
           </div>
         </div>
 
-        <div className={`msg-thread ${activeThread === 3 ? 'active' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(3)} aria-label="Artisan Support">
-          <div className="thread-avatar thread-avatar--support">♻</div>
-          <div className="thread-info">
-            <div className="thread-name">Artisan Support</div>
-            <div className="thread-preview">Thank you for your order enquiry. We will ship within…</div>
+        <div className={`flex items-center gap-3.5 py-4 px-5 cursor-pointer transition-all duration-[220ms] border-b border-gray-200 hover:bg-[#FAFAFA] ${activeThread === 2 ? '!bg-[#F5EDD8]' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(2)} aria-label="Khatri Family Workshop">
+          <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 bg-[#FAFAFA]"><img className="w-full h-full object-cover" src="/images/rogan_1.png" alt="Rogan Art" /></div>
+          <div className="flex-1 min-w-0">
+            <div className="text-[0.9rem] font-medium text-gray-900 mb-1 whitespace-nowrap overflow-hidden text-ellipsis">Khatri Family Workshop</div>
+            <div className="text-[0.8rem] text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis">Namaste! We are happy to answer your questions about…</div>
           </div>
-          <div className="thread-meta">
-            <div className="thread-time">3 days ago</div>
+          <div className="flex flex-col items-end gap-1.5 shrink-0">
+            <div className="text-[0.72rem] text-gray-400">Yesterday</div>
           </div>
         </div>
 
-        <div className="msg-empty-threads">
+        <div className={`flex items-center gap-3.5 py-4 px-5 cursor-pointer transition-all duration-[220ms] border-b border-gray-200 hover:bg-[#FAFAFA] ${activeThread === 3 ? '!bg-[#F5EDD8]' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(3)} aria-label="Artisan Support">
+          <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center text-[1.1rem] shrink-0">♻</div>
+          <div className="flex-1 min-w-0">
+            <div className="text-[0.9rem] font-medium text-gray-900 mb-1 whitespace-nowrap overflow-hidden text-ellipsis">Artisan Support</div>
+            <div className="text-[0.8rem] text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis">Thank you for your order enquiry. We will ship within…</div>
+          </div>
+          <div className="flex flex-col items-end gap-1.5 shrink-0">
+            <div className="text-[0.72rem] text-gray-400">3 days ago</div>
+          </div>
+        </div>
+
+        <div className="py-8 px-5 text-center text-gray-500 text-[0.85rem] leading-[1.6] flex flex-col items-center">
           <p>Start a conversation by enquiring<br/>about any art piece.</p>
-          <Link href="/" className="wl-browse-btn" style={{ marginTop: '.75rem' }}>Browse Gallery</Link>
+          <Link href="/" className="inline-flex items-center py-[0.55rem] px-[1.4rem] rounded-full bg-gray-900 text-white text-[0.85rem] font-medium font-sans transition-all hover:bg-[#C8A96E]" style={{ marginTop: '.75rem' }}>Browse Gallery</Link>
         </div>
       </div>
 
       {/* Chat window */}
-      <div className="msg-chat" id="msg-chat" role="main" aria-label="Chat window">
-        <div className="chat-header" id="chat-header">
-          <div className="chat-avatar"><img src="/images/logo.png" alt="Blooming Sparrow" /></div>
+      <div className="flex-1 flex flex-col overflow-hidden bg-[#FAFAFA] h-[60vh] md:h-auto" id="msg-chat" role="main" aria-label="Chat window">
+        <div className="flex items-center gap-3.5 py-3.5 px-5 border-b border-gray-200 bg-white shrink-0" id="chat-header">
+          <div className="w-10 h-10 rounded-full overflow-hidden bg-[#FAFAFA]"><img className="w-full h-full object-contain" src="/images/logo.png" alt="Blooming Sparrow" /></div>
           <div className="chat-info">
-            <div className="chat-name">Blooming Sparrow Team</div>
-            <div className="chat-status">Typically replies within 24 hours</div>
+            <div className="text-[0.9rem] font-medium text-gray-900">Blooming Sparrow Team</div>
+            <div className="text-[0.75rem] text-gray-400">Typically replies within 24 hours</div>
           </div>
         </div>
 
-        <div className="chat-messages" id="chat-messages" role="log" aria-live="polite">
-          <div className="chat-date-divider">Today</div>
+        <div className="flex-1 overflow-y-auto py-6 px-5 flex flex-col gap-3" id="chat-messages" role="log" aria-live="polite">
+          <div className="text-center text-[0.72rem] text-gray-400 my-2 tracking-[0.06em] uppercase">Today</div>
 
           {activeThread === 1 ? messages.map((m) => (
-            <div key={m.id} className={`chat-msg ${m.isMe ? 'chat-msg--me' : 'chat-msg--them'}`}>
-              <div className="msg-bubble">{m.text}</div>
-              <div className="msg-time">{m.time}</div>
+            <div key={m.id} className={`flex flex-col ${m.isMe ? 'items-end' : 'items-start'}`}>
+              <div className={`max-w-[72%] py-3 px-4 rounded-[18px] text-[0.875rem] leading-[1.55] ${m.isMe ? 'bg-gray-900 text-white rounded-br-[4px]' : 'bg-white rounded-tl-[4px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]'}`}>{m.text}</div>
+              <div className="text-[0.7rem] text-gray-400 mt-1 px-1">{m.time}</div>
             </div>
           )) : (
-            <div className="chat-msg chat-msg--them">
-              <div className="msg-bubble">This thread is currently empty in the demo.</div>
-              <div className="msg-time">Just now</div>
+            <div className="flex flex-col items-start">
+              <div className="max-w-[72%] py-3 px-4 rounded-[18px] text-[0.875rem] leading-[1.55] bg-white rounded-tl-[4px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]">This thread is currently empty in the demo.</div>
+              <div className="text-[0.7rem] text-gray-400 mt-1 px-1">Just now</div>
             </div>
           )}
           <div ref={msgsEndRef} />
         </div>
 
-        <form className="chat-input-wrap" id="chat-form" onSubmit={sendMessage} noValidate>
+        <form className="flex items-center gap-3 py-3.5 px-5 border-t border-gray-200 bg-white shrink-0" id="chat-form" onSubmit={sendMessage} noValidate>
           <input 
             type="text" 
             id="chat-input" 
-            className="chat-input" 
+            className="flex-1 h-[42px] rounded-full border-[1.5px] border-gray-200 px-4 font-sans text-[0.875rem] text-gray-900 outline-none transition-all duration-[220ms] bg-[#FAFAFA] focus:border-gray-900 focus:bg-white" 
             placeholder="Type a message…" 
             aria-label="Type a message" 
             autoComplete="off"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
           />
-          <button type="submit" className="chat-send" id="chat-send" aria-label="Send message">
+          <button type="submit" className="w-10 h-10 rounded-full bg-gray-900 text-white flex items-center justify-center border-none cursor-pointer transition-all duration-[220ms] shrink-0 hover:bg-[#C8A96E] hover:scale-105" id="chat-send" aria-label="Send message">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </form>

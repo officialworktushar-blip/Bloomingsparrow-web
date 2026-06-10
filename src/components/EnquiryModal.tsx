@@ -37,33 +37,33 @@ export default function EnquiryModal({ isOpen, onClose, productTitle }: EnquiryM
   };
 
   return (
-    <div className="modal-backdrop open" role="dialog" aria-modal="true" aria-labelledby="modal-heading" onClick={(e) => {
+    <div className="fixed inset-0 bg-black/45 z-[300] flex items-center justify-center opacity-100 pointer-events-auto transition-opacity duration-[250ms] backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-heading" onClick={(e) => {
       if (e.target === e.currentTarget) onClose();
     }}>
-      <div className="modal">
-        <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
-        <h2 className="modal-title" id="modal-heading">Enquire About This Piece</h2>
-        <p className="modal-sub">We'll get back to you within 24 hours.</p>
+      <div className="bg-white rounded-[20px] p-9 w-[460px] max-w-[92vw] shadow-[0_8px_28px_rgba(0,0,0,0.12)] transform translate-y-0 transition-transform duration-300 relative">
+        <button className="absolute top-[1.1rem] right-[1.1rem] w-[30px] h-[30px] flex items-center justify-center rounded-full bg-[#FAFAFA] text-gray-500 cursor-pointer text-base transition-all hover:bg-gray-200 hover:text-gray-900" onClick={onClose} aria-label="Close">✕</button>
+        <h2 className="font-serif text-[1.55rem] font-normal mb-1.5" id="modal-heading">Enquire About This Piece</h2>
+        <p className="text-[0.85rem] text-gray-500 mb-6">We'll get back to you within 24 hours.</p>
         <form id="enquiry-form" noValidate onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="modal-name">Your Name</label>
-            <input type="text" id="modal-name" placeholder="Enter your name" required />
+          <div className="mb-3.5">
+            <label className="block text-[0.72rem] font-medium tracking-[0.06em] uppercase text-gray-400 mb-1.5" htmlFor="modal-name">Your Name</label>
+            <input className="w-full border-[1.5px] border-gray-200 rounded-xl py-[0.7rem] px-4 font-sans text-[0.875rem] text-gray-900 outline-none transition-all bg-[#FAFAFA] focus:border-gray-900 focus:bg-white" type="text" id="modal-name" placeholder="Enter your name" required />
           </div>
-          <div className="form-group">
-            <label htmlFor="modal-email">Email Address</label>
-            <input type="email" id="modal-email" placeholder="you@email.com" required />
+          <div className="mb-3.5">
+            <label className="block text-[0.72rem] font-medium tracking-[0.06em] uppercase text-gray-400 mb-1.5" htmlFor="modal-email">Email Address</label>
+            <input className="w-full border-[1.5px] border-gray-200 rounded-xl py-[0.7rem] px-4 font-sans text-[0.875rem] text-gray-900 outline-none transition-all bg-[#FAFAFA] focus:border-gray-900 focus:bg-white" type="email" id="modal-email" placeholder="you@email.com" required />
           </div>
-          <div className="form-group">
-            <label htmlFor="modal-subject">Subject</label>
-            <input type="text" id="modal-subject" placeholder="Subject" defaultValue={`Enquiry: ${productTitle}`} required />
+          <div className="mb-3.5">
+            <label className="block text-[0.72rem] font-medium tracking-[0.06em] uppercase text-gray-400 mb-1.5" htmlFor="modal-subject">Subject</label>
+            <input className="w-full border-[1.5px] border-gray-200 rounded-xl py-[0.7rem] px-4 font-sans text-[0.875rem] text-gray-900 outline-none transition-all bg-[#FAFAFA] focus:border-gray-900 focus:bg-white" type="text" id="modal-subject" placeholder="Subject" defaultValue={`Enquiry: ${productTitle}`} required />
           </div>
-          <div className="form-group">
-            <label htmlFor="modal-message">Message</label>
-            <textarea id="modal-message" placeholder="Tell us what you'd like to know…"></textarea>
+          <div className="mb-3.5">
+            <label className="block text-[0.72rem] font-medium tracking-[0.06em] uppercase text-gray-400 mb-1.5" htmlFor="modal-message">Message</label>
+            <textarea className="w-full border-[1.5px] border-gray-200 rounded-xl py-[0.7rem] px-4 font-sans text-[0.875rem] text-gray-900 outline-none transition-all bg-[#FAFAFA] focus:border-gray-900 focus:bg-white h-[88px] resize-none" id="modal-message" placeholder="Tell us what you'd like to know…"></textarea>
           </div>
           <button 
             type="submit" 
-            className="modal-submit" 
+            className="w-full h-[46px] rounded-full bg-gray-900 text-white text-[0.875rem] font-medium font-sans cursor-pointer transition-all mt-1.5 hover:bg-[#C8A96E]" 
             id="modal-submit-btn"
             style={submitted ? { background: '#4CAF50' } : {}}
           >

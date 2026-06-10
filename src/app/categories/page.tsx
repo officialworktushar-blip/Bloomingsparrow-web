@@ -52,12 +52,12 @@ export default function CategoriesPage() {
 
   return (
     <>
-      <div className="cat-bar" role="navigation" aria-label="Category filter">
-        <div className="cat-bar-inner">
+      <div className="bg-white border-b border-gray-200 py-3 px-4 sticky top-[62px] z-[90]" role="navigation" aria-label="Category filter">
+        <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {categories.map(c => (
             <button 
               key={c.id}
-              className={`pill ${activeCat === c.id ? 'active' : ''}`}
+              className={`shrink-0 py-[0.42rem] px-[1.05rem] rounded-[22px] border-[1.5px] border-gray-200 bg-white text-[0.8rem] font-medium text-gray-500 cursor-pointer transition-all whitespace-nowrap tracking-[0.02em] font-sans hover:border-gray-900 hover:text-gray-900 ${activeCat === c.id ? '!bg-gray-900 !border-gray-900 !text-white' : ''}`}
               onClick={() => setActiveCat(c.id)}
             >
               {c.label}
@@ -66,19 +66,19 @@ export default function CategoriesPage() {
         </div>
       </div>
       
-      <main className="grid-wrap" id="main-content" aria-label="Art gallery">
-        <div className="masonry" id="masonry-grid" role="list" aria-label="Art pieces">
+      <main className="w-full p-1.5 sm:p-2.5" id="main-content" aria-label="Art gallery">
+        <div className="w-full columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-1.5 sm:gap-2.5" id="masonry-grid" role="list" aria-label="Art pieces">
           {isLoading ? (
-            <p className="empty-state">Loading gallery...</p>
+            <p className="text-center py-20 text-gray-400 font-serif text-[1.4rem] italic">Loading gallery...</p>
           ) : !list.length ? (
-            <p className="empty-state">No pieces found</p>
+            <p className="text-center py-20 text-gray-400 font-serif text-[1.4rem] italic">No pieces found</p>
           ) : (
             list.map((p, i) => {
               const isWL = isClient && wishlist.includes(p.id);
-              return (
+                          return (
                 <div 
                   key={p.id}
-                  className="art-card" 
+                  className={`break-inside-avoid mb-1.5 sm:mb-2.5 rounded-xl overflow-hidden bg-white cursor-pointer relative shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] block hover:-translate-y-[3px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] group art-card`}
                   role="button" 
                   tabIndex={0}
                   aria-label={`${p.title} — ${p.price}`}
@@ -86,14 +86,14 @@ export default function CategoriesPage() {
                   onClick={() => handleProductClick(p.id)}
                   onKeyPress={(e) => { if (e.key === 'Enter') handleProductClick(p.id); }}
                 >
-                  <div className="card-img-wrap">
-                    <img className="card-img" src={`/${p.image}`} alt={p.title} loading="lazy" />
-                    <div className="card-overlay">
-                      <span className="card-overlay-btn">View Piece</span>
+                  <div className={`relative overflow-hidden w-full ${i % 5 === 0 ? 'aspect-[2/3]' : i % 5 === 1 ? 'aspect-[3/4]' : i % 5 === 2 ? 'aspect-[4/5]' : i % 5 === 3 ? 'aspect-square' : 'aspect-[3/5]'}`}>
+                    <img className="w-full h-full object-cover block transition-transform duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105" src={`/${p.image}`} alt={p.title} loading="lazy" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-55% opacity-0 transition-opacity duration-300 flex items-end p-3.5 group-hover:opacity-100">
+                      <span className="bg-white text-gray-900 rounded-full py-1.5 px-4 text-[0.78rem] font-medium font-sans transition-all hover:bg-[#C8A96E] hover:text-white">View Piece</span>
                     </div>
                     {isClient && (
                       <button 
-                        className={`card-wl-btn ${isWL ? 'card-wl-btn--active' : ''}`}
+                        className={`absolute top-2.5 right-2.5 w-[34px] h-[34px] rounded-full bg-white/90 flex items-center justify-center text-gray-400 shadow-[0_2px_8px_rgba(0,0,0,0.14)] transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 leading-none backdrop-blur-sm hover:bg-white hover:text-[#e05252] hover:scale-110 hover:shadow-[0_4px_14px_rgba(0,0,0,0.18)] ${isWL ? 'text-[#e05252] bg-white' : ''}`}
                         aria-label={isWL ? 'Remove from wishlist' : 'Add to wishlist'}
                         title={isWL ? 'Remove from Wishlist' : 'Add to Wishlist'}
                         onClick={(e) => toggleWishlist(e, p.id)}
@@ -102,10 +102,10 @@ export default function CategoriesPage() {
                       </button>
                     )}
                   </div>
-                  <div className="card-info">
-                    <div className="card-cat">{p.categoryLabel}</div>
-                    <div className="card-title">{p.title}</div>
-                    <div className="card-price">{p.price}</div>
+                  <div className="px-3.5 pt-2.5 pb-3">
+                    <div className="text-[0.68rem] font-medium tracking-widest uppercase text-[#C8A96E] mb-1">{p.categoryLabel}</div>
+                    <div className="font-serif text-[0.975rem] font-medium text-gray-900 leading-[1.3] mb-1">{p.title}</div>
+                    <div className="text-[0.84rem] font-medium text-gray-500">{p.price}</div>
                   </div>
                 </div>
               );

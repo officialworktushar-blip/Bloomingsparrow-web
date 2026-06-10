@@ -24,6 +24,7 @@ interface StoreState {
   logout: () => void;
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
 }
 
@@ -48,5 +49,11 @@ export const useStore = create<StoreState>((set) => ({
     return { cart: [...state.cart, item] };
   }),
   removeFromCart: (id) => set((state) => ({ cart: state.cart.filter(c => c.id !== id) })),
+  updateQuantity: (id, quantity) => set((state) => {
+    if (quantity <= 0) {
+      return { cart: state.cart.filter(c => c.id !== id) };
+    }
+    return { cart: state.cart.map(c => c.id === id ? { ...c, quantity } : c) };
+  }),
   clearCart: () => set({ cart: [] })
 }));

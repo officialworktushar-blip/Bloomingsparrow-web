@@ -25,39 +25,39 @@ export default function WishlistPage() {
     localStorage.setItem('bs_wishlist', JSON.stringify(updated));
   };
 
-  if (!isClient) return <main className="inner-page" id="main-content"><div className="page-header"><h1 className="page-title">Your Wishlist</h1><p className="page-sub">Loading saved pieces…</p></div></main>;
+  if (!isClient) return <main className="w-full p-1.5 sm:p-2.5" id="main-content"><div className="flex items-center justify-between px-2 pt-2 mb-6 flex-wrap gap-3"><h1 className="font-serif text-[2rem] font-normal text-gray-900">Your Wishlist</h1><p className="text-[0.875rem] text-gray-500">Loading saved pieces…</p></div></main>;
 
   return (
-    <main className="inner-page" id="main-content">
-      <div className="page-header">
-        <h1 className="page-title">Your Wishlist</h1>
-        <p className="page-sub">{list.length} piece{list.length === 1 ? '' : 's'} saved</p>
+    <main className="w-full p-1.5 sm:p-2.5" id="main-content">
+      <div className="flex items-center justify-between px-2 pt-2 mb-6 flex-wrap gap-3">
+        <h1 className="font-serif text-[2rem] font-normal text-gray-900">Your Wishlist</h1>
+        <p className="text-[0.875rem] text-gray-500">{list.length} piece{list.length === 1 ? '' : 's'} saved</p>
       </div>
 
       {!list.length ? (
-        <div className="wl-empty" id="wishlist-empty">
-          <div className="wl-empty-icon">♡</div>
-          <h2>Nothing saved yet</h2>
-          <p>Tap the heart on any art piece to save it here.</p>
-          <Link href="/" className="wl-browse-btn">Browse Gallery</Link>
+        <div className="flex flex-col items-center justify-center py-20 px-8 text-center gap-4" id="wishlist-empty">
+          <div className="text-[3.5rem] text-gray-200">♡</div>
+          <h2 className="font-serif text-[1.6rem] font-normal text-gray-900">Nothing saved yet</h2>
+          <p className="text-[0.9rem] text-gray-500">Tap the heart on any art piece to save it here.</p>
+          <Link href="/" className="inline-flex items-center py-[0.55rem] px-[1.4rem] rounded-full bg-gray-900 text-white text-[0.85rem] font-medium font-sans transition-all hover:bg-[#C8A96E]">Browse Gallery</Link>
         </div>
       ) : (
-        <div className="masonry" id="wishlist-grid" role="list">
+        <div className="w-full columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-1.5 sm:gap-2.5" id="wishlist-grid" role="list">
           {list.map((p, i) => (
             <div 
               key={p.id}
-              className="art-card" 
+              className="break-inside-avoid mb-1.5 sm:mb-2.5 rounded-xl overflow-hidden bg-white cursor-pointer relative shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] block hover:-translate-y-[3px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] group art-card" 
               role="button" 
               tabIndex={0}
               onClick={() => router.push(`/product/${p.id}`)}
               style={{ animationDelay: `${i * 0.05}s` }}
             >
-              <div className="card-img-wrap">
-                <img className="card-img" src={`/${p.image}`} alt={p.title} loading="lazy" />
-                <div className="card-overlay">
-                  <span className="card-overlay-btn">View Piece</span>
+              <div className={`relative overflow-hidden w-full ${i % 5 === 0 ? 'aspect-[2/3]' : i % 5 === 1 ? 'aspect-[3/4]' : i % 5 === 2 ? 'aspect-[4/5]' : i % 5 === 3 ? 'aspect-square' : 'aspect-[3/5]'}`}>
+                <img className="w-full h-full object-cover block transition-transform duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105" src={`/${p.image}`} alt={p.title} loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-55% opacity-0 transition-opacity duration-300 flex items-end p-3.5 group-hover:opacity-100">
+                  <span className="bg-white text-gray-900 rounded-full py-1.5 px-4 text-[0.78rem] font-medium font-sans transition-all hover:bg-[#C8A96E] hover:text-white">View Piece</span>
                   <button 
-                    className="wl-remove-btn" 
+                    className="bg-white/90 text-[#e05252] rounded-[16px] py-[0.35rem] px-[0.8rem] text-[0.75rem] font-medium font-sans cursor-pointer ml-2 transition-all hover:bg-white" 
                     data-id={p.id} 
                     aria-label="Remove from wishlist"
                     onClick={(e) => removeWishlist(e, p.id)}
@@ -66,10 +66,10 @@ export default function WishlistPage() {
                   </button>
                 </div>
               </div>
-              <div className="card-info">
-                <div className="card-cat">{p.categoryLabel}</div>
-                <div className="card-title">{p.title}</div>
-                <div className="card-price">{p.price}</div>
+              <div className="px-3.5 pt-2.5 pb-3">
+                <div className="text-[0.68rem] font-medium tracking-widest uppercase text-[#C8A96E] mb-1">{p.categoryLabel}</div>
+                <div className="font-serif text-[0.975rem] font-medium text-gray-900 leading-[1.3] mb-1">{p.title}</div>
+                <div className="text-[0.84rem] font-medium text-gray-500">{p.price}</div>
               </div>
             </div>
           ))}

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/store/useStore';
+import Swal from '@/lib/swal';
 
 export default function CheckoutPage() {
   const { cart, user, token, removeFromCart, clearCart } = useStore();
@@ -24,7 +25,10 @@ export default function CheckoutPage() {
 
   const handleCheckout = async () => {
     if (!user) {
-      alert("Please login first to place an order.");
+      Swal.fire({
+        title: 'Please login first to place an order.',
+        icon: 'warning'
+      });
       router.push('/login');
       return;
     }
@@ -46,7 +50,7 @@ export default function CheckoutPage() {
 
       // 2. Open Razorpay Checkout
       const options = {
-        key: 'rzp_test_placeholder', // Should be from env in production
+        key: data.key,
         amount: data.order.amount,
         currency: "INR",
         name: "Blooming Sparrow",
@@ -68,11 +72,17 @@ export default function CheckoutPage() {
           });
           const verifyData = await verifyRes.json();
           if (verifyRes.ok) {
-            alert('Payment successful!');
+            Swal.fire({
+              title: 'Payment successful!',
+              icon: 'success'
+            });
             clearCart();
             router.push('/');
           } else {
-            alert('Payment verification failed.');
+            Swal.fire({
+              title: 'Payment verification failed.',
+              icon: 'error'
+            });
           }
         },
         prefill: {
@@ -86,18 +96,26 @@ export default function CheckoutPage() {
 
       const rzp = new (window as any).Razorpay(options);
       rzp.on('payment.failed', function (response: any){
-        alert(`Payment Failed: ${response.error.description}`);
+        Swal.fire({
+          title: 'Payment Failed',
+          text: response.error.description,
+          icon: 'error'
+        });
       });
       rzp.open();
     } catch (err: any) {
-      alert(`Error: ${err.message}`);
+      Swal.fire({
+        title: 'Error',
+        text: err.message,
+        icon: 'error'
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="inner-page">
+    <main className="p-8 pb-16 max-w-[860px] mx-auto w-full">
       <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow-sm border border-[#e8dcc4]">
         <h1 className="text-3xl font-bold mb-6">Checkout</h1>
         
