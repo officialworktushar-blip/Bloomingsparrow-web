@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { PRODUCTS } from '@/lib/data';
 import EnquiryModal from '@/components/EnquiryModal';
+import { useStore } from '@/store/useStore';
 
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
@@ -14,6 +15,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [isClient, setIsClient] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const addToCart = useStore(state => state.addToCart);
 
   useEffect(() => {
     setIsClient(true);
@@ -79,8 +81,29 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               <div className="meta-item"><div className="meta-label">Origin</div><div className="meta-value">{p.origin}</div></div>
               <div className="meta-item"><div className="meta-label">Artisan</div><div className="meta-value">{p.artisan}</div></div>
             </div>
+            <div className="product-trust mt-6 mb-8 pt-6 border-t border-gray-100 flex flex-wrap gap-3 text-sm text-gray-600">
+              <span className="trust-badge flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">🎨 Handcrafted</span>
+              <span className="trust-badge flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">✅ Authentic</span>
+              <span className="trust-badge flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">📦 Insured Delivery</span>
+              <span className="trust-badge flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">↩ Easy Returns</span>
+            </div>
             <div className="product-actions">
-              <button className="btn-primary" id="btn-enquire" onClick={() => setIsModalOpen(true)}>✉ Enquire Now</button>
+              <button 
+                className="btn-primary" 
+                onClick={() => {
+                  addToCart({
+                    id: p.id,
+                    title: p.title,
+                    price: p.price,
+                    numericPrice: parseInt(p.price.replace(/[^\\d]/g, ''), 10),
+                    image: p.image,
+                    quantity: 1
+                  });
+                  alert('Added to cart!');
+                }}
+              >
+                🛒 Add to Cart
+              </button>
               {isClient && (
                 <button 
                   className="btn-secondary" 
@@ -91,12 +114,6 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   {isWL ? '♥ Wishlisted' : '♡ Add to Wishlist'}
                 </button>
               )}
-            </div>
-            <div className="product-trust">
-              <span className="trust-badge">🎨 Handcrafted</span>
-              <span className="trust-badge">✅ Authentic</span>
-              <span className="trust-badge">📦 Insured Delivery</span>
-              <span className="trust-badge">↩ Easy Returns</span>
             </div>
           </div>
         </div>

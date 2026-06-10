@@ -2,19 +2,21 @@
 
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { PRODUCTS } from '@/lib/data';
+import { useProductStore } from '@/store/useProductStore';
 
 function GalleryGrid() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [isClient, setIsClient] = useState(false);
+  const { products: PRODUCTS, fetchProducts, isLoading } = useProductStore();
 
   useEffect(() => {
     setIsClient(true);
+    fetchProducts();
     const saved = JSON.parse(localStorage.getItem('bs_wishlist') || '[]');
     setWishlist(saved);
-  }, []);
+  }, [fetchProducts]);
 
   const query = searchParams.get('q')?.toLowerCase().trim() || '';
 
@@ -46,7 +48,9 @@ function GalleryGrid() {
 
   return (
     <div className="masonry" id="masonry-grid" role="list" aria-label="Art pieces">
-      {!list.length ? (
+      {isLoading ? (
+        <p className="empty-state">Loading gallery...</p>
+      ) : !list.length ? (
         <p className="empty-state">No pieces found</p>
       ) : (
         list.map((p, i) => {

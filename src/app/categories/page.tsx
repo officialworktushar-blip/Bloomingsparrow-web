@@ -2,19 +2,21 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { PRODUCTS } from '@/lib/data';
+import { useProductStore } from '@/store/useProductStore';
 
 export default function CategoriesPage() {
   const router = useRouter();
   const [activeCat, setActiveCat] = useState('all');
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [isClient, setIsClient] = useState(false);
+  const { products: PRODUCTS, fetchProducts, isLoading } = useProductStore();
 
   useEffect(() => {
     setIsClient(true);
+    fetchProducts();
     const saved = JSON.parse(localStorage.getItem('bs_wishlist') || '[]');
     setWishlist(saved);
-  }, []);
+  }, [fetchProducts]);
 
   const list = PRODUCTS.filter(p => {
     if (activeCat === 'all') return true;
@@ -66,7 +68,9 @@ export default function CategoriesPage() {
       
       <main className="grid-wrap" id="main-content" aria-label="Art gallery">
         <div className="masonry" id="masonry-grid" role="list" aria-label="Art pieces">
-          {!list.length ? (
+          {isLoading ? (
+            <p className="empty-state">Loading gallery...</p>
+          ) : !list.length ? (
             <p className="empty-state">No pieces found</p>
           ) : (
             list.map((p, i) => {
