@@ -6,9 +6,11 @@ import { useStore } from '@/store/useStore';
 import Swal from '@/lib/swal';
 
 export default function ProfilePage() {
-  const { user, logout } = useStore();
+  const { user, logout, token } = useStore();
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
+  const [orders, setOrders] = useState<any[]>([]);
+  const [loadingOrders, setLoadingOrders] = useState(true);
 
   useEffect(() => {
     setIsClient(true);
@@ -19,6 +21,30 @@ export default function ProfilePage() {
       router.push('/login');
     }
   }, [isClient, user, router]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (!user || !token) return;
+      try {
+        const res = await fetch('http://localhost:5000/api/payment/my-orders', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const data = await res.json();
+        setOrders(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingOrders(false);
+      }
+    };
+    if (isClient && user) {
+      fetchOrders();
+    }
+  }, [isClient, user, token]);
+
+  const latestAddress = orders.length > 0 ? orders[0].shipping_address : null;
 
   if (!isClient || !user) {
     return (
@@ -88,6 +114,65 @@ export default function ProfilePage() {
             </svg>
             Sign Out
           </button>
+        </div>
+      </div>
+
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="md:col-span-1">
+          <h2 className="font-serif text-[1.8rem] mb-6 text-gray-900 border-b pb-2">Saved Address</h2>
+          {latestAddress ? (
+            <div className="bg-white rounded-[20px] p-6 shadow-[0_2px_8px_rgba(0,0,0,0.07)] border border-gray-100">
+              <p className="text-gray-800 font-medium">{latestAddress.street}</p>
+              <p className="text-gray-600 mt-1">{latestAddress.city}, {latestAddress.state} - {latestAddress.pincode}</p>
+              <p className="text-gray-600 mt-1">Phone: {latestAddress.number}</p>
+            </div>
+          ) : (
+            <div className="bg-gray-50 rounded-[20px] p-6 border border-gray-100 text-gray-500">
+              No saved address found. Add one during checkout.
+            </div>
+          )}
+        </div>
+
+        <div className="md:col-span-2">
+          <h2 className="font-serif text-[1.8rem] mb-6 text-gray-900 border-b pb-2">Order History</h2>
+          {loadingOrders ? (
+            <p className="text-gray-500">Loading orders...</p>
+          ) : orders.length > 0 ? (
+            <div className="space-y-6">
+              {orders.map((order, idx) => (
+                <div key={idx} className="bg-white rounded-[20px] p-6 shadow-[0_2px_8px_rgba(0,0,0,0.07)] border border-gray-100">
+                  <div className="flex justify-between items-center mb-4 border-b pb-4">
+                    <div>
+                      <span className="text-sm text-gray-500">Order ID: {order.razorpay_order_id}</span>
+                      <p className="text-sm text-gray-500">{new Date(order.created_at).toLocaleDateString()}</p>
+                    </div>
+                    <div className="text-right">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${order.status === 'paid' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                        {order.status.toUpperCase()}
+                      </span>
+                      <p className="font-medium mt-1">₹{order.amount}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    {order.items?.map((item: any, i: number) => (
+                      <div key={i} className="flex items-center gap-4">
+                        <img src={`/${item.image}`} alt={item.title} className="w-16 h-16 object-cover rounded" />
+                        <div className="flex-1">
+                          <p className="font-medium text-gray-900">{item.title}</p>
+                          <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                        </div>
+                        <p className="font-medium text-gray-900">₹{item.price}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-gray-50 rounded-[20px] p-6 border border-gray-100 text-gray-500">
+              You haven't placed any orders yet.
+            </div>
+          )}
         </div>
       </div>
     </main>
