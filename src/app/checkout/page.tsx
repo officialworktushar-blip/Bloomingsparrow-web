@@ -37,7 +37,7 @@ export default function CheckoutPage() {
     if (!user || !token) return;
     const fetchOrders = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/payment/my-orders', {
+        const res = await fetch('https://api.bloomingsparrow.com/api/payment/my-orders', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -95,7 +95,7 @@ export default function CheckoutPage() {
     setLoading(true);
     try {
       // 1. Create order on backend
-      const res = await fetch('http://localhost:5000/api/payment/create-order', {
+      const res = await fetch('https://api.bloomingsparrow.com/api/payment/create-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ export default function CheckoutPage() {
         order_id: data.order.id,
         handler: async function (response: any) {
           // 3. Verify Payment
-          const verifyRes = await fetch('http://localhost:5000/api/payment/verify', {
+          const verifyRes = await fetch('https://api.bloomingsparrow.com/api/payment/verify', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

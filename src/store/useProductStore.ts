@@ -16,7 +16,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     if (get().products.length > 0) return;
     set({ isLoading: true, error: null });
     try {
-      const res = await fetch('http://localhost:5000/api/public/products');
+      const res = await fetch('https://api.bloomingsparrow.com/api/public/products');
       if (!res.ok) throw new Error('Failed to fetch products');
       const data = await res.json();
       set({ products: data, isLoading: false });

@@ -26,7 +26,7 @@ export default function ProfilePage() {
     const fetchOrders = async () => {
       if (!user || !token) return;
       try {
-        const res = await fetch('http://localhost:5000/api/payment/my-orders', {
+        const res = await fetch('https://api.bloomingsparrow.com/api/payment/my-orders', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
