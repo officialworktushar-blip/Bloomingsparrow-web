@@ -3,7 +3,7 @@
 import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { PRODUCTS } from '@/lib/data';
+import { useProductStore } from '@/store/useProductStore';
 import EnquiryModal from '@/components/EnquiryModal';
 import { useStore } from '@/store/useStore';
 import Swal from '@/lib/swal';
@@ -17,14 +17,24 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const [isClient, setIsClient] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { cart, addToCart, updateQuantity } = useStore();
+  const { products, fetchProducts, isLoading } = useProductStore();
 
   useEffect(() => {
     setIsClient(true);
+    fetchProducts();
     const saved = JSON.parse(localStorage.getItem('bs_wishlist') || '[]');
     setWishlist(saved);
-  }, []);
+  }, [fetchProducts]);
 
-  const p = PRODUCTS.find(x => x.id === id);
+  const p = products.find(x => x.id === id);
+
+  if (isLoading && !p) {
+    return (
+      <main className="product-page" id="main-content" aria-label="Product detail">
+        <div className="empty-state">Loading product...</div>
+      </main>
+    );
+  }
 
   if (!p) {
     return (
@@ -36,13 +46,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           Back to Gallery
         </button>
         <div id="product-content" role="region" aria-label="Product information">
-          <div className="empty-state">Product not found. <br/><Link href="/" style={{ color: 'var(--accent)' }}>← Back to Gallery</Link></div>
+          <div className="empty-state">Product not found.</div>
         </div>
       </main>
     );
   }
 
-  const related = PRODUCTS.filter(x => x.category === p.category && x.id !== p.id).slice(0, 4);
+  const related = products.filter(x => x.category === p.category && x.id !== p.id).slice(0, 4);
   const isWL = isClient && wishlist.includes(p.id);
   const cartItem = isClient ? cart.find(item => item.id === p.id) : undefined;
 
