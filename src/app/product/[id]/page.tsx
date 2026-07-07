@@ -74,7 +74,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
       <div id="product-content" role="region" aria-label="Product information">
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_450px] gap-16 items-start">
-          <div className="rounded-[20px] overflow-hidden shadow-lg"><img className="w-full h-auto object-cover block" src={`/${p.image}`} alt={p.title} /></div>
+          <div className="overflow-hidden rounded-md bg-[#f4f4f4] flex items-center justify-center p-8 lg:p-16 h-full min-h-[600px]">
+            <img className="w-full h-auto max-h-[80vh] object-contain drop-shadow-xl" src={`/${p.image}`} alt={p.title} />
+          </div>
           <div className="sticky top-[100px]">
             <div className="text-[0.72rem] tracking-[0.1em] uppercase text-[#C8A96E] font-medium mb-3.5">
               <Link href="/">Home</Link> &nbsp;/&nbsp; <Link href={`/categories?cat=${p.category}`}>{p.categoryLabel}</Link>
@@ -82,20 +84,19 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             <h1 className="font-serif text-[2.4rem] font-normal leading-[1.2] mb-3.5 text-gray-900">{p.title}</h1>
             <div className="mb-6">
               <span className="text-[0.85rem] text-gray-500 uppercase tracking-wider font-medium mr-2">Price</span>
-              <span className="text-2xl font-medium text-gray-900">{p.price}</span>
+              <span className="text-2xl font-medium text-gray-900">₹{p.price.replace('₹', '').trim()}</span>
               <span className="block text-[0.8rem] text-gray-400 mt-1.5">Inclusive of all taxes &middot; Free shipping</span>
             </div>
-            <div className="h-[1px] bg-gray-200 my-5"></div>
-            <div className="flex gap-2.5 mb-7">
+            <div className="flex items-center gap-6 mb-7 mt-6">
               {cartItem ? (
-                <div className="flex-1 h-12 rounded-full border-2 border-gray-900 bg-white flex items-center justify-between px-6 text-gray-900 font-medium">
+                <div className="h-12 rounded-full border-2 border-gray-900 bg-white flex items-center justify-between px-6 text-gray-900 font-medium w-40">
                   <button onClick={() => updateQuantity(p.id, cartItem.quantity - 1)} className="text-2xl px-2 hover:text-[#C8A96E] transition-colors leading-none pb-1">−</button>
                   <span className="text-[1.05rem] w-8 text-center">{cartItem.quantity}</span>
                   <button onClick={() => updateQuantity(p.id, cartItem.quantity + 1)} className="text-2xl px-2 hover:text-[#C8A96E] transition-colors leading-none pb-1">+</button>
                 </div>
               ) : (
                 <button 
-                  className="flex-[1.5] h-12 rounded-full bg-gray-900 text-white text-sm font-medium tracking-wide transition-all hover:bg-[#C8A96E] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(200,169,110,0.35)] flex items-center justify-center" 
+                  className="px-10 h-12 rounded-full bg-[#111] text-white text-sm font-medium tracking-wide transition-all hover:bg-black flex items-center justify-center gap-2" 
                   onClick={() => {
                     addToCart({
                       id: p.id,
@@ -116,30 +117,31 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   🛒 Add to Cart
                 </button>
               )}
-              {isClient && (
-                <button 
-                  className="flex-1 h-12 text-gray-900 text-sm font-medium transition-all hover:text-[#e05252] flex items-center justify-center gap-2" 
-                  id="btn-wishlist"
-                  onClick={toggleWishlist}
-                  style={isWL ? { color: '#e05252' } : {}}
-                >
-                  <span className="text-lg">{isWL ? '♥' : '♡'}</span> {isWL ? 'Wishlisted' : 'Add to Wishlist'}
-                </button>
-              )}
+              <button 
+                className="px-8 h-12 rounded-full border border-gray-300 text-gray-900 text-sm font-medium tracking-wide transition-all hover:border-gray-900 flex items-center justify-center gap-2" 
+                onClick={() => {
+                  addToCart({
+                    id: p.id,
+                    title: p.title,
+                    price: p.price,
+                    numericPrice: parseInt(p.price.replace(/\D/g, ''), 10),
+                    image: p.image,
+                    quantity: 1
+                  });
+                  router.push('/checkout');
+                }}
+              >
+                Buy Now
+              </button>
             </div>
-            <p className="text-[0.9375rem] text-gray-500 leading-[1.75] mb-[1.4rem]">{p.description}</p>
-            <div className="grid grid-cols-2 gap-3.5 mb-7">
-              <div className="bg-[#FAFAFA] rounded-xl py-3 px-4"><div className="text-[0.68rem] tracking-[0.08em] uppercase text-gray-400 font-medium mb-1">Material</div><div className="text-[0.875rem] text-gray-900">{p.material}</div></div>
-              <div className="bg-[#FAFAFA] rounded-xl py-3 px-4"><div className="text-[0.68rem] tracking-[0.08em] uppercase text-gray-400 font-medium mb-1">Dimensions</div><div className="text-[0.875rem] text-gray-900">{p.dimensions}</div></div>
-              <div className="bg-[#FAFAFA] rounded-xl py-3 px-4"><div className="text-[0.68rem] tracking-[0.08em] uppercase text-gray-400 font-medium mb-1">Origin</div><div className="text-[0.875rem] text-gray-900">{p.origin}</div></div>
-              <div className="bg-[#FAFAFA] rounded-xl py-3 px-4"><div className="text-[0.68rem] tracking-[0.08em] uppercase text-gray-400 font-medium mb-1">Artisan</div><div className="text-[0.875rem] text-gray-900">{p.artisan}</div></div>
+            <p className="text-[0.9rem] text-gray-500 leading-[1.8] mb-[2rem]">{p.description}</p>
+            <div className="grid grid-cols-2 gap-y-8 gap-x-4 mb-10">
+              <div><div className="text-[0.65rem] tracking-[0.1em] uppercase text-gray-400 font-medium mb-1.5">Material</div><div className="text-[0.875rem] text-gray-800 font-medium">{p.material}</div></div>
+              <div><div className="text-[0.65rem] tracking-[0.1em] uppercase text-gray-400 font-medium mb-1.5">Dimensions</div><div className="text-[0.875rem] text-gray-800 font-medium">{p.dimensions}</div></div>
+              <div><div className="text-[0.65rem] tracking-[0.1em] uppercase text-gray-400 font-medium mb-1.5">Origin</div><div className="text-[0.875rem] text-gray-800 font-medium">{p.origin}</div></div>
+              <div><div className="text-[0.65rem] tracking-[0.1em] uppercase text-gray-400 font-medium mb-1.5">Artisan</div><div className="text-[0.875rem] text-gray-800 font-medium">{p.artisan}</div></div>
             </div>
-            <div className="product-trust mt-6 mb-8 pt-6 border-t border-gray-100 flex flex-wrap gap-3 text-sm text-gray-600">
-              <span className="trust-badge flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">🎨 Handcrafted</span>
-              <span className="trust-badge flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">✅ Authentic</span>
-              <span className="trust-badge flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">📦 Insured Delivery</span>
-              <span className="trust-badge flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">↩ Easy Returns</span>
-            </div>
+
 
           </div>
         </div>
