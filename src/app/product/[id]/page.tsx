@@ -74,8 +74,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
       <div id="product-content" role="region" aria-label="Product information">
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_450px] gap-16 items-start">
-          <div className="overflow-hidden rounded-md bg-[#f4f4f4] flex items-center justify-center p-8 lg:p-16 h-full min-h-[600px]">
-            <img className="w-full h-auto max-h-[80vh] object-contain drop-shadow-xl" src={`/${p.image}`} alt={p.title} />
+          <div className="overflow-hidden rounded-md bg-[#f4f4f4] flex items-center justify-center p-4 lg:p-16 h-full min-h-[300px] lg:min-h-[600px]">
+            <img className="w-full h-auto max-h-[50vh] lg:max-h-[80vh] object-contain drop-shadow-xl" src={`/${p.image}`} alt={p.title} />
           </div>
           <div className="sticky top-[100px]">
             <div className="text-[0.72rem] tracking-[0.1em] uppercase text-[#C8A96E] font-medium mb-3.5">
@@ -96,7 +96,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </div>
               ) : (
                 <button 
-                  className="px-10 h-12 rounded-full bg-[#111] text-white text-sm font-medium tracking-wide transition-all hover:bg-black flex items-center justify-center gap-2" 
+                  className="px-10 h-12 rounded-full border border-gray-300 bg-white text-gray-900 text-sm font-medium tracking-wide transition-all hover:border-gray-900 flex items-center justify-center gap-2" 
                   onClick={() => {
                     addToCart({
                       id: p.id,
@@ -118,7 +118,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </button>
               )}
               <button 
-                className="px-8 h-12 rounded-full border border-gray-300 text-gray-900 text-sm font-medium tracking-wide transition-all hover:border-gray-900 flex items-center justify-center gap-2" 
+                className="px-8 h-12 rounded-full bg-[#111] text-white text-sm font-medium tracking-wide transition-all hover:bg-black flex items-center justify-center gap-2" 
                 onClick={() => {
                   addToCart({
                     id: p.id,
