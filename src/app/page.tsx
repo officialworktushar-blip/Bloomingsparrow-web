@@ -87,7 +87,7 @@ function GalleryGrid() {
               <div className="px-3.5 pt-2.5 pb-3">
                 <div className="text-[0.68rem] font-medium tracking-widest uppercase text-[#C8A96E] mb-1">{p.categoryLabel}</div>
                 <div className="font-serif text-[0.975rem] font-medium text-gray-900 leading-[1.3] mb-1">{p.title}</div>
-                <div className="text-[0.84rem] font-medium text-gray-500">{p.price}</div>
+                <div className="text-[0.84rem] font-medium text-gray-500">Rs. {p.price.replace('₹', '').trim()}</div>
               </div>
             </div>
           );
