@@ -73,16 +73,16 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       </button>
 
       <div id="product-content" role="region" aria-label="Product information">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_450px] gap-16 items-start">
-          <div className="overflow-hidden rounded-md bg-[#f4f4f4] flex items-center justify-center p-4 lg:p-16 h-full min-h-[300px] lg:min-h-[600px]">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_500px] gap-12 items-start">
+          <div className="overflow-hidden rounded-md bg-[#f4f4f4] flex items-center justify-center p-4 lg:p-8 h-full min-h-[300px] lg:min-h-[450px]">
             <img className="w-full h-auto max-h-[50vh] lg:max-h-[80vh] object-contain drop-shadow-xl" src={`/${p.image}`} alt={p.title} />
           </div>
           <div className="sticky top-[100px]">
-            <div className="text-[0.72rem] tracking-[0.1em] uppercase text-[#C8A96E] font-medium mb-3.5">
+            <div className="text-[0.72rem] tracking-[0.1em] uppercase text-[#C8A96E] font-medium mb-0">
               <Link href="/">Home</Link> &nbsp;/&nbsp; <Link href={`/categories?cat=${p.category}`}>{p.categoryLabel}</Link>
             </div>
-            <h1 className="font-serif text-[2.4rem] font-normal leading-[1.2] mb-3.5 text-gray-900">{p.title}</h1>
-            <div className="mb-6">
+            <h1 className="font-serif text-[2.4rem] font-normal leading-[1.2] mb-0 text-gray-900">{p.title}</h1>
+            <div className="mb-4">
               <span className="text-[0.85rem] text-gray-500 uppercase tracking-wider font-medium mr-2">Price</span>
               <span className="text-2xl font-medium text-gray-900">₹{p.price.replace('₹', '').trim()}</span>
               <span className="block text-[0.8rem] text-gray-400 mt-1.5">Inclusive of all taxes &middot; Free shipping</span>
@@ -155,7 +155,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   <div className="relative w-full"><img className="w-full aspect-square object-cover transition-transform duration-400 group-hover:scale-105" src={`/${r.image}`} alt={r.title} /></div>
                   <div className="p-2 px-3 pb-3">
                     <div className="font-serif text-[0.9rem] font-medium mb-1 text-gray-900">{r.title}</div>
-                    <div className="text-[0.8rem] text-gray-500">{r.price}</div>
+                    <div className="text-[0.8rem] text-gray-500">Rs. {String(r.price).replace('₹', '').trim()}</div>
                   </div>
                 </div>
               ))}
