@@ -3,24 +3,27 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { PRODUCTS } from '@/lib/data';
+import { useProductStore } from '@/store/useProductStore';
 
 export default function WishlistPage() {
   const router = useRouter();
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [isClient, setIsClient] = useState(false);
+  const { products: PRODUCTS, fetchProducts } = useProductStore();
 
   useEffect(() => {
     setIsClient(true);
-    const saved = JSON.parse(localStorage.getItem('bs_wishlist') || '[]');
+    fetchProducts();
+    const saved = JSON.parse(localStorage.getItem('bs_wishlist') || '[]').map(String);
     setWishlist(saved);
-  }, []);
+  }, [fetchProducts]);
 
-  const list = PRODUCTS.filter(p => wishlist.includes(p.id));
+  const list = PRODUCTS.filter(p => wishlist.includes(String(p.id)));
 
-  const removeWishlist = (e: React.MouseEvent, id: string) => {
+  const removeWishlist = (e: React.MouseEvent, id: string | number) => {
     e.stopPropagation();
-    const updated = wishlist.filter(x => x !== id);
+    const strId = String(id);
+    const updated = wishlist.filter(x => x !== strId);
     setWishlist(updated);
     localStorage.setItem('bs_wishlist', JSON.stringify(updated));
   };
@@ -53,7 +56,7 @@ export default function WishlistPage() {
               style={{ animationDelay: `${i * 0.05}s` }}
             >
               <div className={`relative overflow-hidden w-full ${i % 5 === 0 ? 'aspect-[2/3]' : i % 5 === 1 ? 'aspect-[3/4]' : i % 5 === 2 ? 'aspect-[4/5]' : i % 5 === 3 ? 'aspect-square' : 'aspect-[3/5]'}`}>
-                <img className="w-full h-full object-cover block transition-transform duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105" src={`/${p.image}`} alt={p.title} loading="lazy" />
+                <img className="w-full h-full object-cover block transition-transform duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105" src={p.image.includes('prod-') ? `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${p.image}` : `/${p.image}`} alt={p.title} loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-55% opacity-0 transition-opacity duration-300 flex items-end p-3.5 group-hover:opacity-100">
                   <span className="bg-white text-gray-900 rounded-full py-1.5 px-4 text-[0.78rem] font-medium font-sans transition-all hover:bg-[#C8A96E] hover:text-white">View Piece</span>
                   <button 
@@ -67,7 +70,7 @@ export default function WishlistPage() {
                 </div>
               </div>
               <div className="px-3.5 pt-2.5 pb-3">
-                <div className="text-[0.68rem] font-medium tracking-widest uppercase text-[#C8A96E] mb-1">{p.categoryLabel}</div>
+                <div className="text-[0.68rem] font-medium tracking-widest uppercase text-[#C8A96E] mb-1">{p.categoryLabel || p.category}</div>
                 <div className="font-serif text-[0.975rem] font-medium text-gray-900 leading-[1.3] mb-1">{p.title}</div>
                 <div className="text-[0.84rem] font-medium text-gray-500">Rs. {String(p.price).replace('₹', '').trim()}</div>
               </div>

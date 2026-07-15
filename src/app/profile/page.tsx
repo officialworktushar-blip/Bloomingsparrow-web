@@ -156,7 +156,7 @@ export default function ProfilePage() {
                   <div className="space-y-4">
                     {order.items?.map((item: any, i: number) => (
                       <div key={i} className="flex items-center gap-4">
-                        <img src={`/${item.image}`} alt={item.title} className="w-16 h-16 object-cover rounded" />
+                        <img src={item.image.includes('prod-') ? `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${item.image}` : `/${item.image}`} alt={item.title} className="w-16 h-16 object-cover rounded" />
                         <div className="flex-1">
                           <p className="font-medium text-gray-900">{item.title}</p>
                           <p className="text-sm text-gray-500">Qty: {item.quantity}</p>

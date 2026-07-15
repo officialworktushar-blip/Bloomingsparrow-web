@@ -53,12 +53,14 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   }
 
   const related = products.filter(x => x.category === p.category && x.id !== p.id).slice(0, 4);
-  const isWL = isClient && wishlist.includes(p.id);
+  const isWL = isClient && wishlist.includes(String(p.id));
   const cartItem = isClient ? cart.find(item => item.id === p.id) : undefined;
 
   const toggleWishlist = () => {
-    const inList = wishlist.includes(p.id);
-    const updated = inList ? wishlist.filter(x => x !== p.id) : [...wishlist, p.id];
+    if (!p) return;
+    const strId = String(p.id);
+    const inList = wishlist.includes(strId);
+    const updated = inList ? wishlist.filter(x => x !== strId) : [...wishlist, strId];
     setWishlist(updated);
     localStorage.setItem('bs_wishlist', JSON.stringify(updated));
   };
@@ -75,7 +77,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       <div id="product-content" role="region" aria-label="Product information">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_500px] gap-12 items-start">
           <div className="overflow-hidden rounded-md bg-[#f4f4f4] flex items-center justify-center p-4 lg:p-8 h-full min-h-[300px] lg:min-h-[450px]">
-            <img className="w-full h-auto max-h-[50vh] lg:max-h-[80vh] object-contain drop-shadow-xl" src={`/${p.image}`} alt={p.title} />
+            <img className="w-full h-auto max-h-[50vh] lg:max-h-[80vh] object-contain drop-shadow-xl" src={p.image.includes('prod-') ? `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${p.image}` : `/${p.image}`} alt={p.title} />
           </div>
           <div className="sticky top-[100px]">
             <div className="text-[0.72rem] tracking-[0.1em] uppercase text-[#C8A96E] font-medium mb-0">
@@ -152,7 +154,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {related.map(r => (
                 <div key={r.id} className="rounded-xl overflow-hidden bg-white cursor-pointer shadow-sm transition-all hover:-translate-y-1 hover:shadow-md group" onClick={() => router.push(`/product/${r.id}`)} role="button" tabIndex={0} aria-label={r.title}>
-                  <div className="relative w-full"><img className="w-full aspect-square object-cover transition-transform duration-400 group-hover:scale-105" src={`/${r.image}`} alt={r.title} /></div>
+                  <div className="relative w-full"><img className="w-full aspect-square object-cover transition-transform duration-400 group-hover:scale-105" src={r.image.includes('prod-') ? `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${r.image}` : `/${r.image}`} alt={r.title} /></div>
                   <div className="p-2 px-3 pb-3">
                     <div className="font-serif text-[0.9rem] font-medium mb-1 text-gray-900">{r.title}</div>
                     <div className="text-[0.8rem] text-gray-500">Rs. {String(r.price).replace('₹', '').trim()}</div>
