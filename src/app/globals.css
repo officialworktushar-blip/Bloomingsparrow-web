@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 @layer base {
@@ -20,6 +20,15 @@
   --color-accent: #C8A96E;
   --color-accent-lt: #F5EDD8;
 
+  --color-cream: #F7F3EC;
+  --color-cream-frame: #EFEAE1;
+  --color-charcoal: #1C1A18;
+  --color-charcoal-light: #2E2B27;
+  --color-warm-gray: #8C8477;
+  --color-divider: #E4DED3;
+  --color-olive: #4B5D45;
+  --color-terracotta: #B5533C;
+
   --animate-fade-up: fadeUp 0.45s both;
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
@@ -33,10 +42,12 @@
     70%  { transform: scale(0.88); }
     100% { transform: scale(1); }
   }
-}
 
-.art-card {
-  animation: var(--animate-fade-up);
+  --animate-accordion-open: accordionOpen 0.3s ease-out;
+  @keyframes accordionOpen {
+    from { opacity: 0; max-height: 0; }
+    to { opacity: 1; max-height: 600px; }
+  }
 }
 
 .art-card {
@@ -45,4 +56,70 @@
 
 .card-wl-btn--bounce {
   animation: var(--animate-wl-bounce);
+}
+
+.product-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-warm-gray);
+}
+
+.product-label-dark {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3rem;
+  padding: 0 2rem;
+  border-radius: 9999px;
+  background-color: var(--color-charcoal);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-family: var(--font-sans);
+  border: 1px solid var(--color-charcoal);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background-color: var(--color-charcoal-light);
+  border-color: var(--color-charcoal-light);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3rem;
+  padding: 0 2rem;
+  border-radius: 9999px;
+  background-color: transparent;
+  color: var(--color-charcoal);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-family: var(--font-sans);
+  border: 1px solid var(--color-charcoal);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background-color: var(--color-cream-frame);
+}
+
+.accordion-content {
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
 }
