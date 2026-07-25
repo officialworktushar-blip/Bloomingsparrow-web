@@ -35,10 +35,13 @@ export const useStore = create<StoreState>((set) => ({
   setUser: (user, token) => {
     if (token) localStorage.setItem('userToken', token);
     else localStorage.removeItem('userToken');
+    if (user) localStorage.setItem('bs_user', JSON.stringify(user));
+    else localStorage.removeItem('bs_user');
     set({ user, token });
   },
   logout: () => {
     localStorage.removeItem('userToken');
+    localStorage.removeItem('bs_user');
     set({ user: null, token: null, cart: [] });
   },
   addToCart: (item) => set((state) => {

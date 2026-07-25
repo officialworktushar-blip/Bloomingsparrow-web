@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 
 type Props = {
   images: string[];
@@ -16,23 +16,43 @@ function resolveImageSrc(img: string): string {
 
 export default function ProductImageGallery({ images, title }: Props) {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [zooming, setZooming] = useState(false);
+  const [origin, setOrigin] = useState({ x: 50, y: 50 });
+  const containerRef = useRef<HTMLDivElement>(null);
   const hasMultiple = images.length > 1;
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setOrigin({ x, y });
+  }, []);
 
   return (
     <div className="flex flex-col gap-3">
-      <div
-        className="relative rounded-2xl overflow-hidden bg-[#EFEAE1] flex items-center justify-center p-6 sm:p-10 lg:p-14 min-h-[320px] sm:min-h-[420px] lg:min-h-[520px]"
-        role="img"
-        aria-label={`Image of ${title}`}
-      >
-        <img
-          src={resolveImageSrc(images[activeIdx])}
-          alt={title}
-          className="w-full h-auto max-h-[55vh] lg:max-h-[70vh] object-contain transition-opacity duration-300"
-          draggable={false}
-        />
-        <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-[#C8A96E]/40 rounded-tl-sm" aria-hidden="true" />
-        <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-[#C8A96E]/40 rounded-br-sm" aria-hidden="true" />
+      <div className="p-3 sm:p-4 bg-[#EFEAE1] rounded-2xl border border-[#E4DED3]">
+        <div
+          ref={containerRef}
+          className="relative rounded-xl overflow-hidden bg-white aspect-square cursor-zoom-in"
+          role="img"
+          aria-label={`Image of ${title}`}
+          onMouseEnter={() => setZooming(true)}
+          onMouseLeave={() => setZooming(false)}
+          onMouseMove={handleMouseMove}
+        >
+          <img
+            src={resolveImageSrc(images[activeIdx])}
+            alt={title}
+            className="w-full h-full object-contain transition-transform duration-300 ease-out p-8 sm:p-12 lg:p-16"
+            style={zooming ? { transform: 'scale(2.2)', transformOrigin: `${origin.x}% ${origin.y}%` } : undefined}
+            draggable={false}
+          />
+          <div className="absolute top-3 left-3 w-7 h-7 border-l-[1.5px] border-t-[1.5px] border-[#C8A96E] pointer-events-none" aria-hidden="true" />
+          <div className="absolute top-3 right-3 w-7 h-7 border-r-[1.5px] border-t-[1.5px] border-[#C8A96E] pointer-events-none" aria-hidden="true" />
+          <div className="absolute bottom-3 left-3 w-7 h-7 border-l-[1.5px] border-b-[1.5px] border-[#C8A96E] pointer-events-none" aria-hidden="true" />
+          <div className="absolute bottom-3 right-3 w-7 h-7 border-r-[1.5px] border-b-[1.5px] border-[#C8A96E] pointer-events-none" aria-hidden="true" />
+        </div>
       </div>
 
       {hasMultiple && (

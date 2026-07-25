@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className="font-sans bg-[#FAFAFA] text-[#111] antialiased flex">
         <GoogleProvider>
           <Sidebar />
-          <div className="ml-[56px] md:ml-[72px] w-[calc(100%-56px)] md:w-[calc(100%-72px)] min-h-screen">
+          <div className="flex-1 min-w-0 min-h-screen">
             <TopBar />
             {children}
             <Footer />
