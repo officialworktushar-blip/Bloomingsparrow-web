@@ -34,7 +34,7 @@ export default function ProductImageGallery({ images, title }: Props) {
       <div className="p-3 sm:p-4 bg-[#EFEAE1] rounded-2xl border border-[#E4DED3]">
         <div
           ref={containerRef}
-          className="relative rounded-xl overflow-hidden bg-white aspect-square cursor-zoom-in"
+          className="relative rounded-xl overflow-hidden bg-white aspect-[20/17] cursor-zoom-in"
           role="img"
           aria-label={`Image of ${title}`}
           onMouseEnter={() => setZooming(true)}

@@ -8,6 +8,7 @@ import { useStore } from '@/store/useStore';
 import ProductImageGallery from '@/components/ProductImageGallery';
 import ProductInfo from '@/components/ProductInfo';
 import ProductDeliveryCheck from '@/components/ProductDeliveryCheck';
+import ProductInfoAccordion from '@/components/ProductInfoAccordion';
 import ProductAccordion from '@/components/ProductAccordion';
 import ProductRelated from '@/components/ProductRelated';
 import ProductReviewSection from '@/components/ProductReviewSection';
@@ -144,7 +145,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
   return (
     <main className="bg-[#F7F3EC] min-h-screen" id="main-content" aria-label="Product detail">
-      <div className="max-w-[1400px] mx-auto px-5 sm:px-8 pt-6 sm:pt-8 pb-16 sm:pb-20">
+      <div className="max-w-[1750px] mx-auto px-5 sm:px-8 pt-[30px] sm:pt-[40px] pb-[80px] sm:pb-[100px]">
         {categories.length > 0 && (
           <nav className="mb-6 sm:mb-8" aria-label="Related categories">
             <p className="text-[0.65rem] tracking-[0.1em] uppercase text-[#8C8477] font-medium font-sans mb-2.5">Explore</p>
@@ -167,7 +168,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         )}
 
         <div id="product-content" role="region" aria-label="Product information">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-8 lg:gap-14 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_600px] gap-[40px] lg:gap-[70px] items-start">
             <ProductImageGallery images={imageUrls} title={p.title} />
 
             <div className="lg:sticky lg:top-[100px]">
@@ -178,6 +179,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 onToggleWishlist={toggleWishlist}
               />
               <ProductDeliveryCheck />
+              <ProductInfoAccordion />
             </div>
           </div>
 
