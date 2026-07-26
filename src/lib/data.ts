@@ -1,3 +1,8 @@
+export type Specification = {
+  label: string;
+  value: string;
+};
+
 export type Product = {
   id: string;
   title: string;
@@ -10,6 +15,7 @@ export type Product = {
   dimensions: string;
   origin: string;
   artisan: string;
+  specifications?: Specification[];
 };
 
 export const PRODUCTS: Product[] = [

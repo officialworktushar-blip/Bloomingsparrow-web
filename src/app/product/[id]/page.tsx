@@ -179,7 +179,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 onToggleWishlist={toggleWishlist}
               />
               <ProductDeliveryCheck />
-              <ProductInfoAccordion />
+              <ProductInfoAccordion description={p.description} />
             </div>
           </div>
 
