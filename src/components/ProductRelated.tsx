@@ -48,7 +48,7 @@ export default function ProductRelated({ products, categoryLabel, wishlist, onTo
               >
                 <img
                   className="w-full aspect-square object-cover transition-transform duration-400 group-hover:scale-105"
-                  src={resolveImageSrc(r.image)}
+                  src={resolveImageSrc(r.images?.[0] || r.image)}
                   alt={r.title}
                   loading="lazy"
                 />

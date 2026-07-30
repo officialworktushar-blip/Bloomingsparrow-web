@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProductStore } from '@/store/useProductStore';
+import { getProductImageUrl } from '@/lib/data';
 
 export default function CategoriesPage() {
   const router = useRouter();
@@ -92,7 +93,7 @@ export default function CategoriesPage() {
                   onKeyPress={(e) => { if (e.key === 'Enter') handleProductClick(p.id); }}
                 >
                   <div className={`relative overflow-hidden w-full ${i % 5 === 0 ? 'aspect-[2/3]' : i % 5 === 1 ? 'aspect-[3/4]' : i % 5 === 2 ? 'aspect-[4/5]' : i % 5 === 3 ? 'aspect-square' : 'aspect-[3/5]'}`}>
-                    <img className="w-full h-full object-cover block transition-transform duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105" src={p.image.includes('prod-') ? `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${p.image}` : `/${p.image}`} alt={p.title} loading="lazy" />
+                    <img className="w-full h-full object-cover block transition-transform duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105" src={getProductImageUrl(p)} alt={p.title} loading="lazy" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-55% opacity-0 transition-opacity duration-300 flex items-end p-3.5 group-hover:opacity-100">
                       <span className="bg-white text-gray-900 rounded-full py-1.5 px-4 text-[0.78rem] font-medium font-sans transition-all hover:bg-[#C8A96E] hover:text-white">View Piece</span>
                     </div>

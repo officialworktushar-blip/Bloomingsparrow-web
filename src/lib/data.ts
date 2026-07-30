@@ -10,6 +10,8 @@ export type Product = {
   categoryLabel: string;
   price: string;
   image: string;
+  images?: string[];
+  order?: number;
   description: string;
   material: string;
   dimensions: string;
@@ -17,6 +19,28 @@ export type Product = {
   artisan: string;
   specifications?: Specification[];
 };
+
+export function getProductImageUrl(p: Product): string {
+  const img = p.images?.[0] || p.image || '';
+  if (img.includes('prod-') && !img.startsWith('/')) {
+    return `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${img}`;
+  }
+  if (img.startsWith('/')) return img;
+  return `/${img}`;
+}
+
+export function getProductImageSrc(p: Product): string {
+  return p.images?.[0] || p.image || '';
+}
+
+export function resolveImageSrc(img: string): string {
+  if (!img) return '/placeholder.png';
+  if (img.includes('prod-') && !img.startsWith('/')) {
+    return `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${img}`;
+  }
+  if (img.startsWith('/')) return img;
+  return `/${img}`;
+}
 
 export const PRODUCTS: Product[] = [
   // ROGAN ART

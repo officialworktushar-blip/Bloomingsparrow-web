@@ -79,7 +79,7 @@ export default function ProductInfo({ product, cartItem, isWishlisted, onToggleW
       title: p.title,
       price: p.price,
       numericPrice: parseInt(p.price.replace(/\D/g, ''), 10),
-      image: p.image,
+      image: p.images?.[0] || p.image,
       quantity: 1,
     });
     Swal.fire({
@@ -96,7 +96,7 @@ export default function ProductInfo({ product, cartItem, isWishlisted, onToggleW
       title: p.title,
       price: p.price,
       numericPrice: parseInt(p.price.replace(/\D/g, ''), 10),
-      image: p.image,
+      image: p.images?.[0] || p.image,
       quantity: 1,
     });
     router.push('/checkout');

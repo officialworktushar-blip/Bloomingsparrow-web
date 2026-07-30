@@ -87,20 +87,20 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     localStorage.setItem('bs_wishlist', JSON.stringify(updated));
   };
 
-  const addRelatedToCart = (product: { id: string; title: string; price: string; image: string }) => {
+  const addRelatedToCart = (product: { id: string; title: string; price: string; image: string; images?: string[] }) => {
     useStore.getState().addToCart({
       id: String(product.id),
       title: product.title,
       price: product.price,
       numericPrice: Number(String(product.price).replace(/[₹,]/g, '')) || 0,
-      image: product.image,
+      image: product.images?.[0] || product.image,
       quantity: 1,
     });
   };
 
   const isRelatedInCart = (strId: string) => cart.some(item => item.id === strId);
 
-  const imageUrls = p.image ? [p.image] : [];
+  const imageUrls = p.images && p.images.length > 0 ? p.images : p.image ? [p.image] : [];
 
   const accordionItems = [
     {
