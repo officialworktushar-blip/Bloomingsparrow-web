@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/store/useStore';
 import Swal from '@/lib/swal';
+import ProductImage from '@/components/ProductImage';
 
 export default function ProfilePage() {
   const { user, logout, token } = useStore();
@@ -156,7 +157,7 @@ export default function ProfilePage() {
                   <div className="space-y-4">
                     {order.items?.map((item: any, i: number) => (
                       <div key={i} className="flex items-center gap-4">
-                        <img src={item.image.includes('prod-') ? `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${item.image}` : `/${item.image}`} alt={item.title} className="w-16 h-16 object-cover rounded" />
+                        <ProductImage src={item.image} alt={item.title} className="w-12 aspect-[3/4] object-cover rounded" loading="lazy" />
                         <div className="flex-1">
                           <p className="font-medium text-gray-900">{item.title}</p>
                           <p className="text-sm text-gray-500">Qty: {item.quantity}</p>

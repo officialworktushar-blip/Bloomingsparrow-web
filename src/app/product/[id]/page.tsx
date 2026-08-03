@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useProductStore } from '@/store/useProductStore';
 import { useStore } from '@/store/useStore';
+import { getProductImages } from '@/lib/data';
 import ProductImageGallery from '@/components/ProductImageGallery';
 import ProductInfo from '@/components/ProductInfo';
 import ProductDeliveryCheck from '@/components/ProductDeliveryCheck';
@@ -100,7 +101,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
   const isRelatedInCart = (strId: string) => cart.some(item => item.id === strId);
 
-  const imageUrls = p.images && p.images.length > 0 ? p.images : p.image ? [p.image] : [];
+  const imageUrls = getProductImages(p);
 
   const accordionItems = [
     {

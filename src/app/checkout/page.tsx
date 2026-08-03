@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/store/useStore';
 import Swal from '@/lib/swal';
+import ProductImage from '@/components/ProductImage';
 
 export default function CheckoutPage() {
   const { cart, user, token, removeFromCart, clearCart } = useStore();
@@ -187,7 +188,7 @@ export default function CheckoutPage() {
               {cart.map(item => (
                 <div key={item.id} className="flex items-center justify-between border-b pb-2">
                   <div className="flex items-center space-x-4">
-                    <img src={item.image.includes('prod-') ? `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${item.image}` : `/${item.image}`} alt={item.title} className="w-16 h-16 object-cover rounded" />
+                    <ProductImage src={item.image} alt={item.title} className="w-12 aspect-[3/4] object-cover rounded" loading="lazy" />
                     <div>
                       <p className="font-medium">{item.title}</p>
                       <p className="text-sm text-gray-500">Qty: {item.quantity}</p>

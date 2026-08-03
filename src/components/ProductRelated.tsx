@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Product } from '@/lib/data';
+import ProductImage from '@/components/ProductImage';
 
 type Props = {
   products: Product[];
@@ -11,13 +12,6 @@ type Props = {
   onAddToCart: (product: Product) => void;
   isInCart: (id: string) => boolean;
 };
-
-function resolveImageSrc(img: string): string {
-  if (img.includes('prod-')) {
-    return `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${img}`;
-  }
-  return `/${img}`;
-}
 
 export default function ProductRelated({ products, categoryLabel, wishlist, onToggleWishlist, onAddToCart, isInCart }: Props) {
   const router = useRouter();
@@ -46,9 +40,9 @@ export default function ProductRelated({ products, categoryLabel, wishlist, onTo
                 aria-label={r.title}
                 onKeyDown={(e) => { if (e.key === 'Enter') router.push(`/product/${r.id}`); }}
               >
-                <img
-                  className="w-full aspect-square object-cover transition-transform duration-400 group-hover:scale-105"
-                  src={resolveImageSrc(r.images?.[0] || r.image)}
+                <ProductImage
+                  className="w-full aspect-[3/4] object-cover transition-transform duration-400 group-hover:scale-105"
+                  src={r.images?.[0] || r.image}
                   alt={r.title}
                   loading="lazy"
                 />

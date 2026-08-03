@@ -20,26 +20,27 @@ export type Product = {
   specifications?: Specification[];
 };
 
-export function getProductImageUrl(p: Product): string {
-  const img = p.images?.[0] || p.image || '';
-  if (img.includes('prod-') && !img.startsWith('/')) {
-    return `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${img}`;
-  }
-  if (img.startsWith('/')) return img;
-  return `/${img}`;
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com';
+
+export function resolveImageSrc(img?: string | null): string {
+  if (!img || img.trim() === '') return '/placeholder.png';
+  const trimmed = img.trim();
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (trimmed.startsWith('/')) return trimmed;
+  return `${API_BASE_URL}/${trimmed}`;
 }
 
 export function getProductImageSrc(p: Product): string {
   return p.images?.[0] || p.image || '';
 }
 
-export function resolveImageSrc(img: string): string {
-  if (!img) return '/placeholder.png';
-  if (img.includes('prod-') && !img.startsWith('/')) {
-    return `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com'}/${img}`;
-  }
-  if (img.startsWith('/')) return img;
-  return `/${img}`;
+export function getProductImageUrl(p: Product): string {
+  return resolveImageSrc(getProductImageSrc(p));
+}
+
+export function getProductImages(p: Product): string[] {
+  const list = p.images && p.images.length > 0 ? p.images : p.image ? [p.image] : [];
+  return list.length > 0 ? list : ['/placeholder.png'];
 }
 
 export const PRODUCTS: Product[] = [
