@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useProductStore } from '@/store/useProductStore';
-import ProductImage from '@/components/ProductImage';
+import ProductCard from '@/components/ProductCard';
 
 export default function WishlistPage() {
   const router = useRouter();
@@ -48,34 +48,15 @@ export default function WishlistPage() {
       ) : (
         <div className="w-full columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-1.5 sm:gap-2.5" id="wishlist-grid" role="list">
           {list.map((p, i) => (
-            <div 
+            <ProductCard
               key={p.id}
-              className="break-inside-avoid mb-1.5 sm:mb-2.5 rounded-xl overflow-hidden bg-white cursor-pointer relative shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] block hover:-translate-y-[3px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] group art-card" 
-              role="button" 
-              tabIndex={0}
-              onClick={() => router.push(`/product/${p.id}`)}
-              style={{ animationDelay: `${i * 0.05}s` }}
-            >
-              <div className="relative overflow-hidden w-full aspect-[3/4]">
-                <ProductImage className="w-full h-full object-cover block transition-transform duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105" src={p.images?.[0] || p.image} alt={p.title} loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-55% opacity-0 transition-opacity duration-300 flex items-end p-3.5 group-hover:opacity-100">
-                  <span className="bg-white text-gray-900 rounded-full py-1.5 px-4 text-[0.78rem] font-medium font-sans transition-all hover:bg-[#C8A96E] hover:text-white">View Piece</span>
-                  <button 
-                    className="bg-white/90 text-[#e05252] rounded-[16px] py-[0.35rem] px-[0.8rem] text-[0.75rem] font-medium font-sans cursor-pointer ml-2 transition-all hover:bg-white" 
-                    data-id={p.id} 
-                    aria-label="Remove from wishlist"
-                    onClick={(e) => removeWishlist(e, p.id)}
-                  >
-                    ✕ Remove
-                  </button>
-                </div>
-              </div>
-              <div className="px-3.5 pt-2.5 pb-3">
-                <div className="text-[0.68rem] font-medium tracking-widest uppercase text-[#C8A96E] mb-1">{p.categoryLabel || p.category}</div>
-                <div className="font-serif text-[0.975rem] font-medium text-gray-900 leading-[1.3] mb-1">{p.title}</div>
-                <div className="text-[0.84rem] font-medium text-gray-500">Rs. {String(p.price).replace('₹', '').trim()}</div>
-              </div>
-            </div>
+              product={p}
+              isWishlisted
+              showActions
+              onToggleWishlist={removeWishlist}
+              onOpen={(id) => router.push(`/product/${id}`)}
+              index={i}
+            />
           ))}
         </div>
       )}

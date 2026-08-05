@@ -34,7 +34,7 @@ export default function ProductImageGallery({ images, title }: Props) {
         <div className="w-full lg:flex-1 p-3 sm:p-4 bg-[#EFEAE1] rounded-2xl border border-[#E4DED3]">
           <div
             ref={containerRef}
-            className="relative rounded-xl overflow-hidden bg-white aspect-[3/4] cursor-zoom-in"
+            className="relative rounded-xl overflow-hidden bg-white aspect-[15/16] cursor-zoom-in"
             role="img"
             aria-label={`Image of ${title}`}
             onMouseEnter={() => setHoverZoom(true)}

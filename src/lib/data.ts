@@ -20,14 +20,12 @@ export type Product = {
   specifications?: Specification[];
 };
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.bloomingsparrow.com';
-
 export function resolveImageSrc(img?: string | null): string {
   if (!img || img.trim() === '') return '/placeholder.png';
   const trimmed = img.trim();
   if (/^https?:\/\//i.test(trimmed)) return trimmed;
   if (trimmed.startsWith('/')) return trimmed;
-  return `${API_BASE_URL}/${trimmed}`;
+  return `/${trimmed}`;
 }
 
 export function getProductImageSrc(p: Product): string {

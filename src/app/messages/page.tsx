@@ -40,7 +40,7 @@ export default function MessagesPage() {
   };
 
   return (
-    <main className="flex flex-col md:flex-row gap-0 p-0 max-w-none h-auto md:h-[calc(100vh-62px)] overflow-visible md:overflow-hidden w-full mx-auto" id="main-content">
+    <main className="flex flex-col md:flex-row gap-0 p-0 max-w-none h-auto md:h-[calc(100vh-148px)] overflow-visible md:overflow-hidden w-full mx-auto" id="main-content">
       {/* Thread list */}
       <div className="w-full md:w-[320px] md:min-w-[260px] shrink-0 border-b md:border-b-0 md:border-r border-gray-200 flex flex-col bg-white overflow-y-auto" id="msg-sidebar" role="list" aria-label="Message threads">
         <div className="pt-5 pb-3 px-5 border-b border-gray-200">

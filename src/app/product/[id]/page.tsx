@@ -16,8 +16,6 @@ import ProductReviewSection from '@/components/ProductReviewSection';
 
 const WHATSAPP_URL = 'https://wa.link/lvchko';
 
-const NAV_SLUGS = ['rogan-art', 'lacquerer-art', 'bell-art', 'leather-toys', 'shola-art', 'bird-making', 'leather-bag'];
-
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const id = resolvedParams.id;
@@ -25,7 +23,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [isClient, setIsClient] = useState(false);
-  const { cart, user } = useStore();
+  const { cart } = useStore();
   const { products, fetchProducts, isLoading } = useProductStore();
 
   useEffect(() => {
@@ -34,12 +32,6 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     const saved = JSON.parse(localStorage.getItem('bs_wishlist') || '[]');
     setWishlist(saved);
   }, [fetchProducts]);
-
-  const handleHeaderSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const q = new FormData(e.currentTarget).get('q')?.toString().trim();
-    if (q) router.push(`/?q=${encodeURIComponent(q)}`);
-  };
 
   const p = products.find(x => x.id === id);
 
@@ -79,7 +71,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     );
   }
 
-  const related = products.filter(x => x.category === p.category && x.id !== p.id).slice(0, 4);
+  const sameCategory = products.filter(x => x.category === p.category && x.id !== p.id);
+  const related = (sameCategory.length > 0 ? sameCategory : products.filter(x => x.id !== p.id)).slice(0, 4);
   const isWL = isClient && wishlist.includes(String(p.id));
   const cartItem = isClient ? cart.find(item => item.id === p.id) : undefined;
 
@@ -126,140 +119,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     },
   ];
 
-  const RELATED_CATEGORIES: Record<string, string[]> = {
-    'rogan-art':      ['shola-art', 'lacquerer-art', 'bell-art'],
-    'lacquerer-art':  ['rogan-art', 'bell-art', 'leather-bag'],
-    'bell-art':       ['lacquerer-art', 'rogan-art', 'bird-making'],
-    'leather-toys':   ['bird-making', 'leather-bag', 'shola-art'],
-    'shola-art':      ['bird-making', 'rogan-art', 'leather-toys'],
-    'bird-making':    ['shola-art', 'leather-toys', 'bell-art'],
-    'leather-bag':    ['leather-toys', 'lacquerer-art', 'bell-art'],
-  };
-
-  const allCatsMap = new Map<string, string>();
-  products.forEach(x => {
-    const slug = String(x.category || '').toLowerCase().replace(/\s+/g, '-');
-    const label = x.categoryLabel || x.category || '';
-    if (slug && label && !allCatsMap.has(slug)) allCatsMap.set(slug, label);
-  });
-
-  let relatedSlugs = RELATED_CATEGORIES[p.category] || [];
-  if (relatedSlugs.length === 0) {
-    relatedSlugs = Array.from(allCatsMap.keys())
-      .filter(s => s !== p.category)
-      .slice(0, 3);
-  }
-  const categories = relatedSlugs
-    .filter(slug => slug !== p.category && allCatsMap.has(slug))
-    .map(slug => ({ slug, label: allCatsMap.get(slug)! }))
-    .slice(0, 4);
-
-  const navItems = NAV_SLUGS
-    .map(slug => ({ slug, label: allCatsMap.get(slug) || '' }))
-    .filter(n => n.label !== '');
-
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-  const searchInputClass =
-    'w-full h-11 rounded-full border-[1.5px] border-[#E4DED3] bg-[#F7F3EC] pl-11 pr-5 text-[0.85rem] text-[#1C1A18] outline-none transition-all placeholder:text-[#A39A8B] focus:border-[#1C1A18] focus:bg-white';
-
   return (
     <main className="bg-[#F7F3EC] min-h-screen" id="main-content" aria-label="Product detail">
-      <div className="bg-[#1C1A18] text-white text-center text-[0.72rem] sm:text-[0.78rem] font-sans font-medium tracking-[0.04em] py-2 px-4">
-        🎉 Free shipping across India on every handcrafted piece&nbsp;&nbsp;·&nbsp;&nbsp;Ships in 2–3 days
-      </div>
-
-      <header className="bg-white border-b border-[#E4DED3]">
-        <div className="max-w-[1750px] mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-2.5 no-underline shrink-0" aria-label="Blooming Sparrow Home">
-            <img src="/images/logo.png" alt="Blooming Sparrow" className="w-9 h-9 object-contain" />
-            <span className="font-serif text-[1.25rem] font-semibold text-[#1C1A18] hidden sm:inline">Blooming Sparrow</span>
-          </Link>
-
-          <form role="search" onSubmit={handleHeaderSearch} className="hidden md:block flex-1 max-w-[560px] mx-auto w-full">
-            <div className="relative">
-              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-[17px] h-[17px] text-[#8C8477] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-              <input
-                type="search"
-                name="q"
-                placeholder="Find products, categories & more…"
-                aria-label="Search products"
-                autoComplete="off"
-                className={searchInputClass}
-              />
-            </div>
-          </form>
-
-          <div className="flex items-center gap-3 shrink-0">
-            <Link
-              href={user ? '/profile' : '/login'}
-              className="text-[0.8rem] font-medium text-[#1C1A18] no-underline hover:text-[#C8A96E] transition-colors hidden sm:block"
-            >
-              {user ? 'My Profile' : 'Sign In'}
-            </Link>
-            <Link
-              href="/checkout"
-              className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-[#F7F3EC] transition-colors no-underline text-[#1C1A18]"
-              aria-label={`Cart, ${cartCount} items`}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                <circle cx="9" cy="21" r="1" />
-                <circle cx="20" cy="21" r="1" />
-                <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
-              </svg>
-              {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 bg-[#C8A96E] text-white rounded-full min-w-[18px] h-[18px] px-1 text-[10px] font-semibold flex items-center justify-center leading-none">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-          </div>
-        </div>
-
-        <form role="search" onSubmit={handleHeaderSearch} className="md:hidden px-5 pb-3">
-          <div className="relative">
-            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-[17px] h-[17px] text-[#8C8477] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-            <input
-              type="search"
-              name="q"
-              placeholder="Find products, categories & more…"
-              aria-label="Search products"
-              autoComplete="off"
-              className={searchInputClass}
-            />
-          </div>
-        </form>
-      </header>
-
-      <nav className="bg-[#1C1A18]" aria-label="Shop categories">
-        <div className="max-w-[1750px] mx-auto px-5 sm:px-8 flex items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <Link href="/categories" className="shrink-0 text-[0.8rem] font-medium text-white/90 hover:text-white no-underline px-3.5 py-3 transition-colors border-b-2 border-transparent hover:border-[#C8A96E]">
-            Shop All
-          </Link>
-          {navItems.map(n => (
-            <Link
-              key={n.slug}
-              href={`/categories?cat=${n.slug}`}
-              className="shrink-0 text-[0.8rem] font-medium text-white/90 hover:text-white no-underline px-3.5 py-3 transition-colors border-b-2 border-transparent hover:border-[#C8A96E]"
-            >
-              {n.label}
-            </Link>
-          ))}
-          <Link href="/about" className="shrink-0 text-[0.8rem] font-medium text-white/90 hover:text-white no-underline px-3.5 py-3 transition-colors border-b-2 border-transparent hover:border-[#C8A96E]">
-            About Us
-          </Link>
-          <Link href="/faq" className="shrink-0 text-[0.8rem] font-medium text-white/90 hover:text-white no-underline px-3.5 py-3 transition-colors border-b-2 border-transparent hover:border-[#C8A96E]">
-            FAQs
-          </Link>
-        </div>
-      </nav>
-
       <div className="max-w-[1750px] mx-auto px-5 sm:px-8 pt-8 pb-[80px] sm:pb-[100px]">
         <nav className="flex items-center gap-1.5 text-[0.7rem] tracking-[0.08em] uppercase text-[#8C8477] font-medium font-sans mb-8 pb-4 border-b border-[#E4DED3]" aria-label="Breadcrumb">
           <Link href="/" className="hover:text-[#1C1A18] transition-colors no-underline">Home</Link>
@@ -273,7 +134,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
         <div id="product-content" role="region" aria-label="Product information">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_600px] gap-[40px] lg:gap-[70px] items-start">
-            <ProductImageGallery images={imageUrls} title={p.title} />
+            <div className="flex flex-col gap-6">
+              <ProductImageGallery images={imageUrls} title={p.title} />
+              <ProductDeliveryCheck />
+            </div>
 
             <div className="lg:sticky lg:top-[100px]">
               <ProductInfo
@@ -282,31 +146,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 isWishlisted={isWL}
                 onToggleWishlist={toggleWishlist}
               />
-              <ProductDeliveryCheck />
               <ProductInfoAccordion description={p.description} />
             </div>
           </div>
-
-          {categories.length > 0 && (
-            <nav className="mt-8" aria-label="Related categories">
-              <p className="text-[0.65rem] tracking-[0.1em] uppercase text-[#8C8477] font-medium font-sans mb-2.5">Explore</p>
-              <div className="flex flex-wrap gap-2">
-                {categories.map(c => (
-                  <Link
-                    key={c.slug}
-                    href={`/categories?cat=${c.slug}`}
-                    className={`inline-flex items-center h-8 px-4 rounded-full text-[0.75rem] font-medium font-sans border transition-all duration-200 no-underline ${
-                      c.slug === p.category
-                        ? 'bg-[#1C1A18] border-[#1C1A18] text-white'
-                        : 'bg-white border-[#E4DED3] text-[#8C8477] hover:border-[#1C1A18] hover:text-[#1C1A18]'
-                    }`}
-                  >
-                    {c.label}
-                  </Link>
-                ))}
-              </div>
-            </nav>
-          )}
 
           <div className="mt-8">
             <ProductAccordion items={accordionItems} />
@@ -315,6 +157,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           <ProductRelated
             products={related}
             categoryLabel={p.categoryLabel}
+            categorySlug={p.category}
             wishlist={wishlist}
             onToggleWishlist={toggleRelatedWishlist}
             onAddToCart={addRelatedToCart}

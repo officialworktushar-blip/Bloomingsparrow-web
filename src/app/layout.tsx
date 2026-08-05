@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
-import TopBar from "@/components/TopBar";
+import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 
 import GoogleProvider from "@/components/GoogleProvider";
@@ -18,14 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="font-sans bg-[#FAFAFA] text-[#111] antialiased flex">
+      <body className="font-sans bg-[#FAFAFA] text-[#111] antialiased">
         <GoogleProvider>
-          <Sidebar />
-          <div className="flex-1 min-w-0 min-h-screen">
-            <TopBar />
-            {children}
-            <Footer />
-          </div>
+          <SiteHeader />
+          {children}
+          <Footer />
         </GoogleProvider>
       </body>
     </html>
