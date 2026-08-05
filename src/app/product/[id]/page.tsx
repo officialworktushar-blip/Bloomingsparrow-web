@@ -7,8 +7,11 @@ import { useProductStore } from '@/store/useProductStore';
 import { useStore } from '@/store/useStore';
 import { getProductImages } from '@/lib/data';
 import ProductImageGallery from '@/components/ProductImageGallery';
-import ProductInfo from '@/components/ProductInfo';
 import ProductDeliveryCheck from '@/components/ProductDeliveryCheck';
+import ProductPromoHeader from '@/components/ProductPromoHeader';
+import ProductPurchaseBlock from '@/components/ProductPurchaseBlock';
+import ProductTrustBadges from '@/components/ProductTrustBadges';
+import ProductSpecifications from '@/components/ProductSpecifications';
 import ProductInfoAccordion from '@/components/ProductInfoAccordion';
 import ProductAccordion from '@/components/ProductAccordion';
 import ProductRelated from '@/components/ProductRelated';
@@ -74,7 +77,6 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const sameCategory = products.filter(x => x.category === p.category && x.id !== p.id);
   const related = (sameCategory.length > 0 ? sameCategory : products.filter(x => x.id !== p.id)).slice(0, 4);
   const isWL = isClient && wishlist.includes(String(p.id));
-  const cartItem = isClient ? cart.find(item => item.id === p.id) : undefined;
 
   const toggleWishlist = () => {
     const strId = String(p.id);
@@ -133,20 +135,36 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         </nav>
 
         <div id="product-content" role="region" aria-label="Product information">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_600px] gap-[40px] lg:gap-[70px] items-start">
-            <div className="flex flex-col gap-6">
-              <ProductImageGallery images={imageUrls} title={p.title} />
-              <ProductDeliveryCheck />
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_600px] gap-6 lg:gap-[70px] items-start">
+            <div className="contents lg:flex lg:flex-col lg:gap-6">
+              <div className="order-1">
+                <ProductImageGallery images={imageUrls} title={p.title} />
+              </div>
+              <div className="order-5">
+                <ProductDeliveryCheck />
+              </div>
             </div>
 
-            <div className="lg:sticky lg:top-[100px]">
-              <ProductInfo
-                product={p}
-                cartItem={cartItem}
-                isWishlisted={isWL}
-                onToggleWishlist={toggleWishlist}
-              />
-              <ProductInfoAccordion description={p.description} />
+            <div className="contents lg:block lg:sticky lg:top-[100px]">
+              <div className="order-4">
+                <ProductPromoHeader />
+              </div>
+              <div className="order-2">
+                <ProductPurchaseBlock
+                  product={p}
+                  isWishlisted={isWL}
+                  onToggleWishlist={toggleWishlist}
+                />
+              </div>
+              <div className="order-3">
+                <ProductTrustBadges />
+              </div>
+              <div className="order-3">
+                <ProductSpecifications product={p} />
+              </div>
+              <div className="order-3">
+                <ProductInfoAccordion description={p.description} />
+              </div>
             </div>
           </div>
 

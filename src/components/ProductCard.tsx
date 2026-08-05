@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import ProductImage from '@/components/ProductImage';
 import type { Product } from '@/lib/data';
 
+const STAGGER = ['', 'mt-5', 'mt-10', 'mt-2', 'mt-7', 'mt-4', 'mt-12', 'mt-6'];
+
 type Props = {
   product: Product;
   isWishlisted: boolean;
@@ -21,7 +23,6 @@ export default function ProductCard({
   onOpen,
   index = 0,
 }: Props) {
-  const [aspect, setAspect] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
 
@@ -33,13 +34,6 @@ export default function ProductCard({
     return () => mq.removeEventListener('change', update);
   }, []);
 
-  const lockAspect = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = e.currentTarget;
-    if (img.naturalWidth && img.naturalHeight) {
-      setAspect(img.naturalHeight / img.naturalWidth);
-    }
-  };
-
   const open = () => onOpen(p.id);
 
   const actionBtnClass =
@@ -48,7 +42,7 @@ export default function ProductCard({
   return (
     <div
       key={p.id}
-      className="break-inside-avoid mb-1.5 sm:mb-2.5 rounded-xl overflow-hidden bg-white cursor-pointer relative shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] inline-block w-full hover:-translate-y-[3px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] group art-card"
+      className={`break-inside-avoid mb-1.5 sm:mb-2.5 ${STAGGER[index % STAGGER.length]} rounded-xl overflow-hidden bg-white cursor-pointer relative shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] inline-block w-full hover:-translate-y-[3px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] group art-card`}
       role="button"
       tabIndex={0}
       aria-label={`${p.title} — ${p.price}`}
@@ -58,13 +52,12 @@ export default function ProductCard({
         if (e.key === 'Enter') open();
       }}
     >
-      <div className="relative overflow-hidden w-full" style={aspect ? { aspectRatio: aspect } : undefined}>
+      <div className="relative overflow-hidden w-full aspect-[3/4]">
         <ProductImage
-          className="w-full h-auto block transition-transform duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105"
+          className="w-full h-full object-cover block transition-transform duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105"
           src={p.images?.[0] || p.image}
           alt={p.title}
           loading="lazy"
-          onLoad={lockAspect}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-55% opacity-0 transition-opacity duration-300 flex items-end p-3.5 group-hover:opacity-100">
           <span className="bg-white text-gray-900 rounded-full py-1.5 px-4 text-[0.78rem] font-medium font-sans transition-all hover:bg-[#C8A96E] hover:text-white">View Piece</span>

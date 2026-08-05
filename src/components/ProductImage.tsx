@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { resolveImageSrc } from '@/lib/data';
 
 type Props = {
@@ -15,6 +15,11 @@ type Props = {
 
 export default function ProductImage({ src, alt, className, style, loading = 'lazy', draggable, onLoad }: Props) {
   const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    setFailed(false);
+  }, [src]);
+
   const resolved = resolveImageSrc(failed ? '' : src);
   return (
     <img
