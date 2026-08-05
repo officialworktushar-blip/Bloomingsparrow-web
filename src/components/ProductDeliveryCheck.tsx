@@ -53,14 +53,19 @@ export default function ProductDeliveryCheck() {
   };
 
   return (
-    <div className="rounded-xl border border-[#E4DED3] bg-white p-5 mb-8">
+    <div className="rounded-2xl border border-[#E4DED3] bg-white p-5 mb-8">
       <div className="flex items-center gap-2 mb-3">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8C8477" strokeWidth="1.8" aria-hidden="true">
-          <rect x="1" y="3" width="15" height="13" rx="1" />
-          <path d="M16 8h4l3 5v5a1 1 0 01-1 1h-2" />
-          <circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
-        </svg>
-        <span className="text-[0.8rem] font-medium text-[#1C1A18] font-sans">Delivery</span>
+        <span className="w-8 h-8 rounded-full bg-[#F7F3EC] border border-[#E4DED3] flex items-center justify-center text-[#B5533C]">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+            <rect x="1" y="3" width="15" height="13" rx="1" />
+            <path d="M16 8h4l3 5v5a1 1 0 01-1 1h-2" />
+            <circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
+          </svg>
+        </span>
+        <div>
+          <span className="block text-[0.8rem] font-medium text-[#1C1A18] font-sans">Delivery</span>
+          <span className="block text-[0.68rem] text-[#8C8477] font-sans">Check estimated arrival at your pincode</span>
+        </div>
       </div>
 
       <div className="flex items-center gap-2 mb-3">

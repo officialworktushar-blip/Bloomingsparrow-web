@@ -7,6 +7,8 @@ import { useStore } from '@/store/useStore';
 import Swal from '@/lib/swal';
 import { Product, Specification } from '@/lib/data';
 
+const WHATSAPP_URL = 'https://wa.link/lvchko';
+
 type Props = {
   product: Product;
   cartItem: { id: string; quantity: number } | undefined;
@@ -103,57 +105,125 @@ export default function ProductInfo({ product, cartItem, isWishlisted, onToggleW
   };
 
   const specs = buildSpecifications(p);
+  const specsLine = [p.dimensions, p.material].filter(Boolean).join(' · ');
+
+  const TRUST_STRIP = [
+    {
+      label: '100% Handmade',
+      icon: (
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M18 8h1a4 4 0 010 8h-1" />
+          <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
+          <line x1="6" y1="1" x2="6" y2="4" />
+          <line x1="10" y1="1" x2="10" y2="4" />
+          <line x1="14" y1="1" x2="14" y2="4" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Colour may vary',
+      icon: (
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Easy 7-day returns',
+      icon: (
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M1 4v6h6" />
+          <path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Free shipping',
+      icon: (
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="1" y="3" width="15" height="13" rx="1" />
+          <path d="M16 8h4l3 5v5a1 1 0 01-1 1h-2" />
+          <circle cx="5.5" cy="18.5" r="2.5" />
+          <circle cx="18.5" cy="18.5" r="2.5" />
+        </svg>
+      ),
+    },
+  ];
 
   return (
     <div className="flex flex-col">
-      <nav className="mb-4" aria-label="Breadcrumb">
-        <ol className="flex items-center gap-1.5 text-[0.7rem] tracking-[0.1em] uppercase text-[#8C8477] font-medium font-sans">
-          <li>
-            <Link href="/" className="hover:text-[#1C1A18] transition-colors">Home</Link>
-          </li>
-          <li aria-hidden="true" className="text-[#E4DED3]">/</li>
-          <li>
-            <Link href={`/categories?cat=${p.category}`} className="hover:text-[#1C1A18] transition-colors">
-              {p.categoryLabel}
-            </Link>
-          </li>
-        </ol>
-      </nav>
-
-      <div className="flex items-start justify-between gap-4 mb-1">
-        <h1 className="font-serif text-[2rem] sm:text-[2.4rem] lg:text-[2.8rem] font-semibold leading-[1.15] text-[#1C1A18] tracking-[-0.01em]">
-          {p.title}
-        </h1>
-        <button
-          onClick={onToggleWishlist}
-          className="shrink-0 mt-2 w-10 h-10 rounded-full border border-[#E4DED3] flex items-center justify-center transition-all duration-200 hover:border-[#B5533C] hover:text-[#B5533C]"
-          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-          title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
-        >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill={isWishlisted ? '#B5533C' : 'none'}
-            stroke="currentColor"
-            strokeWidth="1.8"
-            className={isWishlisted ? 'text-[#B5533C]' : 'text-[#8C8477]'}
-            aria-hidden="true"
-          >
-            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-5">
+        <span className="inline-flex items-center gap-1.5 text-[0.72rem] text-[#8C8477] font-medium font-sans">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B5533C" strokeWidth="1.8" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
           </svg>
+          Ships across India
+        </span>
+        <span className="inline-flex items-center gap-1.5 text-[0.72rem] text-[#8C8477] font-medium font-sans">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B5533C" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M18 8h1a4 4 0 010 8h-1" />
+            <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
+            <line x1="6" y1="1" x2="6" y2="4" />
+            <line x1="10" y1="1" x2="10" y2="4" />
+            <line x1="14" y1="1" x2="14" y2="4" />
+          </svg>
+          Handcrafted by artisans
+        </span>
+      </div>
+
+      <Link href="/shipping" className="block no-underline mb-6" aria-label="Read our shipping and delivery promise">
+        <div className="flex items-center gap-3 rounded-2xl border border-[#C8A96E]/40 bg-[#F5EDD8] px-4 py-3.5 transition-all duration-200 hover:border-[#C8A96E] hover:shadow-[0_4px_18px_rgba(200,169,110,0.2)]">
+          <span className="w-9 h-9 rounded-full bg-white border border-[#C8A96E]/50 flex items-center justify-center text-[#B5533C] shrink-0">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+          </span>
+          <span className="flex-1 min-w-0">
+            <span className="block text-[0.8rem] font-semibold text-[#1C1A18] font-sans">Backed by the Blooming Sparrow Promise</span>
+            <span className="block text-[0.68rem] text-[#8C8477] font-sans mt-0.5">Authenticity · Safe Delivery · Easy Resolution</span>
+          </span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B5533C" strokeWidth="2" className="shrink-0" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </div>
+      </Link>
+
+      <p className="text-[0.65rem] tracking-[0.14em] uppercase text-[#8C8477] font-medium font-sans mb-2">
+        {p.categoryLabel}{p.origin ? ` · ${p.origin}` : ''}
+      </p>
+
+      <h1 className="font-serif text-[2rem] sm:text-[2.4rem] lg:text-[2.8rem] font-semibold leading-[1.12] text-[#1C1A18] tracking-[-0.01em] mb-2">
+        {p.title}
+      </h1>
+
+      {p.artisan && p.artisan.trim() !== '' && (
+        <p className="text-[0.9rem] font-sans mb-2">
+          <span className="text-[#8C8477]">by </span>
+          <span className="font-semibold text-[#C8A96E]">{p.artisan}</span>
+        </p>
+      )}
+
+      {specsLine && (
+        <p className="text-[0.8rem] text-[#8C8477] font-sans mb-5">{specsLine}</p>
+      )}
+
+      <div className="flex items-baseline gap-3 mb-1">
+        <span className="font-serif text-[1.9rem] font-semibold text-[#1C1A18]">₹{priceClean}</span>
+      </div>
+      <p className="text-[0.78rem] text-[#8C8477] mb-6 font-sans">Inclusive of all taxes · Free shipping</p>
+
+      <p className="text-[0.8rem] text-[#1C1A18] font-medium font-sans mb-1">Ships in 2–3 business days</p>
+      <p className="text-[0.75rem] text-[#8C8477] font-sans mb-6">Handcrafted piece — dispatched with tracking within 2–3 days</p>
+
+      <div className="flex flex-col sm:flex-row gap-3 mb-3">
+        <button className="btn-primary flex-1" onClick={handleBuyNow}>
+          Buy Now
         </button>
-      </div>
-
-      <div className="mb-2">
-        <span className="text-[0.7rem] tracking-[0.1em] uppercase text-[#8C8477] font-medium font-sans mr-2.5">Price</span>
-        <span className="font-serif text-[1.75rem] font-semibold text-[#1C1A18]">₹{priceClean}</span>
-      </div>
-      <p className="text-[0.8rem] text-[#8C8477] mb-6 font-sans">Inclusive of all taxes · Free shipping</p>
-
-      <div className="flex items-center gap-3 mb-7">
         {cartItem ? (
-          <div className="h-[3rem] rounded-full border border-[#1C1A18] bg-white flex items-center justify-between px-5 text-[#1C1A18] font-medium w-[10rem] font-sans">
+          <div className="h-12 sm:h-[3rem] w-full sm:w-[10rem] shrink-0 rounded-full border border-[#1C1A18] bg-white flex items-center justify-between px-5 text-[#1C1A18] font-medium font-sans">
             <button
               onClick={() => updateQuantity(p.id, cartItem.quantity - 1)}
               className="text-xl px-1.5 hover:text-[#C8A96E] transition-colors leading-none pb-0.5"
@@ -171,34 +241,82 @@ export default function ProductInfo({ product, cartItem, isWishlisted, onToggleW
             </button>
           </div>
         ) : (
-          <button className="btn-secondary" onClick={handleAddToCart}>
+          <button className="btn-secondary flex-1" onClick={handleAddToCart}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+              <circle cx="9" cy="21" r="1" />
+              <circle cx="20" cy="21" r="1" />
               <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
             </svg>
             Add to Cart
           </button>
         )}
-        <button className="btn-primary" onClick={handleBuyNow}>
-          Buy Now
+      </div>
+
+      <div className="flex gap-3 mb-6">
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-1 inline-flex items-center justify-center gap-2 h-12 rounded-full bg-[#C8A96E] text-white text-[0.875rem] font-semibold font-sans transition-all duration-200 hover:bg-[#B8975A] no-underline"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg>
+          Talk to Our Expert
+        </a>
+        <button
+          onClick={onToggleWishlist}
+          className={`shrink-0 w-12 h-12 rounded-full border bg-white flex items-center justify-center transition-all duration-200 cursor-pointer ${
+            isWishlisted
+              ? 'border-[#B5533C] text-[#B5533C]'
+              : 'border-[#E4DED3] text-[#8C8477] hover:border-[#B5533C] hover:text-[#B5533C]'
+          }`}
+          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill={isWishlisted ? 'currentColor' : 'none'}
+            stroke="currentColor"
+            strokeWidth="1.8"
+            aria-hidden="true"
+          >
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+          </svg>
         </button>
       </div>
 
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3 mb-8">
+        {TRUST_STRIP.map(item => (
+          <div key={item.label} className="flex items-center gap-2 text-[#8C8477]">
+            <span className="w-8 h-8 rounded-full bg-[#F7F3EC] border border-[#E4DED3] flex items-center justify-center shrink-0">
+              {item.icon}
+            </span>
+            <span className="text-[0.66rem] font-medium tracking-[0.02em] font-sans leading-snug">{item.label}</span>
+          </div>
+        ))}
+      </div>
+
       {specs.length > 0 && (
-        <div className="grid grid-cols-2 gap-y-7 gap-x-6 mb-8">
-          {specs.map((spec, i) => (
-            <div key={i}>
-              <div className="flex items-center gap-1.5 mb-1.5">
-                {SPEC_ICONS[spec.label] && (
-                  <span className="text-[#8C8477]">{SPEC_ICONS[spec.label]}</span>
-                )}
-                <div className="product-label">{spec.label}</div>
+        <div className="rounded-2xl border border-[#E4DED3] bg-white p-5">
+          <h2 className="text-[0.7rem] tracking-[0.12em] uppercase text-[#8C8477] font-semibold font-sans mb-4">Specifications</h2>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+            {specs.map((spec, i) => (
+              <div key={i}>
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  {SPEC_ICONS[spec.label] && (
+                    <span className="text-[#8C8477]">{SPEC_ICONS[spec.label]}</span>
+                  )}
+                  <div className="product-label">{spec.label}</div>
+                </div>
+                <div className="text-[0.875rem] text-[#1C1A18] font-medium font-sans leading-[1.8]">
+                  {spec.value}
+                </div>
               </div>
-              <div className="text-[0.875rem] text-[#1C1A18] font-medium font-sans leading-[1.8]">
-                {spec.value}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
     </div>
