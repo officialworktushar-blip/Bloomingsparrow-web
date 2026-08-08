@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import ProductImage from '@/components/ProductImage';
 import type { Product } from '@/lib/data';
 
-const STAGGER = ['', 'mt-5', 'mt-10', 'mt-2', 'mt-7', 'mt-4', 'mt-12', 'mt-6'];
-
 type Props = {
   product: Product;
   isWishlisted: boolean;
@@ -42,7 +40,7 @@ export default function ProductCard({
   return (
     <div
       key={p.id}
-      className={`break-inside-avoid mb-1.5 sm:mb-2.5 ${STAGGER[index % STAGGER.length]} rounded-xl overflow-hidden bg-white cursor-pointer relative shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] inline-block w-full hover:-translate-y-[3px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] group art-card`}
+      className={`h-full w-full flex flex-col rounded-xl overflow-hidden bg-white cursor-pointer relative shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] hover:-translate-y-[3px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] group art-card`}
       role="button"
       tabIndex={0}
       aria-label={`${p.title} — ${p.price}`}

@@ -46,7 +46,7 @@ export default function WishlistPage() {
           <Link href="/" className="inline-flex items-center py-[0.55rem] px-[1.4rem] rounded-full bg-gray-900 text-white text-[0.85rem] font-medium font-sans transition-all hover:bg-[#C8A96E]">Browse Gallery</Link>
         </div>
       ) : (
-        <div className="w-full columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-1.5 sm:gap-2.5" id="wishlist-grid" role="list">
+        <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1.5 sm:gap-2.5" id="wishlist-grid" role="list">
           {list.map((p, i) => (
             <ProductCard
               key={p.id}

@@ -46,7 +46,7 @@ function GalleryGrid() {
 
 
   return (
-    <div className="w-full columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-1.5 sm:gap-2.5" id="masonry-grid" role="list" aria-label="Art pieces">
+    <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1.5 sm:gap-2.5" id="masonry-grid" role="list" aria-label="Art pieces">
       {isLoading ? (
         <p className="text-center py-20 text-gray-400 font-serif text-[1.4rem] italic">Loading gallery...</p>
       ) : !list.length ? (
