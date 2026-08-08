@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState, useMemo } from 'react';
+import { Suspense, useEffect, useState, useMemo, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useProductStore } from '@/store/useProductStore';
 import ProductCard from '@/components/ProductCard';
@@ -17,12 +17,29 @@ function CategoriesView() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const catParam = searchParams.get('cat');
-  const [manualCat, setManualCat] = useState<string | null>(null);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [isClient, setIsClient] = useState(false);
   const { products: PRODUCTS, fetchProducts, isLoading } = useProductStore();
 
-  const activeCat = catParam ?? manualCat ?? 'all';
+  const activeCat = catParam ?? 'all';
+  const barRef = useRef<HTMLDivElement>(null);
+  const [isBarStuck, setIsBarStuck] = useState(false);
+
+  useEffect(() => {
+    const el = barRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const limit = window.matchMedia('(min-width: 768px)').matches ? 64 : 120;
+      setIsBarStuck(el.getBoundingClientRect().top <= limit + 0.5);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
 
   useEffect(() => {
     setIsClient(true);
@@ -54,6 +71,10 @@ function CategoriesView() {
     router.push(`/product/${id}`);
   };
 
+  const selectCategory = (id: string) => {
+    router.push(id === 'all' ? '/categories' : `/categories?cat=${encodeURIComponent(id)}`);
+  };
+
   const categories = useMemo(() => {
     const catsMap = new Map<string, string>();
     PRODUCTS.forEach(p => {
@@ -70,13 +91,18 @@ function CategoriesView() {
 
   return (
     <>
-      <div className="bg-white border-b border-gray-200 py-3 px-4 sticky top-16 z-[90]" role="navigation" aria-label="Category filter">
+      <div
+        ref={barRef}
+        className={`bg-white border-b border-gray-200 py-3 px-4 sticky top-[120px] md:top-16 z-[90] transition-shadow duration-200 ${isBarStuck ? 'shadow-[0_6px_16px_rgba(0,0,0,0.10)]' : ''}`}
+        role="navigation"
+        aria-label="Category filter"
+      >
         <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {categories.map(c => (
             <button 
               key={c.id}
               className={`shrink-0 py-[0.42rem] px-[1.05rem] rounded-[22px] border-[1.5px] border-gray-200 bg-white text-[0.8rem] font-medium text-gray-500 cursor-pointer transition-all whitespace-nowrap tracking-[0.02em] font-sans hover:border-gray-900 hover:text-gray-900 ${activeCat === c.id ? '!bg-gray-900 !border-gray-900 !text-white' : ''}`}
-              onClick={() => setManualCat(c.id)}
+              onClick={() => selectCategory(c.id)}
             >
               {c.label}
             </button>

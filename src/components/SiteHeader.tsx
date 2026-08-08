@@ -112,8 +112,7 @@ export default function SiteHeader() {
 
   return (
     <>
-      <header>
-        <div className="bg-[#1C1A18] text-white h-9 flex items-center justify-center text-center px-4 text-[0.72rem] sm:text-[0.78rem] font-sans font-medium tracking-[0.04em]">
+      <div className="bg-[#1C1A18] text-white h-9 flex items-center justify-center text-center px-4 text-[0.72rem] sm:text-[0.78rem] font-sans font-medium tracking-[0.04em]">
           🎉 Free shipping across India on every handcrafted piece&nbsp;&nbsp;·&nbsp;&nbsp;Ships in 2–3 days
         </div>
 
@@ -298,7 +297,6 @@ export default function SiteHeader() {
             </div>
           </div>
         </nav>
-      </header>
 
       {drawerOpen && (
         <div
