@@ -16,6 +16,7 @@ export default function SiteHeader() {
   const { user, cart } = useStore();
   const { products, fetchProducts } = useProductStore();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [openShop, setOpenShop] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
@@ -112,9 +113,9 @@ export default function SiteHeader() {
 
   return (
     <>
-      <div className="bg-[#1C1A18] text-white h-9 flex items-center justify-center text-center px-4 text-[0.72rem] sm:text-[0.78rem] font-sans font-medium tracking-[0.04em]">
-          🎉 Free shipping across India on every handcrafted piece&nbsp;&nbsp;·&nbsp;&nbsp;Ships in 2–3 days
-        </div>
+      <div className="bg-[#1C1A18] text-white h-9 flex items-center justify-center text-center px-4 text-[0.72rem] sm:text-[0.78rem] font-sans font-medium tracking-[0.04em] whitespace-nowrap">
+        Free shipping across India
+      </div>
 
         <div className="sticky top-0 z-[100] bg-white border-b border-[#E4DED3]">
           <div className="max-w-[1750px] mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
@@ -134,6 +135,9 @@ export default function SiteHeader() {
 
             <Link href="/" className="flex items-center gap-2.5 no-underline shrink-0" aria-label="Blooming Sparrow Home">
               <img src="/images/logo.png" alt="Blooming Sparrow" className="w-9 h-9 object-contain" />
+              <span className="hidden md:block font-serif text-[1.05rem] font-semibold text-[#1C1A18] whitespace-nowrap">
+                Blooming Sparrow
+              </span>
             </Link>
 
             <div className="hidden lg:flex items-center gap-2.5 shrink-0">
@@ -150,7 +154,7 @@ export default function SiteHeader() {
                 <input
                   type="search"
                   name="q"
-                  placeholder="Find products, categories & more…"
+                  placeholder="Blooming Sparrow"
                   aria-label="Search products"
                   autoComplete="off"
                   className={searchInputClass}
@@ -159,6 +163,18 @@ export default function SiteHeader() {
             </form>
 
             <div className="flex items-center gap-3 shrink-0">
+              <button
+                type="button"
+                className="md:hidden relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-[#F7F3EC] transition-colors cursor-pointer text-[#1C1A18]"
+                onClick={() => setMobileSearchOpen(v => !v)}
+                aria-label="Toggle search"
+                aria-expanded={mobileSearchOpen}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              </button>
               <Link
                 href={user ? '/profile' : '/login'}
                 className="text-[0.8rem] font-medium text-[#1C1A18] no-underline hover:text-[#C8A96E] transition-colors hidden sm:block"
@@ -193,20 +209,27 @@ export default function SiteHeader() {
             </div>
           </div>
 
-          <form role="search" onSubmit={handleSearch} className="md:hidden px-5 pb-3">
-            <div className="relative">
-              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-[17px] h-[17px] text-[#8C8477] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-              <input
-                type="search"
-                name="q"
-                placeholder="Find products, categories & more…"
-                aria-label="Search products"
-                autoComplete="off"
-                className={searchInputClass}
-              />
+          <form
+            role="search"
+            onSubmit={handleSearch}
+            aria-hidden={!mobileSearchOpen}
+            className={`md:hidden grid transition-[grid-template-rows] duration-200 ease-in-out ${mobileSearchOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+          >
+            <div className={`overflow-hidden min-h-0 ${mobileSearchOpen ? 'px-5 pb-3 pt-1' : 'px-5 pb-0 pt-0'}`}>
+              <div className="relative">
+                <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-[17px] h-[17px] text-[#8C8477] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input
+                  type="search"
+                  name="q"
+                  placeholder="Blooming Sparrow"
+                  aria-label="Search products"
+                  autoComplete="off"
+                  className={searchInputClass}
+                />
+              </div>
             </div>
           </form>
         </div>
