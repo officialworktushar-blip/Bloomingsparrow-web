@@ -38,7 +38,7 @@ function AccordionRow({ item }: { item: AccordionItem }) {
     <div className="border-b border-[#E4DED3] last:border-b-0">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-4 text-left cursor-pointer group"
+        className="w-full flex items-center justify-between py-4 px-4 sm:px-0 text-left cursor-pointer group"
         aria-expanded={open}
       >
         <span className="text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-[#1C1A18] font-sans group-hover:text-[#8C8477] transition-colors">
@@ -51,7 +51,7 @@ function AccordionRow({ item }: { item: AccordionItem }) {
         style={{ maxHeight: open ? '600px' : '0', opacity: open ? 1 : 0 }}
         role="region"
       >
-        <div className="pb-4 text-[0.875rem] text-[#8C8477] leading-[1.7] font-sans whitespace-pre-line">
+        <div className="pb-4 px-4 sm:px-0 text-[0.875rem] text-[#8C8477] leading-[1.7] font-sans whitespace-pre-line">
           {item.content}
         </div>
       </div>
