@@ -9,10 +9,10 @@ const QUICK_LINKS = [
 ];
 
 const SOCIAL_LINKS = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
-  { label: 'Pinterest', href: 'https://pinterest.com/' },
-  { label: 'Instagram', href: 'https://instagram.com/' },
-  { label: 'YouTube', href: 'https://youtube.com/' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/blooming-sparrow/?viewAsMember=true' },
+  { label: 'Pinterest', href: 'https://pin.it/1jXuSq7p0' },
+  { label: 'Instagram', href: 'https://www.instagram.com/blooming_sparrow?igsi=MTJwaThmZm5id2k3OA==' },
+  { label: 'YouTube', href: 'https://youtube.com/@bloomingsparrow1?si=EZefE_Aj98m3PhrB' },
 ];
 
 const STICKERS = [

@@ -51,7 +51,7 @@ function AccordionRow({ item }: { item: AccordionItem }) {
         style={{ maxHeight: open ? '600px' : '0', opacity: open ? 1 : 0 }}
         role="region"
       >
-        <div className="pb-4 text-[0.85rem] text-[#8C8477] leading-[1.75] font-sans whitespace-pre-line">
+        <div className="pb-4 text-[0.875rem] text-[#8C8477] leading-[1.7] font-sans whitespace-pre-line">
           {item.content}
         </div>
       </div>
