@@ -35,13 +35,13 @@ function AccordionRow({ item }: { item: AccordionItem }) {
   if (!item.content || item.content.trim() === '') return null;
 
   return (
-    <div className="border-b border-[#E4DED3] last:border-b-0">
+    <div className="border-b border-[#efede8] last:border-b-0">
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between py-4 px-4 sm:px-0 text-left cursor-pointer group"
         aria-expanded={open}
       >
-        <span className="text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-[#1C1A18] font-sans group-hover:text-[#8C8477] transition-colors">
+        <span className="text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-[#252525] font-sans group-hover:text-[#7e7e84] transition-colors">
           {item.title}
         </span>
         <ChevronIcon open={open} />
@@ -51,7 +51,7 @@ function AccordionRow({ item }: { item: AccordionItem }) {
         style={{ maxHeight: open ? '600px' : '0', opacity: open ? 1 : 0 }}
         role="region"
       >
-        <div className="pb-4 px-4 sm:px-0 text-[0.875rem] text-[#8C8477] leading-[1.7] font-sans whitespace-pre-line">
+        <div className="pb-4 px-4 sm:px-0 text-[0.875rem] text-[#7e7e84] leading-[1.7] font-sans whitespace-pre-line">
           {item.content}
         </div>
       </div>
@@ -64,7 +64,7 @@ export default function ProductAccordion({ items }: Props) {
   if (visible.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-[#E4DED3] bg-white overflow-hidden mb-8">
+    <div className="rounded-xl border border-[#efede8] bg-white overflow-hidden mb-8">
       {visible.map(item => (
         <AccordionRow key={item.id} item={item} />
       ))}

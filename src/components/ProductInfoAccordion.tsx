@@ -96,16 +96,16 @@ function AccordionRow({ item }: { item: InfoItem }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-[#E4DED3] last:border-b-0">
+    <div className="border-b border-[#efede8] last:border-b-0">
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center px-4 py-4 text-left cursor-pointer group"
         aria-expanded={open}
       >
-        <span className="flex items-center justify-center w-5 h-5 shrink-0 text-[#8C8477] transition-colors group-hover:text-[#1C1A18]">
+        <span className="flex items-center justify-center w-5 h-5 shrink-0 text-[#7e7e84] transition-colors group-hover:text-[#252525]">
           {item.icon}
         </span>
-        <span className="ml-3 flex-1 min-w-0 text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-[#1C1A18] font-sans whitespace-nowrap overflow-hidden text-ellipsis group-hover:text-[#8C8477] transition-colors">
+        <span className="ml-3 flex-1 min-w-0 text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-[#252525] font-sans whitespace-nowrap overflow-hidden text-ellipsis group-hover:text-[#7e7e84] transition-colors">
           {item.label}
         </span>
         <span className="ml-4 shrink-0">
@@ -117,7 +117,7 @@ function AccordionRow({ item }: { item: InfoItem }) {
         style={{ maxHeight: open ? '600px' : '0', opacity: open ? 1 : 0 }}
         role="region"
       >
-        <div className="px-4 pb-4 pl-[52px] text-[0.8rem] text-[#8C8477] leading-[1.8] font-sans">
+        <div className="px-4 pb-4 pl-[52px] text-[0.8rem] text-[#7e7e84] leading-[1.8] font-sans">
           {item.content}
         </div>
       </div>
@@ -129,7 +129,7 @@ export default function ProductInfoAccordion({ description }: { description?: st
   const items = buildItems(description);
 
   return (
-    <div className="rounded-xl border border-[#E4DED3] bg-white overflow-hidden mb-8">
+    <div className="rounded-xl border border-[#efede8] bg-white overflow-hidden mb-8">
       {items.map(item => (
         <AccordionRow key={item.id} item={item} />
       ))}

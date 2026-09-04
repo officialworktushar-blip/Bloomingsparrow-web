@@ -47,8 +47,8 @@ export default function ProductTrustBadges() {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3 mb-8">
       {TRUST_STRIP.map(item => (
-        <div key={item.label} className="flex items-center gap-2 text-[#8C8477]">
-          <span className="w-8 h-8 rounded-full bg-[#F7F3EC] border border-[#E4DED3] flex items-center justify-center shrink-0">
+        <div key={item.label} className="flex items-center gap-2 text-[#7e7e84]">
+          <span className="w-8 h-8 rounded-full bg-[#fcf7f3] border border-[#efede8] flex items-center justify-center shrink-0">
             {item.icon}
           </span>
           <span className="text-[0.66rem] font-medium tracking-[0.02em] font-sans leading-snug">{item.label}</span>

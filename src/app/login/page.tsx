@@ -93,7 +93,7 @@ export default function LoginPage() {
 
   return (
     <main className="inner-page">
-      <div className="max-w-md mx-auto mt-12 bg-white p-8 border border-[#e8dcc4] rounded shadow-sm">
+      <div className="max-w-md mx-auto mt-12 bg-white p-8 border border-[#e8e7d5] rounded shadow-sm">
         <h1 className="page-title text-center mb-6">Login</h1>
         {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
         <form onSubmit={handleLogin} className="space-y-4">
@@ -105,7 +105,7 @@ export default function LoginPage() {
             <label className="block text-sm font-medium text-gray-700">Password</label>
             <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="mt-1 w-full p-2 border border-gray-300 rounded" />
           </div>
-          <button type="submit" disabled={loading} className="w-full bg-[#1c1c1c] text-white py-2.5 rounded mt-4 flex justify-center items-center gap-2 disabled:opacity-75 transition-all">
+          <button type="submit" disabled={loading} className="w-full bg-[#252525] text-white py-2.5 rounded mt-4 flex justify-center items-center gap-2 disabled:opacity-75 transition-all">
             {loading ? (
               <>
                 <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -127,7 +127,7 @@ export default function LoginPage() {
           </button>
         </form>
         <p className="mt-6 text-center text-sm">
-          Don't have an account? <Link href="/register" className="text-[#a46e3e]">Register here</Link>
+          Don't have an account? <Link href="/register" className="text-[#287379]">Register here</Link>
         </p>
       </div>
     </main>

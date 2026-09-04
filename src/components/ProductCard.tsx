@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ProductImage from '@/components/ProductImage';
+import { useStore } from '@/store/useStore';
 import type { Product } from '@/lib/data';
 
 type Props = {
@@ -13,6 +14,19 @@ type Props = {
   index?: number;
 };
 
+function Stars() {
+  return (
+    <span className="inline-flex items-center gap-[2px]" aria-label="Rated 4.8 out of 5">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#252525" aria-hidden="true">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+        </svg>
+      ))}
+      <span className="ml-1 text-[0.68rem] font-medium text-[#7e7e84] font-sans">4.8</span>
+    </span>
+  );
+}
+
 export default function ProductCard({
   product: p,
   isWishlisted,
@@ -21,26 +35,38 @@ export default function ProductCard({
   onOpen,
   index = 0,
 }: Props) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
+  const addToCart = useStore(state => state.addToCart);
+  const [added, setAdded] = useState(false);
+  const addedTimer = useRef<number | null>(null);
 
-  useEffect(() => {
-    const mq = window.matchMedia('(hover: none)');
-    const update = () => setIsTouch(mq.matches);
-    update();
-    mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
+  useEffect(() => () => {
+    if (addedTimer.current) window.clearTimeout(addedTimer.current);
   }, []);
 
   const open = () => onOpen(p.id);
 
-  const actionBtnClass =
-    'w-[34px] h-[34px] rounded-full bg-white/90 flex items-center justify-center text-gray-400 shadow-[0_2px_8px_rgba(0,0,0,0.14)] transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] leading-none backdrop-blur-sm hover:bg-white hover:text-[#1C1A18] hover:scale-110 hover:shadow-[0_4px_14px_rgba(0,0,0,0.18)] cursor-pointer';
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToCart({
+      id: p.id,
+      title: p.title,
+      price: p.price,
+      numericPrice: Number(String(p.price).replace(/[₹,]/g, '')) || 0,
+      image: p.images?.[0] || p.image,
+      quantity: 1,
+    });
+    setAdded(true);
+    if (addedTimer.current) window.clearTimeout(addedTimer.current);
+    addedTimer.current = window.setTimeout(() => setAdded(false), 1200);
+  };
+
+  const firstImage = p.images?.[0] || p.image;
+  const secondImage = p.images?.[1];
 
   return (
     <div
       key={p.id}
-      className={`h-full w-full flex flex-col rounded-xl overflow-hidden bg-white cursor-pointer relative shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] hover:-translate-y-[3px] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] group art-card`}
+      className={`h-full w-full flex flex-col bg-white cursor-pointer relative group art-card`}
       role="button"
       tabIndex={0}
       aria-label={`${p.title} — ${p.price}`}
@@ -50,76 +76,84 @@ export default function ProductCard({
         if (e.key === 'Enter') open();
       }}
     >
-      <div className="relative overflow-hidden w-full aspect-[3/4]">
+      <div className="relative overflow-hidden w-full aspect-square bg-[#f5f2ec]">
         <ProductImage
-          className="w-full h-full object-cover block transition-transform duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105"
-          src={p.images?.[0] || p.image}
+          className="w-full h-full object-cover block transition-opacity duration-500 ease-in-out"
+          src={firstImage}
           alt={p.title}
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-55% opacity-0 transition-opacity duration-300 flex items-end p-3.5 group-hover:opacity-100">
-          <span className="bg-white text-gray-900 rounded-full py-1.5 px-4 text-[0.78rem] font-medium font-sans transition-all hover:bg-[#C8A96E] hover:text-white">View Piece</span>
-        </div>
+        {secondImage && (
+          <ProductImage
+            className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+            src={secondImage}
+            alt={`${p.title} alternate view`}
+            loading="lazy"
+          />
+        )}
+
+        {p.title && (
+          <span className="absolute top-2 left-2 z-10 inline-block bg-[#252525] text-white text-[0.6rem] font-semibold uppercase tracking-[0.14em] px-2 py-0.5 font-sans">
+            {p.categoryLabel || 'Art'}
+          </span>
+        )}
 
         {showActions && (
-          <div className="absolute top-2.5 right-2.5 flex items-center gap-2 z-10">
-            <button
-              className={`${actionBtnClass} ${isWishlisted ? 'text-[#e05252] bg-white' : ''}`}
-              aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-              title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
-              onClick={(e) => onToggleWishlist(e, p.id)}
-            >
-              {isWishlisted ? '♥' : '♡'}
-            </button>
-            <button
-              className={`${actionBtnClass} ${isTouch ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
-              aria-label="More options"
-              aria-haspopup="true"
-              aria-expanded={menuOpen}
-              onClick={(e) => {
-                e.stopPropagation();
-                setMenuOpen(v => !v);
-              }}
-            >
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <circle cx="12" cy="5" r="1.7" />
-                <circle cx="12" cy="12" r="1.7" />
-                <circle cx="12" cy="19" r="1.7" />
-              </svg>
-            </button>
-          </div>
+          <button
+            className={`absolute top-2 right-2 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer ${
+              isWishlisted
+                ? 'bg-[#e05252] text-white'
+                : 'bg-white/90 text-[#202025] hover:bg-[#287379] hover:text-white shadow-[0_2px_8px_rgba(0,0,0,0.14)]'
+            }`}
+            aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+            title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+            onClick={(e) => onToggleWishlist(e, p.id)}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill={isWishlisted ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+            </svg>
+          </button>
         )}
 
-        {menuOpen && (
-          <div
-            className="absolute top-[52px] right-2.5 z-20 min-w-[175px] bg-white rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.16)] border border-[#EFEAE1] overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+        <div className="absolute inset-x-0 bottom-0 translate-y-0 lg:translate-y-full lg:group-hover:translate-y-0 transition-transform duration-300 ease-in-out z-10">
+          <button
+            className={`w-full h-10 inline-flex items-center justify-center gap-1.5 font-sans text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition-colors cursor-pointer border-t border-[#efede8] ${
+              added ? 'bg-[#252525] text-white' : 'bg-white text-[#202025] hover:bg-[#287379] hover:text-white'
+            }`}
+            onClick={handleAddToCart}
+            aria-label={`Add ${p.title} to cart`}
           >
-            <button
-              className="w-full text-left px-4 py-2.5 text-[0.8rem] font-medium text-[#1C1A18] hover:bg-[#F7F3EC] cursor-pointer"
-              onClick={(e) => {
-                onToggleWishlist(e, p.id);
-                setMenuOpen(false);
-              }}
-            >
-              {isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
-            </button>
-            <button
-              className="w-full text-left px-4 py-2.5 text-[0.8rem] font-medium text-[#1C1A18] hover:bg-[#F7F3EC] cursor-pointer border-t border-[#EFEAE1]"
-              onClick={(e) => {
-                e.stopPropagation();
-                open();
-              }}
-            >
-              View Piece
-            </button>
-          </div>
-        )}
+            {added ? (
+              <>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Added
+              </>
+            ) : (
+              <>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                  <circle cx="9" cy="21" r="1" />
+                  <circle cx="20" cy="21" r="1" />
+                  <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+                </svg>
+                Add to Cart
+              </>
+            )}
+          </button>
+        </div>
       </div>
-      <div className="px-3.5 pt-2.5 pb-3">
-        <div className="text-[0.68rem] font-medium tracking-widest uppercase text-[#C8A96E] mb-1">{p.categoryLabel || p.category}</div>
-        <div className="font-serif text-[0.975rem] font-medium text-gray-900 leading-[1.3] mb-1">{p.title}</div>
-        <div className="text-[0.84rem] font-medium text-gray-500">Rs. {String(p.price).replace('₹', '').trim()}</div>
+
+      <div className="px-3 pt-3 pb-3 flex flex-col gap-1">
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="font-sans text-[0.82rem] font-medium text-[#202025] leading-[1.35]">
+            {p.title}
+          </h3>
+        </div>
+        <Stars />
+        <div className="font-sans text-[0.95rem] font-semibold text-[#287379]">
+          ₹{String(p.price).replace(/[₹\s]/g, '').trim()}
+        </div>
       </div>
     </div>
   );

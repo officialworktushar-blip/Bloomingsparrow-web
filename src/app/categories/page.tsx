@@ -93,7 +93,7 @@ function CategoriesView() {
     <>
       <div
         ref={barRef}
-        className={`bg-white border-b border-gray-200 py-3 px-4 sticky top-[120px] md:top-16 z-[90] transition-shadow duration-200 ${isBarStuck ? 'shadow-[0_6px_16px_rgba(0,0,0,0.10)]' : ''}`}
+        className={`bg-white border-b border-[#efede8] py-3 px-4 sticky top-[76px] z-[90] transition-shadow duration-200 ${isBarStuck ? 'shadow-[0_6px_16px_rgba(0,0,0,0.08)]' : ''}`}
         role="navigation"
         aria-label="Category filter"
       >
@@ -101,7 +101,7 @@ function CategoriesView() {
           {categories.map(c => (
             <button 
               key={c.id}
-              className={`shrink-0 py-[0.42rem] px-[1.05rem] rounded-[22px] border-[1.5px] border-gray-200 bg-white text-[0.8rem] font-medium text-gray-500 cursor-pointer transition-all whitespace-nowrap tracking-[0.02em] font-sans hover:border-gray-900 hover:text-gray-900 ${activeCat === c.id ? '!bg-gray-900 !border-gray-900 !text-white' : ''}`}
+              className={`shrink-0 py-[0.42rem] px-[1.05rem] rounded-[22px] border-[1.5px] border-[#efede8] bg-white text-[0.8rem] font-medium text-[#7e7e84] cursor-pointer transition-all whitespace-nowrap tracking-[0.02em] font-sans hover:border-[#287379] hover:text-[#287379] ${activeCat === c.id ? '!bg-[#287379] !border-[#287379] !text-white' : ''}`}
               onClick={() => selectCategory(c.id)}
             >
               {c.label}
@@ -113,9 +113,9 @@ function CategoriesView() {
       <main className="w-full p-1.5 sm:p-2.5" id="main-content" aria-label="Art gallery">
         <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1.5 sm:gap-2.5" id="masonry-grid" role="list" aria-label="Art pieces">
           {isLoading ? (
-            <p className="text-center py-20 text-gray-400 font-serif text-[1.4rem] italic">Loading gallery...</p>
+            <p className="text-center py-20 text-[#7e7e84] font-sans text-[1.1rem] italic">Loading gallery...</p>
           ) : !list.length ? (
-            <p className="text-center py-20 text-gray-400 font-serif text-[1.4rem] italic">No pieces found</p>
+            <p className="text-center py-20 text-[#7e7e84] font-sans text-[1.1rem] italic">No pieces found</p>
           ) : (
             list.map((p, i) => {
               const isWL = isClient && wishlist.includes(String(p.id));

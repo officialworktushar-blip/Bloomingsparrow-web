@@ -1,28 +1,28 @@
 import Link from 'next/link';
 
-const SECTION_HEADING = 'text-[1.1rem] sm:text-[1.2rem] font-semibold text-[#1C1A18] font-serif mt-10 mb-3';
-const BODY = 'text-[0.85rem] text-[#1C1A18]/80 leading-[1.85] font-sans mb-4';
-const BULLET = 'text-[0.85rem] text-[#1C1A18]/80 leading-[1.85] font-sans ml-4 mb-1.5 list-disc';
+const SECTION_HEADING = 'text-[1.1rem] sm:text-[1.2rem] font-semibold text-[#252525] font-serif mt-10 mb-3';
+const BODY = 'text-[0.85rem] text-[#252525]/80 leading-[1.85] font-sans mb-4';
+const BULLET = 'text-[0.85rem] text-[#252525]/80 leading-[1.85] font-sans ml-4 mb-1.5 list-disc';
 
 export default function PrivacyPage() {
   const lastUpdated = 'July 2026';
 
   return (
-    <main className="bg-[#F7F3EC] min-h-screen">
+    <main className="bg-[#fcf7f3] min-h-screen">
       <div className="max-w-[800px] mx-auto px-6 py-16 sm:py-20">
         <nav className="mb-6" aria-label="Breadcrumb">
-          <ol className="flex items-center gap-1.5 text-[0.7rem] tracking-[0.1em] uppercase text-[#8C8477] font-medium font-sans">
-            <li><Link href="/" className="hover:text-[#1C1A18] transition-colors">Home</Link></li>
-            <li aria-hidden="true" className="text-[#E4DED3]">/</li>
-            <li className="text-[#1C1A18]">Privacy Policy</li>
+          <ol className="flex items-center gap-1.5 text-[0.7rem] tracking-[0.1em] uppercase text-[#7e7e84] font-medium font-sans">
+            <li><Link href="/" className="hover:text-[#252525] transition-colors">Home</Link></li>
+            <li aria-hidden="true" className="text-[#efede8]">/</li>
+            <li className="text-[#252525]">Privacy Policy</li>
           </ol>
         </nav>
 
-        <h1 className="font-serif text-[2rem] sm:text-[2.4rem] font-semibold text-[#1C1A18] mb-4">Privacy Policy</h1>
-        <div className="w-12 h-[2px] bg-[#C8A96E] mb-4" />
-        <p className="text-[0.75rem] text-[#8C8477] font-sans mb-8">Last updated: {lastUpdated}</p>
+        <h1 className="font-serif text-[2rem] sm:text-[2.4rem] font-semibold text-[#252525] mb-4">Privacy Policy</h1>
+        <div className="w-12 h-[2px] bg-[#287379] mb-4" />
+        <p className="text-[0.75rem] text-[#7e7e84] font-sans mb-8">Last updated: {lastUpdated}</p>
 
-        <p className="BODY text-[0.82rem] mb-6 p-3 rounded-lg bg-[#B5533C]/10 border border-[#B5533C]/20 text-[#B5533C] font-sans leading-relaxed">
+        <p className="BODY text-[0.82rem] mb-6 p-3 rounded-lg bg-[#d24418]/10 border border-[#d24418]/20 text-[#d24418] font-sans leading-relaxed">
           Disclaimer: This privacy policy is boilerplate content and should be reviewed by a qualified legal professional before publishing to ensure compliance with applicable data protection laws, including the Information Technology Act 2000, the IT (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules 2011, and the Digital Personal Data Protection Act 2023.
         </p>
 
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
 
         <h2 className={SECTION_HEADING}>1. Information We Collect</h2>
         <p className={BODY}>We collect the following types of information:</p>
-        <p className={BODY}><strong className="text-[#1C1A18]">Personal Information you provide directly:</strong></p>
+        <p className={BODY}><strong className="text-[#252525]">Personal Information you provide directly:</strong></p>
         <ul className="mb-3">
           <li className={BULLET}>Full name</li>
           <li className={BULLET}>Email address</li>
@@ -40,7 +40,7 @@ export default function PrivacyPage() {
           <li className={BULLET}>Shipping and billing address</li>
           <li className={BULLET}>Payment information (processed securely by our payment gateway — we do not store card numbers)</li>
         </ul>
-        <p className={BODY}><strong className="text-[#1C1A18]">Information collected automatically:</strong></p>
+        <p className={BODY}><strong className="text-[#252525]">Information collected automatically:</strong></p>
         <ul className="mb-4">
           <li className={BULLET}>Device type, browser, and operating system</li>
           <li className={BULLET}>IP address and approximate location</li>
@@ -117,11 +117,11 @@ export default function PrivacyPage() {
         </p>
         <p className={BODY}>
           Blooming Sparrow<br />
-          Email: <a href="mailto:bloomingsparrow@gmail.com" className="underline hover:text-[#1C1A18] transition-colors">bloomingsparrow@gmail.com</a>
+          Email: <a href="mailto:bloomingsparrow@gmail.com" className="underline hover:text-[#252525] transition-colors">bloomingsparrow@gmail.com</a>
         </p>
 
-        <div className="mt-12 pt-8 border-t border-[#E4DED3]">
-          <p className="text-[0.82rem] text-[#8C8477] font-sans">
+        <div className="mt-12 pt-8 border-t border-[#efede8]">
+          <p className="text-[0.82rem] text-[#7e7e84] font-sans">
             This privacy policy should be reviewed by a legal professional before publishing to ensure compliance with applicable Indian data protection laws.
           </p>
         </div>

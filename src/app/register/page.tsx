@@ -72,7 +72,7 @@ export default function RegisterPage() {
 
   return (
     <main className="inner-page">
-      <div className="max-w-md mx-auto mt-12 bg-white p-8 border border-[#e8dcc4] rounded shadow-sm">
+      <div className="max-w-md mx-auto mt-12 bg-white p-8 border border-[#e8e7d5] rounded shadow-sm">
         <h1 className="page-title text-center mb-6">Create Account</h1>
         {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
         <form onSubmit={handleRegister} className="space-y-4">
@@ -104,7 +104,7 @@ export default function RegisterPage() {
               </button>
             </div>
           </div>
-          <button type="submit" disabled={loading} className="w-full bg-[#1c1c1c] text-white py-2.5 rounded mt-4 flex justify-center items-center gap-2 disabled:opacity-75 transition-all">
+          <button type="submit" disabled={loading} className="w-full bg-[#252525] text-white py-2.5 rounded mt-4 flex justify-center items-center gap-2 disabled:opacity-75 transition-all">
             {loading ? (
               <>
                 <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -126,7 +126,7 @@ export default function RegisterPage() {
           </button>
         </form>
         <p className="mt-6 text-center text-sm">
-          Already have an account? <Link href="/login" className="text-[#a46e3e]">Sign In</Link>
+          Already have an account? <Link href="/login" className="text-[#287379]">Sign In</Link>
         </p>
       </div>
     </main>

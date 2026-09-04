@@ -52,35 +52,35 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
 
   return (
     <div className="flex flex-col">
-      <p className="text-[0.65rem] tracking-[0.14em] uppercase text-[#8C8477] font-medium font-sans mb-2">
+      <p className="text-[0.65rem] tracking-[0.14em] uppercase text-[#7e7e84] font-medium font-sans mb-2">
         {p.categoryLabel}{p.origin ? ` · ${p.origin}` : ''}
       </p>
 
-      <h1 className="font-serif text-[2rem] sm:text-[2.4rem] lg:text-[2.8rem] font-semibold leading-[1.12] text-[#1C1A18] tracking-[-0.01em] mb-2">
+      <h1 className="font-serif text-[2rem] sm:text-[2.4rem] lg:text-[2.8rem] font-semibold leading-[1.12] text-[#252525] tracking-[-0.01em] mb-2">
         {p.title}
       </h1>
 
       {p.artisan && p.artisan.trim() !== '' && (
         <p className="text-[0.9rem] font-sans mb-2">
-          <span className="text-[#8C8477]">by </span>
-          <span className="font-semibold text-[#C8A96E]">{p.artisan}</span>
+          <span className="text-[#7e7e84]">by </span>
+          <span className="font-semibold text-[#287379]">{p.artisan}</span>
         </p>
       )}
 
       {specsLine && (
-        <p className="text-[0.8rem] text-[#8C8477] font-sans mb-5">{specsLine}</p>
+        <p className="text-[0.8rem] text-[#7e7e84] font-sans mb-5">{specsLine}</p>
       )}
 
       <div className="flex items-baseline gap-3 mb-1">
-        <span className="font-serif text-[1.9rem] font-semibold text-[#1C1A18]">₹{priceClean}</span>
+        <span className="font-serif text-[1.9rem] font-semibold text-[#252525]">₹{priceClean}</span>
       </div>
-      <p className="text-[0.78rem] text-[#8C8477] mb-6 font-sans">Inclusive of all taxes · Free shipping</p>
+      <p className="text-[0.78rem] text-[#7e7e84] mb-6 font-sans">Inclusive of all taxes · Free shipping</p>
 
       <div className="flex gap-2 sm:gap-3 mb-3">
-        <div className="w-[42%] lg:w-auto lg:flex-1 h-12 rounded-full border border-[#E4DED3] bg-white lg:border-[#1C1A18] lg:bg-transparent text-[#1C1A18] flex items-center justify-between px-4 font-sans">
+        <div className="w-[42%] lg:w-auto lg:flex-1 h-12 rounded-full border border-[#efede8] bg-white lg:border-[#252525] lg:bg-transparent text-[#252525] flex items-center justify-between px-4 font-sans">
           <button
             onClick={() => setQty(q => Math.max(1, q - 1))}
-            className="text-xl px-1.5 hover:text-[#C8A96E] transition-colors leading-none pb-0.5 cursor-pointer"
+            className="text-xl px-1.5 hover:text-[#287379] transition-colors leading-none pb-0.5 cursor-pointer"
             aria-label="Decrease quantity"
           >
             −
@@ -88,7 +88,7 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
           <span className="text-[0.85rem] font-medium">Qty: {qty}</span>
           <button
             onClick={() => setQty(q => q + 1)}
-            className="text-xl px-1.5 hover:text-[#C8A96E] transition-colors leading-none pb-0.5 cursor-pointer"
+            className="text-xl px-1.5 hover:text-[#287379] transition-colors leading-none pb-0.5 cursor-pointer"
             aria-label="Increase quantity"
           >
             +
@@ -102,7 +102,7 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
       <div className="flex gap-3 mb-6">
         <button
           onClick={handleAddToCart}
-          className="flex-1 inline-flex items-center justify-center gap-2 h-12 rounded-full bg-[#C8A96E] text-white text-[0.875rem] font-semibold font-sans transition-all duration-200 hover:bg-[#B8975A] cursor-pointer"
+          className="flex-1 inline-flex items-center justify-center gap-2 h-12 rounded-full bg-[#287379] text-white text-[0.875rem] font-semibold font-sans transition-all duration-200 hover:bg-[#B8975A] cursor-pointer"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <circle cx="9" cy="21" r="1" />
@@ -115,8 +115,8 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
           onClick={onToggleWishlist}
           className={`shrink-0 w-12 h-12 rounded-full border bg-white flex items-center justify-center transition-all duration-200 cursor-pointer ${
             isWishlisted
-              ? 'border-[#B5533C] text-[#B5533C]'
-              : 'border-[#E4DED3] text-[#8C8477] hover:border-[#B5533C] hover:text-[#B5533C]'
+              ? 'border-[#d24418] text-[#d24418]'
+              : 'border-[#efede8] text-[#7e7e84] hover:border-[#d24418] hover:text-[#d24418]'
           }`}
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
           title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}

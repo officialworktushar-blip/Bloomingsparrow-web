@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
-
+import WhatsAppButton from "@/components/WhatsAppButton";
 import GoogleProvider from "@/components/GoogleProvider";
 
 export const metadata: Metadata = {
@@ -17,11 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="font-sans bg-[#FAFAFA] text-[#111] antialiased">
+      <body className={`font-sans bg-[#fcf7f3] text-[#202025] antialiased`}>
         <GoogleProvider>
           <SiteHeader />
           {children}
           <Footer />
+          <WhatsAppButton />
         </GoogleProvider>
       </body>
     </html>

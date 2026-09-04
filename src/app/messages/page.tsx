@@ -47,20 +47,20 @@ export default function MessagesPage() {
           <h1 className="font-serif text-gray-900 font-normal" style={{ fontSize: '1.5rem' }}>Messages</h1>
         </div>
 
-        <div className={`flex items-center gap-3.5 py-4 px-5 cursor-pointer transition-all duration-[220ms] border-b border-gray-200 hover:bg-[#FAFAFA] ${activeThread === 1 ? '!bg-[#F5EDD8]' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(1)} aria-label="Blooming Sparrow Team">
-          <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 bg-[#FAFAFA]"><img className="w-full h-full object-contain" src="/images/logo.png" alt="Blooming Sparrow" /></div>
+        <div className={`flex items-center gap-3.5 py-4 px-5 cursor-pointer transition-all duration-[220ms] border-b border-gray-200 hover:bg-[#fcf7f3] ${activeThread === 1 ? '!bg-[#e8e7d5]' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(1)} aria-label="Blooming Sparrow Team">
+          <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 bg-[#fcf7f3]"><img className="w-full h-full object-contain" src="/images/logo.png" alt="Blooming Sparrow" /></div>
           <div className="flex-1 min-w-0">
             <div className="text-[0.9rem] font-medium text-gray-900 mb-1 whitespace-nowrap overflow-hidden text-ellipsis">Blooming Sparrow Team</div>
             <div className="text-[0.8rem] text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis">Your enquiry about "Brass Temple Bell" has been received…</div>
           </div>
           <div className="flex flex-col items-end gap-1.5 shrink-0">
             <div className="text-[0.72rem] text-gray-400">2h ago</div>
-            <div className="bg-[#C8A96E] text-white text-[0.7rem] font-semibold py-[0.15rem] px-2 rounded-[10px] min-w-[20px] text-center">2</div>
+            <div className="bg-[#287379] text-white text-[0.7rem] font-semibold py-[0.15rem] px-2 rounded-[10px] min-w-[20px] text-center">2</div>
           </div>
         </div>
 
-        <div className={`flex items-center gap-3.5 py-4 px-5 cursor-pointer transition-all duration-[220ms] border-b border-gray-200 hover:bg-[#FAFAFA] ${activeThread === 2 ? '!bg-[#F5EDD8]' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(2)} aria-label="Khatri Family Workshop">
-          <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 bg-[#FAFAFA]"><img className="w-full h-full object-cover" src="/images/rogan_1.png" alt="Rogan Art" /></div>
+        <div className={`flex items-center gap-3.5 py-4 px-5 cursor-pointer transition-all duration-[220ms] border-b border-gray-200 hover:bg-[#fcf7f3] ${activeThread === 2 ? '!bg-[#e8e7d5]' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(2)} aria-label="Khatri Family Workshop">
+          <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 bg-[#fcf7f3]"><img className="w-full h-full object-cover" src="/images/rogan_1.png" alt="Rogan Art" /></div>
           <div className="flex-1 min-w-0">
             <div className="text-[0.9rem] font-medium text-gray-900 mb-1 whitespace-nowrap overflow-hidden text-ellipsis">Khatri Family Workshop</div>
             <div className="text-[0.8rem] text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis">Namaste! We are happy to answer your questions about…</div>
@@ -70,7 +70,7 @@ export default function MessagesPage() {
           </div>
         </div>
 
-        <div className={`flex items-center gap-3.5 py-4 px-5 cursor-pointer transition-all duration-[220ms] border-b border-gray-200 hover:bg-[#FAFAFA] ${activeThread === 3 ? '!bg-[#F5EDD8]' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(3)} aria-label="Artisan Support">
+        <div className={`flex items-center gap-3.5 py-4 px-5 cursor-pointer transition-all duration-[220ms] border-b border-gray-200 hover:bg-[#fcf7f3] ${activeThread === 3 ? '!bg-[#e8e7d5]' : ''}`} role="listitem" tabIndex={0} onClick={() => setActiveThread(3)} aria-label="Artisan Support">
           <div className="w-11 h-11 rounded-full bg-gray-200 flex items-center justify-center text-[1.1rem] shrink-0">♻</div>
           <div className="flex-1 min-w-0">
             <div className="text-[0.9rem] font-medium text-gray-900 mb-1 whitespace-nowrap overflow-hidden text-ellipsis">Artisan Support</div>
@@ -83,14 +83,14 @@ export default function MessagesPage() {
 
         <div className="py-8 px-5 text-center text-gray-500 text-[0.85rem] leading-[1.6] flex flex-col items-center">
           <p>Start a conversation by enquiring<br/>about any art piece.</p>
-          <Link href="/" className="inline-flex items-center py-[0.55rem] px-[1.4rem] rounded-full bg-gray-900 text-white text-[0.85rem] font-medium font-sans transition-all hover:bg-[#C8A96E]" style={{ marginTop: '.75rem' }}>Browse Gallery</Link>
+          <Link href="/" className="inline-flex items-center py-[0.55rem] px-[1.4rem] rounded-full bg-gray-900 text-white text-[0.85rem] font-medium font-sans transition-all hover:bg-[#287379]" style={{ marginTop: '.75rem' }}>Browse Gallery</Link>
         </div>
       </div>
 
       {/* Chat window */}
-      <div className="flex-1 flex flex-col overflow-hidden bg-[#FAFAFA] h-[60vh] md:h-auto" id="msg-chat" role="main" aria-label="Chat window">
+      <div className="flex-1 flex flex-col overflow-hidden bg-[#fcf7f3] h-[60vh] md:h-auto" id="msg-chat" role="main" aria-label="Chat window">
         <div className="flex items-center gap-3.5 py-3.5 px-5 border-b border-gray-200 bg-white shrink-0" id="chat-header">
-          <div className="w-10 h-10 rounded-full overflow-hidden bg-[#FAFAFA]"><img className="w-full h-full object-contain" src="/images/logo.png" alt="Blooming Sparrow" /></div>
+          <div className="w-10 h-10 rounded-full overflow-hidden bg-[#fcf7f3]"><img className="w-full h-full object-contain" src="/images/logo.png" alt="Blooming Sparrow" /></div>
           <div className="chat-info">
             <div className="text-[0.9rem] font-medium text-gray-900">Blooming Sparrow Team</div>
             <div className="text-[0.75rem] text-gray-400">Typically replies within 24 hours</div>
@@ -118,14 +118,14 @@ export default function MessagesPage() {
           <input 
             type="text" 
             id="chat-input" 
-            className="flex-1 h-[42px] rounded-full border-[1.5px] border-gray-200 px-4 font-sans text-[0.875rem] text-gray-900 outline-none transition-all duration-[220ms] bg-[#FAFAFA] focus:border-gray-900 focus:bg-white" 
+            className="flex-1 h-[42px] rounded-full border-[1.5px] border-gray-200 px-4 font-sans text-[0.875rem] text-gray-900 outline-none transition-all duration-[220ms] bg-[#fcf7f3] focus:border-gray-900 focus:bg-white" 
             placeholder="Type a message…" 
             aria-label="Type a message" 
             autoComplete="off"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
           />
-          <button type="submit" className="w-10 h-10 rounded-full bg-gray-900 text-white flex items-center justify-center border-none cursor-pointer transition-all duration-[220ms] shrink-0 hover:bg-[#C8A96E] hover:scale-105" id="chat-send" aria-label="Send message">
+          <button type="submit" className="w-10 h-10 rounded-full bg-gray-900 text-white flex items-center justify-center border-none cursor-pointer transition-all duration-[220ms] shrink-0 hover:bg-[#287379] hover:scale-105" id="chat-send" aria-label="Send message">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </form>

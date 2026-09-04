@@ -64,18 +64,18 @@ export default function ProductSpecifications({ product }: Props) {
   if (specs.length === 0) return null;
 
   return (
-    <div className="rounded-2xl border border-[#E4DED3] bg-white p-5">
-      <h2 className="text-[0.7rem] tracking-[0.12em] uppercase text-[#8C8477] font-semibold font-sans mb-4">Specifications</h2>
+    <div className="rounded-2xl border border-[#efede8] bg-white p-5">
+      <h2 className="text-[0.7rem] tracking-[0.12em] uppercase text-[#7e7e84] font-semibold font-sans mb-4">Specifications</h2>
       <div className="grid grid-cols-2 gap-x-6 gap-y-5">
         {specs.map((spec, i) => (
           <div key={i}>
             <div className="flex items-center gap-1.5 mb-1.5">
               {SPEC_ICONS[spec.label] && (
-                <span className="text-[#8C8477]">{SPEC_ICONS[spec.label]}</span>
+                <span className="text-[#7e7e84]">{SPEC_ICONS[spec.label]}</span>
               )}
               <div className="product-label">{spec.label}</div>
             </div>
-            <div className="text-[0.875rem] text-[#1C1A18] font-medium font-sans leading-[1.8]">
+            <div className="text-[0.875rem] text-[#252525] font-medium font-sans leading-[1.8]">
               {spec.value}
             </div>
           </div>

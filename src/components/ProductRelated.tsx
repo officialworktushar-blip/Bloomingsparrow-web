@@ -24,19 +24,19 @@ export default function ProductRelated({ products, categoryLabel, categorySlug, 
   const heading = allSameCategory ? `More ${categoryLabel}` : 'You may also like';
 
   return (
-    <section className="mt-16 pt-12 border-t border-[#E4DED3]" aria-label={`Related ${categoryLabel} products`}>
+    <section className="mt-16 pt-12 border-t border-[#efede8]" aria-label={`Related ${categoryLabel} products`}>
       <div className="flex items-end justify-between gap-4 mb-8">
         <div>
-          <p className="text-[0.65rem] tracking-[0.16em] uppercase text-[#C8A96E] font-semibold font-sans mb-2">Handpicked for you</p>
-          <h2 className="font-serif text-[1.8rem] sm:text-[2.2rem] font-semibold text-[#1C1A18] leading-tight">
+          <p className="text-[0.65rem] tracking-[0.16em] uppercase text-[#287379] font-semibold font-sans mb-2">Handpicked for you</p>
+          <h2 className="font-serif text-[1.8rem] sm:text-[2.2rem] font-semibold text-[#252525] leading-tight">
             {heading}
           </h2>
-          <div className="mt-3 h-[3px] w-14 rounded-full bg-[#C8A96E]" aria-hidden="true" />
+          <div className="mt-3 h-[3px] w-14 rounded-full bg-[#287379]" aria-hidden="true" />
         </div>
         {categorySlug && (
           <Link
             href={`/categories?cat=${categorySlug}`}
-            className="hidden sm:inline-flex items-center gap-1.5 h-10 px-5 rounded-full border border-[#E4DED3] text-[0.75rem] font-medium text-[#8C8477] font-sans transition-all duration-200 hover:border-[#1C1A18] hover:text-[#1C1A18] no-underline shrink-0"
+            className="hidden sm:inline-flex items-center gap-1.5 h-10 px-5 rounded-full border border-[#efede8] text-[0.75rem] font-medium text-[#7e7e84] font-sans transition-all duration-200 hover:border-[#252525] hover:text-[#252525] no-underline shrink-0"
           >
             View All
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -53,10 +53,10 @@ export default function ProductRelated({ products, categoryLabel, categorySlug, 
           return (
             <div
               key={r.id}
-              className="group relative flex flex-col rounded-2xl overflow-hidden bg-white border border-[#E4DED3] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_44px_rgba(28,26,24,0.13)]"
+              className="group relative flex flex-col rounded-2xl overflow-hidden bg-white border border-[#efede8] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_44px_rgba(28,26,24,0.13)]"
             >
               <div
-                className="relative overflow-hidden aspect-[3/4] bg-[#EFEAE1] cursor-pointer"
+                className="relative overflow-hidden aspect-[3/4] bg-[#f5f2ec] cursor-pointer"
                 onClick={() => router.push(`/product/${r.id}`)}
                 role="button"
                 tabIndex={0}
@@ -70,11 +70,11 @@ export default function ProductRelated({ products, categoryLabel, categorySlug, 
                   loading="lazy"
                 />
                 <div
-                  className="absolute inset-0 bg-gradient-to-t from-[#1C1A18]/45 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute inset-0 bg-gradient-to-t from-[#252525]/45 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   aria-hidden="true"
                 />
 
-                <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-[#1C1A18] text-[0.58rem] font-semibold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full shadow-sm">
+                <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-[#252525] text-[0.58rem] font-semibold uppercase tracking-[0.12em] px-2.5 py-1 rounded-full shadow-sm">
                   {r.categoryLabel || categoryLabel}
                 </span>
 
@@ -82,8 +82,8 @@ export default function ProductRelated({ products, categoryLabel, categorySlug, 
                   onClick={(e) => { e.stopPropagation(); onToggleWishlist(String(r.id)); }}
                   className={`absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer ${
                     isWL
-                      ? 'bg-[#B5533C] text-white'
-                      : 'bg-white/90 backdrop-blur-sm text-[#8C8477] hover:bg-white hover:text-[#B5533C]'
+                      ? 'bg-[#d24418] text-white'
+                      : 'bg-white/90 backdrop-blur-sm text-[#7e7e84] hover:bg-white hover:text-[#d24418]'
                   }`}
                   aria-label={isWL ? 'Remove from wishlist' : 'Add to wishlist'}
                 >
@@ -98,7 +98,7 @@ export default function ProductRelated({ products, categoryLabel, categorySlug, 
                     className={`hidden md:flex w-full h-10 rounded-full items-center justify-center gap-1.5 text-[0.75rem] font-semibold font-sans transition-all duration-200 cursor-pointer ${
                       inCart
                         ? 'bg-[#4B5D45] text-white cursor-default'
-                        : 'bg-white text-[#1C1A18] hover:bg-[#C8A96E] hover:text-white'
+                        : 'bg-white text-[#252525] hover:bg-[#287379] hover:text-white'
                     }`}
                     aria-label={inCart ? 'Already in cart' : `Add ${r.title} to cart`}
                   >
@@ -125,16 +125,16 @@ export default function ProductRelated({ products, categoryLabel, categorySlug, 
 
               <div className="p-4 flex flex-col flex-1">
                 <div
-                  className="font-serif text-[1.02rem] font-semibold text-[#1C1A18] leading-tight mb-1 cursor-pointer transition-colors hover:text-[#C8A96E]"
+                  className="font-serif text-[1.02rem] font-semibold text-[#252525] leading-tight mb-1 cursor-pointer transition-colors hover:text-[#287379]"
                   onClick={() => router.push(`/product/${r.id}`)}
                 >
                   {r.title}
                 </div>
                 {r.artisan && r.artisan.trim() !== '' && (
-                  <div className="text-[0.72rem] text-[#8C8477] font-sans mb-2">by {r.artisan}</div>
+                  <div className="text-[0.72rem] text-[#7e7e84] font-sans mb-2">by {r.artisan}</div>
                 )}
                 <div className="mt-auto flex items-center justify-between pt-1">
-                  <span className="font-serif text-[1.1rem] font-semibold text-[#1C1A18]">
+                  <span className="font-serif text-[1.1rem] font-semibold text-[#252525]">
                     ₹{String(r.price).replace('₹', '').trim()}
                   </span>
                   {inCart ? (
@@ -144,7 +144,7 @@ export default function ProductRelated({ products, categoryLabel, categorySlug, 
                   ) : (
                     <button
                       onClick={() => onAddToCart(r)}
-                      className="md:hidden w-8 h-8 rounded-full bg-[#1C1A18] text-white flex items-center justify-center cursor-pointer hover:bg-[#C8A96E] transition-colors"
+                      className="md:hidden w-8 h-8 rounded-full bg-[#252525] text-white flex items-center justify-center cursor-pointer hover:bg-[#287379] transition-colors"
                       aria-label={`Add ${r.title} to cart`}
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -165,7 +165,7 @@ export default function ProductRelated({ products, categoryLabel, categorySlug, 
         <div className="sm:hidden mt-6 text-center">
           <Link
             href={`/categories?cat=${categorySlug}`}
-            className="inline-flex items-center gap-1.5 h-10 px-6 rounded-full border border-[#E4DED3] text-[0.75rem] font-medium text-[#8C8477] font-sans transition-all duration-200 hover:border-[#1C1A18] hover:text-[#1C1A18] no-underline"
+            className="inline-flex items-center gap-1.5 h-10 px-6 rounded-full border border-[#efede8] text-[0.75rem] font-medium text-[#7e7e84] font-sans transition-all duration-200 hover:border-[#252525] hover:text-[#252525] no-underline"
           >
             View All {categoryLabel}
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">

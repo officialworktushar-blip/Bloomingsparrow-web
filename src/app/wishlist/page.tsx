@@ -43,7 +43,7 @@ export default function WishlistPage() {
           <div className="text-[3.5rem] text-gray-200">♡</div>
           <h2 className="font-serif text-[1.6rem] font-normal text-gray-900">Nothing saved yet</h2>
           <p className="text-[0.9rem] text-gray-500">Tap the heart on any art piece to save it here.</p>
-          <Link href="/" className="inline-flex items-center py-[0.55rem] px-[1.4rem] rounded-full bg-gray-900 text-white text-[0.85rem] font-medium font-sans transition-all hover:bg-[#C8A96E]">Browse Gallery</Link>
+          <Link href="/" className="inline-flex items-center py-[0.55rem] px-[1.4rem] rounded-full bg-gray-900 text-white text-[0.85rem] font-medium font-sans transition-all hover:bg-[#287379]">Browse Gallery</Link>
         </div>
       ) : (
         <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1.5 sm:gap-2.5" id="wishlist-grid" role="list">

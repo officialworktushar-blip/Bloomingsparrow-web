@@ -1,23 +1,23 @@
 import Link from 'next/link';
 
-const SECTION_HEADING = 'text-[1.1rem] sm:text-[1.2rem] font-semibold text-[#1C1A18] font-serif mt-10 mb-3';
-const BODY = 'text-[0.85rem] text-[#1C1A18]/80 leading-[1.85] font-sans mb-4';
-const BULLET = 'text-[0.85rem] text-[#1C1A18]/80 leading-[1.85] font-sans ml-4 mb-1.5 list-disc';
+const SECTION_HEADING = 'text-[1.1rem] sm:text-[1.2rem] font-semibold text-[#252525] font-serif mt-10 mb-3';
+const BODY = 'text-[0.85rem] text-[#252525]/80 leading-[1.85] font-sans mb-4';
+const BULLET = 'text-[0.85rem] text-[#252525]/80 leading-[1.85] font-sans ml-4 mb-1.5 list-disc';
 
 export default function ReturnsPage() {
   return (
-    <main className="bg-[#F7F3EC] min-h-screen">
+    <main className="bg-[#fcf7f3] min-h-screen">
       <div className="max-w-[800px] mx-auto px-6 py-16 sm:py-20">
         <nav className="mb-6" aria-label="Breadcrumb">
-          <ol className="flex items-center gap-1.5 text-[0.7rem] tracking-[0.1em] uppercase text-[#8C8477] font-medium font-sans">
-            <li><Link href="/" className="hover:text-[#1C1A18] transition-colors">Home</Link></li>
-            <li aria-hidden="true" className="text-[#E4DED3]">/</li>
-            <li className="text-[#1C1A18]">Returns &amp; Refunds</li>
+          <ol className="flex items-center gap-1.5 text-[0.7rem] tracking-[0.1em] uppercase text-[#7e7e84] font-medium font-sans">
+            <li><Link href="/" className="hover:text-[#252525] transition-colors">Home</Link></li>
+            <li aria-hidden="true" className="text-[#efede8]">/</li>
+            <li className="text-[#252525]">Returns &amp; Refunds</li>
           </ol>
         </nav>
 
-        <h1 className="font-serif text-[2rem] sm:text-[2.4rem] font-semibold text-[#1C1A18] mb-4">Returns &amp; Refunds</h1>
-        <div className="w-12 h-[2px] bg-[#C8A96E] mb-8" />
+        <h1 className="font-serif text-[2rem] sm:text-[2.4rem] font-semibold text-[#252525] mb-4">Returns &amp; Refunds</h1>
+        <div className="w-12 h-[2px] bg-[#287379] mb-8" />
 
         <p className={BODY}>
           We want you to love every handcrafted piece you receive. If something is not right, our return process is simple and hassle-free.
@@ -83,10 +83,10 @@ export default function ReturnsPage() {
           We currently do not offer direct exchanges. If you would like a different item, please initiate a return for the original product and place a new order for the item you prefer.
         </p>
 
-        <div className="mt-12 pt-8 border-t border-[#E4DED3]">
-          <p className="text-[0.82rem] text-[#8C8477] font-sans">
+        <div className="mt-12 pt-8 border-t border-[#efede8]">
+          <p className="text-[0.82rem] text-[#7e7e84] font-sans">
             For return or refund queries, email us at{' '}
-            <a href="mailto:bloomingsparrow@gmail.com" className="underline hover:text-[#1C1A18] transition-colors">bloomingsparrow@gmail.com</a>.
+            <a href="mailto:bloomingsparrow@gmail.com" className="underline hover:text-[#252525] transition-colors">bloomingsparrow@gmail.com</a>.
           </p>
         </div>
       </div>

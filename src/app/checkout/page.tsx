@@ -176,7 +176,7 @@ export default function CheckoutPage() {
 
   return (
     <main className="p-8 pb-16 max-w-[860px] mx-auto w-full">
-      <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow-sm border border-[#e8dcc4]">
+      <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow-sm border border-[#e8e7d5]">
         <h1 className="text-3xl font-bold mb-6">Checkout</h1>
         
         {cart.length === 0 ? (
@@ -228,12 +228,12 @@ export default function CheckoutPage() {
                               className="p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-colors"
                               onClick={() => selectAddress('new')}
                             >
-                              <span className="font-semibold text-[#1c1c1c]">Add New Address</span>
+                              <span className="font-semibold text-[#252525]">Add New Address</span>
                             </div>
                             {savedAddresses.map((addr, idx) => (
                               <div 
                                 key={idx} 
-                                className={`p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-50 transition-colors ${selectedAddressIndex === idx.toString() ? 'bg-gray-50 border-l-4 border-l-[#1c1c1c]' : 'border-l-4 border-l-transparent'}`}
+                                className={`p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-50 transition-colors ${selectedAddressIndex === idx.toString() ? 'bg-gray-50 border-l-4 border-l-[#252525]' : 'border-l-4 border-l-transparent'}`}
                                 onClick={() => selectAddress(idx.toString())}
                               >
                                 <div className="font-semibold text-gray-900">{addr.street}</div>
@@ -250,26 +250,26 @@ export default function CheckoutPage() {
                 <div className="space-y-3">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
-                    <input type="text" value={address.street} onChange={e => setAddress({...address, street: e.target.value})} className="w-full p-2 border border-gray-300 rounded focus:ring-[#C8A96E] focus:border-[#C8A96E]" placeholder="123 Main St" />
+                    <input type="text" value={address.street} onChange={e => setAddress({...address, street: e.target.value})} className="w-full p-2 border border-gray-300 rounded focus:ring-[#287379] focus:border-[#287379]" placeholder="123 Main St" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                      <input type="text" value={address.city} onChange={e => setAddress({...address, city: e.target.value})} className="w-full p-2 border border-gray-300 rounded focus:ring-[#C8A96E] focus:border-[#C8A96E]" placeholder="City" />
+                      <input type="text" value={address.city} onChange={e => setAddress({...address, city: e.target.value})} className="w-full p-2 border border-gray-300 rounded focus:ring-[#287379] focus:border-[#287379]" placeholder="City" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
-                      <input type="text" value={address.state} onChange={e => setAddress({...address, state: e.target.value})} className="w-full p-2 border border-gray-300 rounded focus:ring-[#C8A96E] focus:border-[#C8A96E]" placeholder="State" />
+                      <input type="text" value={address.state} onChange={e => setAddress({...address, state: e.target.value})} className="w-full p-2 border border-gray-300 rounded focus:ring-[#287379] focus:border-[#287379]" placeholder="State" />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
-                      <input type="text" value={address.pincode} onChange={e => setAddress({...address, pincode: e.target.value})} className="w-full p-2 border border-gray-300 rounded focus:ring-[#C8A96E] focus:border-[#C8A96E]" placeholder="Pincode" />
+                      <input type="text" value={address.pincode} onChange={e => setAddress({...address, pincode: e.target.value})} className="w-full p-2 border border-gray-300 rounded focus:ring-[#287379] focus:border-[#287379]" placeholder="Pincode" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                      <input type="tel" value={address.number} onChange={e => setAddress({...address, number: e.target.value})} className="w-full p-2 border border-gray-300 rounded focus:ring-[#C8A96E] focus:border-[#C8A96E]" placeholder="10-digit number" />
+                      <input type="tel" value={address.number} onChange={e => setAddress({...address, number: e.target.value})} className="w-full p-2 border border-gray-300 rounded focus:ring-[#287379] focus:border-[#287379]" placeholder="10-digit number" />
                     </div>
                   </div>
                 </div>
@@ -294,7 +294,7 @@ export default function CheckoutPage() {
               <button 
                 onClick={handleCheckout} 
                 disabled={loading}
-                className="w-full bg-[#1c1c1c] text-white py-3 rounded text-lg font-medium hover:bg-black transition-colors"
+                className="w-full bg-[#252525] text-white py-3 rounded text-lg font-medium hover:bg-black transition-colors"
               >
                 {loading ? 'Processing...' : 'Pay Now'}
               </button>

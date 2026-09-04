@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders:wght@300;400;500;600;700;800&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
 @import "tailwindcss";
 
 @layer base {
@@ -10,29 +10,37 @@
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
+
+  body {
+    background-color: #fcf7f3;
+    color: #202025;
+  }
 }
 
 @theme {
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "DM Sans", system-ui, sans-serif;
-  
-  --color-bg: #FAFAFA;
-  --color-surface: #fff;
-  --color-border: #E8E8E8;
-  --color-t1: #111;
-  --color-t2: #6B6B6B;
-  --color-t3: #9E9E9E;
-  --color-accent: #C8A96E;
-  --color-accent-lt: #F5EDD8;
+  --font-sans: "Jost", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Big Shoulders", "Big Shoulders Display", ui-serif, Georgia, serif;
+  --font-display: "Big Shoulders", "Big Shoulders Display", ui-serif, Georgia, serif;
 
-  --color-cream: #F7F3EC;
-  --color-cream-frame: #EFEAE1;
-  --color-charcoal: #1C1A18;
-  --color-charcoal-light: #2E2B27;
-  --color-warm-gray: #8C8477;
-  --color-divider: #E4DED3;
-  --color-olive: #4B5D45;
-  --color-terracotta: #B5533C;
+  --color-bg: #fcf7f3;
+  --color-surface: #ffffff;
+  --color-border: #efede8;
+  --color-t1: #202025;
+  --color-t2: #7e7e84;
+  --color-t3: #a4a099;
+  --color-accent: #287379;
+  --color-accent-deep: #1e5a5e;
+  --color-accent-lt: #e8e7d5;
+  --color-olive: #e8e7d5;
+  --color-cream: #fcf7f3;
+  --color-cream-frame: #f5f2ec;
+  --color-charcoal: #252525;
+  --color-charcoal-light: #3a3a3f;
+  --color-warm-gray: #7e7e84;
+  --color-divider: #efede8;
+  --color-terracotta: #d24418;
+  --color-wa: #25d366;
+  --color-success: #4b5d45;
 
   --animate-fade-up: fadeUp 0.45s both;
   @keyframes fadeUp {
@@ -53,6 +61,12 @@
     from { opacity: 0; max-height: 0; }
     to { opacity: 1; max-height: 600px; }
   }
+
+  --animate-announce: announceSwap 0.5s ease-in-out both;
+  @keyframes announceSwap {
+    0%   { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
 }
 
 .art-card {
@@ -63,43 +77,75 @@
   animation: var(--animate-wl-bounce);
 }
 
+/* ---------- Typography helpers ---------- */
+.section-kicker {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--color-t1);
+}
+
+.section-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--color-t2);
+}
+
 .product-label {
-  font-size: 0.7rem;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-warm-gray);
 }
 
 .product-label-dark {
-  font-size: 0.7rem;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #888;
 }
 
+/* ---------- Buttons (EcoCarry look: sharp edges, uppercase, tracked) ---------- */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  height: 3rem;
+  height: 3.25rem;
   padding: 0 2rem;
-  border-radius: 9999px;
-  background-color: var(--color-charcoal);
+  border-radius: 0;
+  background-color: var(--color-accent);
   color: #fff;
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
   font-family: var(--font-sans);
-  border: 1px solid var(--color-charcoal);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-accent);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 .btn-primary:hover {
-  background-color: var(--color-charcoal-light);
-  border-color: var(--color-charcoal-light);
+  background-color: var(--color-charcoal);
+  border-color: var(--color-charcoal);
 }
 
 .btn-secondary {
@@ -107,21 +153,65 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  height: 3rem;
+  height: 3.25rem;
   padding: 0 2rem;
-  border-radius: 9999px;
+  border-radius: 0;
   background-color: transparent;
   color: var(--color-charcoal);
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
   font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
   border: 1px solid var(--color-charcoal);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 .btn-secondary:hover {
-  background-color: var(--color-cream-frame);
+  background-color: var(--color-charcoal);
+  color: #fff;
+}
+
+/* Small rectangular CTA used on cards / quick actions */
+.btn-theme-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 2.4rem;
+  padding: 0 1.1rem;
+  border-radius: 0;
+  background-color: var(--color-accent);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-accent);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn-theme-sm:hover {
+  background-color: var(--color-charcoal);
+  border-color: var(--color-charcoal);
+}
+
+/* ---------- Auth pages ---------- */
+.inner-page {
+  min-height: 60vh;
+  background-color: var(--color-bg);
+  padding: 0.75rem 1rem 4rem;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.2rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-t1);
 }
 
 .accordion-content {

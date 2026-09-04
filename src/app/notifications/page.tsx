@@ -17,22 +17,22 @@ export default function NotificationsPage() {
           className="text-[0.8rem] text-gray-500 bg-transparent border-none cursor-pointer font-sans transition-colors duration-200 hover:text-gray-900" 
           id="mark-all-btn" 
           onClick={markAllRead}
-          style={read ? { color: '#C8A96E' } : undefined}
+          style={read ? { color: '#287379' } : undefined}
         >
           {read ? 'All read ✓' : 'Mark all as read'}
         </button>
       </div>
 
       <div className="flex flex-col gap-2" id="notif-list" role="list">
-        <div className={`flex items-center gap-4 py-4 px-5 rounded-xl bg-white shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] cursor-default border-l-[3px] border-transparent hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] hover:translate-x-[2px] ${!read ? '!border-l-[#C8A96E] !bg-[#fffdf8]' : ''}`} role="listitem" tabIndex={0}>
-          <div className="w-10 h-10 rounded-full flex items-center justify-center text-base shrink-0 bg-[#F5EDD8] text-[#C8A96E]">✦</div>
+        <div className={`flex items-center gap-4 py-4 px-5 rounded-xl bg-white shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] cursor-default border-l-[3px] border-transparent hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] hover:translate-x-[2px] ${!read ? '!border-l-[#287379] !bg-[#fffdf8]' : ''}`} role="listitem" tabIndex={0}>
+          <div className="w-10 h-10 rounded-full flex items-center justify-center text-base shrink-0 bg-[#e8e7d5] text-[#287379]">✦</div>
           <div className="flex-1 min-w-0">
             <div className="text-[0.875rem] text-gray-900 leading-[1.5]"><strong>New Arrival:</strong> "Peacock Rogan Canvas" has just been added to our Rogan Art collection.</div>
             <div className="text-[0.75rem] text-gray-400 mt-1">2 hours ago</div>
           </div>
           <div className="w-[52px] h-[52px] rounded-xl overflow-hidden shrink-0"><img className="w-full h-full object-cover" src="/images/rogan_1.png" alt="Peacock Rogan Canvas" /></div>
         </div>
-        <div className={`flex items-center gap-4 py-4 px-5 rounded-xl bg-white shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] cursor-default border-l-[3px] border-transparent hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] hover:translate-x-[2px] ${!read ? '!border-l-[#C8A96E] !bg-[#fffdf8]' : ''}`} role="listitem" tabIndex={0}>
+        <div className={`flex items-center gap-4 py-4 px-5 rounded-xl bg-white shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] cursor-default border-l-[3px] border-transparent hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] hover:translate-x-[2px] ${!read ? '!border-l-[#287379] !bg-[#fffdf8]' : ''}`} role="listitem" tabIndex={0}>
           <div className="w-10 h-10 rounded-full flex items-center justify-center text-base shrink-0 bg-[#e8f4ff] text-[#4a90d9]">✉</div>
           <div className="flex-1 min-w-0">
             <div className="text-[0.875rem] text-gray-900 leading-[1.5]"><strong>Enquiry Received:</strong> Thank you for your enquiry about "Brass Temple Bell". Our team will respond within 24 hours.</div>
@@ -49,7 +49,7 @@ export default function NotificationsPage() {
           <div className="w-[52px] h-[52px] rounded-xl overflow-hidden shrink-0"><img className="w-full h-full object-cover" src="/images/shola_1.png" alt="Shola Art" /></div>
         </div>
         <div className="flex items-center gap-4 py-4 px-5 rounded-xl bg-white shadow-[0_2px_8px_rgba(0,0,0,0.07)] transition-all duration-[220ms] cursor-default border-l-[3px] border-transparent hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] hover:translate-x-[2px]" role="listitem" tabIndex={0}>
-          <div className="w-10 h-10 rounded-full flex items-center justify-center text-base shrink-0 bg-[#F5EDD8] text-[#C8A96E]">✦</div>
+          <div className="w-10 h-10 rounded-full flex items-center justify-center text-base shrink-0 bg-[#e8e7d5] text-[#287379]">✦</div>
           <div className="flex-1 min-w-0">
             <div className="text-[0.875rem] text-gray-900 leading-[1.5]"><strong>New Collection:</strong> Our Bird Making series has expanded — 2 new handcrafted sculptures are now available.</div>
             <div className="text-[0.75rem] text-gray-400 mt-1">3 days ago</div>
