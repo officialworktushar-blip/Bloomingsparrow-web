@@ -43,7 +43,7 @@ function Stars() {
   return (
     <div className="flex items-center justify-center gap-1 mb-3" aria-label="5 out of 5 stars">
       {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} width="15" height="15" viewBox="0 0 24 24" fill="#252525" aria-hidden="true">
+        <svg key={i} width="15" height="15" viewBox="0 0 24 24" fill="#108474" aria-hidden="true">
           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
         </svg>
       ))}

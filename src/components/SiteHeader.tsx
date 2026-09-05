@@ -28,6 +28,7 @@ export default function SiteHeader() {
   const [isTouch, setIsTouch] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [announceIndex, setAnnounceIndex] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
   const navRef = useRef<HTMLElement | null>(null);
   const closeTimerRef = useRef<number | null>(null);
 
@@ -110,6 +111,20 @@ export default function SiteHeader() {
     });
   }, [categories, products]);
 
+  useEffect(() => {
+    const readWishlistCount = () => {
+      const saved = JSON.parse(localStorage.getItem('bs_wishlist') || '[]');
+      setWishlistCount(Array.isArray(saved) ? saved.length : 0);
+    };
+    readWishlistCount();
+    window.addEventListener('focus', readWishlistCount);
+    window.addEventListener('storage', readWishlistCount);
+    return () => {
+      window.removeEventListener('focus', readWishlistCount);
+      window.removeEventListener('storage', readWishlistCount);
+    };
+  }, []);
+
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -162,7 +177,7 @@ export default function SiteHeader() {
 
             <Link href="/" className="flex items-center gap-2.5 no-underline shrink-0" aria-label="Blooming Sparrow Home">
               <img src="/images/logo.png" alt="Blooming Sparrow" className="w-9 h-9 object-contain" />
-              <span className="hidden sm:block font-display text-[1.35rem] font-bold uppercase tracking-[0.08em] text-[#202025] whitespace-nowrap">
+              <span className="hidden sm:block font-display text-[1.35rem] font-bold uppercase tracking-[0.08em] text-[#287379] whitespace-nowrap">
                 Blooming Sparrow
               </span>
             </Link>
@@ -258,7 +273,7 @@ export default function SiteHeader() {
           <div className="flex items-center gap-1 shrink-0">
             <button
               type="button"
-              className="relative flex items-center justify-center w-10 h-10 rounded-md hover:bg-[#f5f2ec] transition-colors cursor-pointer text-[#202025]"
+              className="relative flex items-center justify-center w-10 h-10 rounded-md hover:bg-[#f5f2ec] transition-colors cursor-pointer header-icon"
               onClick={() => setSearchOpen(v => !v)}
               aria-label="Toggle search"
               aria-expanded={searchOpen}
@@ -271,7 +286,7 @@ export default function SiteHeader() {
 
             <Link
               href={user ? '/profile' : '/login'}
-              className="hidden md:inline-flex items-center gap-1.5 px-2.5 h-10 font-sans text-[0.78rem] font-semibold uppercase tracking-[0.1em] text-[#202025] no-underline hover:text-[#287379] transition-colors"
+              className="hidden md:inline-flex items-center gap-1.5 px-2.5 h-10 font-sans text-[0.78rem] font-semibold uppercase tracking-[0.1em] header-icon no-underline hover:text-[#1e5a5e] transition-colors"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
@@ -282,17 +297,22 @@ export default function SiteHeader() {
 
             <Link
               href="/wishlist"
-              className="relative flex items-center justify-center w-10 h-10 rounded-md hover:bg-[#f5f2ec] transition-colors no-underline text-[#202025]"
-              aria-label="Wishlist"
+              className="relative flex items-center justify-center w-10 h-10 rounded-md hover:bg-[#f5f2ec] transition-colors no-underline header-icon"
+              aria-label={`Wishlist${wishlistCount > 0 ? `, ${wishlistCount} items` : ''}`}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                 <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
               </svg>
+              {wishlistCount > 0 && (
+                <span className="header-count-badge border-2 border-[#fcf7f3]">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
 
             <Link
               href="/checkout"
-              className="relative flex items-center justify-center w-10 h-10 rounded-md hover:bg-[#f5f2ec] transition-colors no-underline text-[#202025]"
+              className="relative flex items-center justify-center w-10 h-10 rounded-md hover:bg-[#f5f2ec] transition-colors no-underline header-icon"
               aria-label={`Cart, ${cartCount} items`}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
@@ -301,7 +321,7 @@ export default function SiteHeader() {
                 <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
               </svg>
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 bg-[#287379] text-white rounded-full min-w-[19px] h-[19px] px-1 text-[10px] font-semibold flex items-center justify-center leading-none border-2 border-[#fcf7f3]">
+                <span className="header-count-badge border-2 border-[#fcf7f3]">
                   {cartCount}
                 </span>
               )}
@@ -360,7 +380,7 @@ export default function SiteHeader() {
         <div className="flex items-center justify-between px-5 py-4 border-b border-[#efede8] shrink-0">
           <Link href="/" className="flex items-center gap-2.5 no-underline" onClick={closeDrawer} aria-label="Blooming Sparrow Home">
             <img src="/images/logo.png" alt="Blooming Sparrow" className="w-8 h-8 object-contain" />
-            <span className="font-display text-[1.15rem] font-bold uppercase tracking-[0.08em] text-[#202025]">Blooming Sparrow</span>
+            <span className="font-display text-[1.15rem] font-bold uppercase tracking-[0.08em] text-[#287379]">Blooming Sparrow</span>
           </Link>
           <button
             type="button"
@@ -415,7 +435,12 @@ export default function SiteHeader() {
             {user ? 'My Profile' : 'Sign In'}
           </Link>
           <Link href="/wishlist" className={drawerLinkClass} onClick={closeDrawer}>
-            Wishlist
+            <span>Wishlist</span>
+            {wishlistCount > 0 && (
+              <span className="bg-[#287379] text-white rounded-full min-w-[19px] h-[19px] px-1 text-[10px] font-semibold flex items-center justify-center leading-none">
+                {wishlistCount}
+              </span>
+            )}
           </Link>
           <Link href="/checkout" className={drawerLinkClass} onClick={closeDrawer}>
             <span>Cart</span>

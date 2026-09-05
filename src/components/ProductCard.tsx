@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import ProductImage from '@/components/ProductImage';
+import BestSellerBadge from '@/components/BestSellerBadge';
 import { useStore } from '@/store/useStore';
 import type { Product } from '@/lib/data';
 
@@ -18,7 +19,7 @@ function Stars() {
   return (
     <span className="inline-flex items-center gap-[2px]" aria-label="Rated 4.8 out of 5">
       {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#252525" aria-hidden="true">
+        <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#108474" aria-hidden="true">
           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
         </svg>
       ))}
@@ -66,7 +67,7 @@ export default function ProductCard({
   return (
     <div
       key={p.id}
-      className={`h-full w-full flex flex-col bg-white cursor-pointer relative group art-card`}
+      className={`h-full w-full flex flex-col bg-white cursor-pointer relative group product-card art-card`}
       role="button"
       tabIndex={0}
       aria-label={`${p.title} — ${p.price}`}
@@ -76,7 +77,7 @@ export default function ProductCard({
         if (e.key === 'Enter') open();
       }}
     >
-      <div className="relative overflow-hidden w-full aspect-square bg-[#f5f2ec]">
+      <div className="relative overflow-hidden w-full aspect-square bg-[#f5f2ec] product-card__media">
         <ProductImage
           className="w-full h-full object-cover block transition-opacity duration-500 ease-in-out"
           src={firstImage}
@@ -92,11 +93,7 @@ export default function ProductCard({
           />
         )}
 
-        {p.title && (
-          <span className="absolute top-2 left-2 z-10 inline-block bg-[#252525] text-white text-[0.6rem] font-semibold uppercase tracking-[0.14em] px-2 py-0.5 font-sans">
-            {p.categoryLabel || 'Art'}
-          </span>
-        )}
+        <BestSellerBadge />
 
         {showActions && (
           <button
@@ -144,12 +141,11 @@ export default function ProductCard({
         </div>
       </div>
 
-      <div className="px-3 pt-3 pb-3 flex flex-col gap-1">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-sans text-[0.82rem] font-medium text-[#202025] leading-[1.35]">
-            {p.title}
-          </h3>
-        </div>
+      <div className="px-3.5 pt-3 pb-3.5 flex flex-col flex-1 gap-1 product-card__info">
+        <span className="product-label">{p.categoryLabel || 'Art'}</span>
+        <h3 className="font-sans text-[0.82rem] font-medium text-[#202025] leading-[1.35]">
+          {p.title}
+        </h3>
         <Stars />
         <div className="font-sans text-[0.95rem] font-semibold text-[#287379]">
           ₹{String(p.price).replace(/[₹\s]/g, '').trim()}

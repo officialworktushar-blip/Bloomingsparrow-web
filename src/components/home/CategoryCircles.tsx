@@ -36,15 +36,15 @@ export default function CategoryCircles({ products }: Props) {
               href={`/categories?cat=${c.slug}`}
               className="group flex flex-col items-center gap-2.5 no-underline snap-start shrink-0"
             >
-              <span className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-2 border-[#287379]/15 bg-[#f5f2ec] group-hover:border-[#287379] transition-colors duration-300 block">
+              <span className="category-circle w-[104px] h-[104px] sm:w-[112px] sm:h-[112px] group-hover:scale-[1.04] transition-transform duration-300">
                 <ProductImage
                   src={c.image}
                   alt={c.label}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="category-circle__img transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                 />
               </span>
-              <span className="font-sans text-[0.85rem] font-medium text-[#202025] group-hover:text-[#287379] transition-colors">
+              <span className="category-circle-label group-hover:text-[#287379] transition-colors">
                 {c.label}
               </span>
             </Link>
