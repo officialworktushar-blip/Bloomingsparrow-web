@@ -118,16 +118,12 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           <span className="text-[#252525]" aria-current="page">{p.title}</span>
         </nav>
 
-        <div id="product-content" role="region" aria-label="Product information" className="lg:flex lg:items-start lg:gap-10">
-          <div className="min-w-0 lg:w-[55%] lg:shrink-0 lg:self-start lg:sticky lg:top-[88px]">
+        <div id="product-content" role="region" aria-label="Product information" className="lg:flex lg:flex-wrap lg:items-start lg:gap-x-10 lg:gap-y-10">
+          <div className="min-w-0 lg:w-[55%] lg:shrink-0 lg:self-start lg:sticky lg:top-[88px] lg:order-1">
             <ProductImageGallery images={imageUrls} title={p.title} bestSeller={p.bestSeller} />
-
-            <div className="mt-6 lg:mt-8">
-              <ProductDeliveryCheck />
-            </div>
           </div>
 
-          <div className="mt-8 lg:mt-0 lg:w-[45%] lg:min-w-0">
+          <div className="mt-8 lg:mt-0 lg:w-[45%] lg:min-w-0 lg:order-2">
             <ProductPurchaseBlock
               product={p}
               isWishlisted={isWL}
@@ -145,6 +141,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             <div className="mt-[var(--space-md)]">
               <ProductPromoHeader />
             </div>
+          </div>
+
+          <div className="mt-8 lg:mt-0 lg:w-[55%] lg:shrink-0 lg:order-3">
+            <ProductDeliveryCheck />
           </div>
         </div>
 

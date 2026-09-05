@@ -67,23 +67,25 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
 
   return (
     <div className="flex flex-col">
-      <p className="text-[0.65rem] tracking-[0.14em] uppercase text-[#7e7e84] font-medium font-sans mb-[var(--space-xs)]">
+      <p className="order-1 text-[0.65rem] tracking-[0.14em] uppercase text-[#7e7e84] font-medium font-sans mb-[var(--space-xs)]">
         {p.categoryLabel}{p.origin ? ` · ${p.origin}` : ''}
       </p>
 
-      <h1 className="font-sans text-[1.9rem] sm:text-[2.3rem] lg:text-[2.6rem] font-semibold leading-[1.12] text-[#252525] tracking-[-0.01em] mb-[var(--space-gap)]">
+      <div className="order-2 md:order-3">
+        <div className="flex items-baseline gap-3">
+          <span className="font-sans text-[1.9rem] font-semibold text-[#252525]">₹{priceClean}</span>
+        </div>
+        <p className="text-[0.78rem] text-[#7e7e84] mb-[var(--space-gap)] font-sans">Inclusive of all taxes · Free shipping</p>
+      </div>
+
+      <h1 className="order-3 md:order-2 font-sans text-[1.9rem] sm:text-[2.3rem] lg:text-[2.6rem] font-semibold leading-[1.12] text-[#252525] tracking-[-0.01em] mb-[var(--space-gap)]">
         {p.title}
       </h1>
-
-      <div className="flex items-baseline gap-3">
-        <span className="font-sans text-[1.9rem] font-semibold text-[#252525]">₹{priceClean}</span>
-      </div>
-      <p className="text-[0.78rem] text-[#7e7e84] mb-[var(--space-gap)] font-sans">Inclusive of all taxes · Free shipping</p>
 
       {summary && (
         <a
           href="#reviews"
-          className="inline-flex items-center gap-2 mb-1 w-fit no-underline group scroll-mt-28"
+          className="order-4 inline-flex items-center gap-2 mb-1 w-fit no-underline group scroll-mt-28"
           aria-label={`Rated ${summary.averageRating.toFixed(1)} out of 5, read ${totalReviews} review${totalReviews === 1 ? '' : 's'}`}
         >
           <StarRating rating={Math.round(summary.averageRating)} />
@@ -96,19 +98,19 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
       )}
 
       {p.artisan && p.artisan.trim() !== '' && (
-        <p className="text-[0.9rem] font-sans mb-1">
+        <p className="order-5 text-[0.9rem] font-sans mb-1">
           <span className="text-[#7e7e84]">by </span>
           <span className="font-semibold text-[#287379]">{p.artisan}</span>
         </p>
       )}
 
       {specsLine && (
-        <p className="text-[0.8rem] text-[#7e7e84] font-sans mb-[var(--space-md)]">{specsLine}</p>
+        <p className="order-6 text-[0.8rem] text-[#7e7e84] font-sans mb-[var(--space-md)]">{specsLine}</p>
       )}
 
-      <hr className="border-t border-[#efede8] mt-0 mb-[var(--space-md)]" />
+      <hr className="order-7 border-t border-[#efede8] mt-0 mb-[var(--space-md)]" />
 
-      <div className="flex gap-2 sm:gap-3 mb-[var(--space-btn)]">
+      <div className="order-8 flex gap-2 sm:gap-3 mb-[var(--space-btn)]">
         <div className="flex-1 h-12 rounded-full border border-[#efede8] bg-white text-[#252525] flex items-center justify-between px-2 font-sans">
           <button
             onClick={() => setQty(q => Math.max(1, q - 1))}
@@ -150,7 +152,7 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
         </button>
       </div>
 
-      <button onClick={handleAddToCart} className="btn-primary w-full mb-2">
+      <button onClick={handleAddToCart} className="order-9 btn-primary w-full mb-2">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
           <circle cx="9" cy="21" r="1" />
           <circle cx="20" cy="21" r="1" />
@@ -159,7 +161,7 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
         Add to Cart
       </button>
 
-      <button onClick={handleBuyNow} className="btn-secondary w-full">
+      <button onClick={handleBuyNow} className="order-10 btn-secondary w-full">
         Buy Now
       </button>
     </div>
