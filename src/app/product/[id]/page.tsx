@@ -118,37 +118,37 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           <span className="text-[#252525]" aria-current="page">{p.title}</span>
         </nav>
 
-        <div id="product-content" role="region" aria-label="Product information" className="grid grid-cols-1 lg:grid-cols-[1fr_600px] gap-6 lg:gap-[70px] items-start">
-          <div className="lg:col-start-1 lg:row-start-1 min-w-0">
+        <div id="product-content" role="region" aria-label="Product information" className="lg:flex lg:items-start lg:gap-10">
+          <div className="min-w-0 lg:w-[55%] lg:shrink-0 lg:self-start lg:sticky lg:top-[88px]">
             <ProductImageGallery images={imageUrls} title={p.title} bestSeller={p.bestSeller} />
+
+            <div className="mt-6 lg:mt-8">
+              <ProductDeliveryCheck />
+            </div>
           </div>
 
-          <div className="lg:col-start-2 lg:row-start-1 min-w-0">
+          <div className="mt-8 lg:mt-0 lg:w-[45%] lg:min-w-0">
             <ProductPurchaseBlock
               product={p}
               isWishlisted={isWL}
               onToggleWishlist={toggleWishlist}
             />
-          </div>
 
-          <div className="lg:col-start-2 lg:row-start-2 min-w-0">
-            <ProductTrustBadges />
-          </div>
+            <div className="mt-[var(--space-lg)]">
+              <ProductTrustBadges />
+            </div>
 
-          <div className="lg:col-start-2 lg:row-start-3 min-w-0">
-            <ProductShareRow />
-          </div>
+            <div className="mt-[var(--space-md)]">
+              <ProductShareRow />
+            </div>
 
-          <div className="lg:col-start-2 lg:row-start-4 min-w-0">
-            <ProductPromoHeader />
-          </div>
-
-          <div className="lg:col-start-1 lg:row-start-2 min-w-0">
-            <ProductDeliveryCheck />
+            <div className="mt-[var(--space-md)]">
+              <ProductPromoHeader />
+            </div>
           </div>
         </div>
 
-        <div className="mt-8 lg:mt-12">
+        <div className="mt-8 lg:mt-[var(--space-lg)]">
           <ProductDescriptionTabs product={p} />
         </div>
 

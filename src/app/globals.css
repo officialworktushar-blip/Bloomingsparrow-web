@@ -50,6 +50,14 @@
   --color-star: #108474;
   --color-star-empty: #d4d0c8;
 
+  /* Product-page vertical rhythm (single place to tune product-column spacing) */
+  --space-xs: 8px;
+  --space-gap: 10px;
+  --space-btn: 12px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+
   --animate-fade-up: fadeUp 0.45s both;
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }

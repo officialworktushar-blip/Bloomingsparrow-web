@@ -53,7 +53,7 @@ export default function ProductDeliveryCheck() {
   };
 
   return (
-    <div className="rounded-2xl border border-[#efede8] bg-white p-5 mb-8">
+    <div className="rounded-2xl border border-[#efede8] bg-white p-5">
       <div className="flex items-center gap-2 mb-3">
         <span className="w-8 h-8 rounded-full bg-[#fcf7f3] border border-[#efede8] flex items-center justify-center text-[#d24418]">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">

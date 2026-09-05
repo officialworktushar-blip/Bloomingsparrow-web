@@ -45,7 +45,7 @@ const TRUST_STRIP: { label: string; icon: ReactNode }[] = [
 
 export default function ProductTrustBadges() {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3 mb-8">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3">
       {TRUST_STRIP.map(item => (
         <div key={item.label} className="flex items-center gap-2 text-[#7e7e84]">
           <span className="w-8 h-8 rounded-full bg-[#fcf7f3] border border-[#efede8] flex items-center justify-center shrink-0">

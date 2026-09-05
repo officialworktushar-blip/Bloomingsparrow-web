@@ -35,7 +35,7 @@ const SHARE_ITEMS: { label: string; icon: React.ReactNode }[] = [
 
 export default function ProductShareRow() {
   return (
-    <div className="flex items-center gap-4 mb-8">
+    <div className="flex items-center gap-4">
       <span className="text-[0.7rem] tracking-[0.14em] uppercase text-[#7e7e84] font-medium font-sans shrink-0">
         Share
       </span>
