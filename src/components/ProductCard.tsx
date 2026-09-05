@@ -93,7 +93,7 @@ export default function ProductCard({
           />
         )}
 
-        <BestSellerBadge />
+        {p.bestSeller && <BestSellerBadge />}
 
         {showActions && (
           <button

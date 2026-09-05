@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/store/useStore';
+import { useReviewStore } from '@/store/useReviewStore';
 import Swal from '@/lib/swal';
 import { Product } from '@/lib/data';
 
@@ -12,9 +13,22 @@ type Props = {
   onToggleWishlist: () => void;
 };
 
+function StarRating({ rating, size = 14 }: { rating: number; size?: number }) {
+  return (
+    <span className="inline-flex gap-0.5" aria-hidden="true">
+      {[1, 2, 3, 4, 5].map(i => (
+        <svg key={i} width={size} height={size} viewBox="0 0 24 24" fill={i <= rating ? '#108474' : 'none'} stroke={i <= rating ? '#108474' : '#D4D0C8'} strokeWidth="1.5">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      ))}
+    </span>
+  );
+}
+
 export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWishlist }: Props) {
   const router = useRouter();
   const { addToCart } = useStore();
+  const { summary } = useReviewStore();
   const p = product;
   const priceClean = p.price.replace('₹', '').trim();
   const [qty, setQty] = useState(1);
@@ -49,6 +63,7 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
   };
 
   const specsLine = [p.dimensions, p.material].filter(Boolean).join(' · ');
+  const totalReviews = summary?.totalReviews ?? 0;
 
   return (
     <div className="flex flex-col">
@@ -56,9 +71,24 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
         {p.categoryLabel}{p.origin ? ` · ${p.origin}` : ''}
       </p>
 
-      <h1 className="font-serif text-[2rem] sm:text-[2.4rem] lg:text-[2.8rem] font-semibold leading-[1.12] text-[#252525] tracking-[-0.01em] mb-2">
+      <h1 className="font-sans text-[1.9rem] sm:text-[2.3rem] lg:text-[2.6rem] font-semibold leading-[1.12] text-[#252525] tracking-[-0.01em] mb-2">
         {p.title}
       </h1>
+
+      {summary && (
+        <a
+          href="#reviews"
+          className="inline-flex items-center gap-2 mb-2 w-fit no-underline group scroll-mt-28"
+          aria-label={`Rated ${summary.averageRating.toFixed(1)} out of 5, read ${totalReviews} review${totalReviews === 1 ? '' : 's'}`}
+        >
+          <StarRating rating={Math.round(summary.averageRating)} />
+          <span className="text-[0.78rem] text-[#7e7e84] font-sans group-hover:text-[#252525] transition-colors">
+            {totalReviews > 0
+              ? `${summary.averageRating.toFixed(1)} (${totalReviews} review${totalReviews === 1 ? '' : 's'})`
+              : 'Be the first to review'}
+          </span>
+        </a>
+      )}
 
       {p.artisan && p.artisan.trim() !== '' && (
         <p className="text-[0.9rem] font-sans mb-2">
@@ -72,15 +102,15 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
       )}
 
       <div className="flex items-baseline gap-3 mb-1">
-        <span className="font-serif text-[1.9rem] font-semibold text-[#252525]">₹{priceClean}</span>
+        <span className="font-sans text-[1.9rem] font-semibold text-[#252525]">₹{priceClean}</span>
       </div>
       <p className="text-[0.78rem] text-[#7e7e84] mb-6 font-sans">Inclusive of all taxes · Free shipping</p>
 
       <div className="flex gap-2 sm:gap-3 mb-3">
-        <div className="w-[42%] lg:w-auto lg:flex-1 h-12 rounded-full border border-[#efede8] bg-white lg:border-[#252525] lg:bg-transparent text-[#252525] flex items-center justify-between px-4 font-sans">
+        <div className="flex-1 h-12 rounded-full border border-[#efede8] bg-white text-[#252525] flex items-center justify-between px-2 font-sans">
           <button
             onClick={() => setQty(q => Math.max(1, q - 1))}
-            className="text-xl px-1.5 hover:text-[#287379] transition-colors leading-none pb-0.5 cursor-pointer"
+            className="w-8 h-8 rounded-full bg-[#287379] text-white flex items-center justify-center text-lg leading-none hover:bg-[#252525] transition-colors cursor-pointer"
             aria-label="Decrease quantity"
           >
             −
@@ -88,29 +118,12 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
           <span className="text-[0.85rem] font-medium">Qty: {qty}</span>
           <button
             onClick={() => setQty(q => q + 1)}
-            className="text-xl px-1.5 hover:text-[#287379] transition-colors leading-none pb-0.5 cursor-pointer"
+            className="w-8 h-8 rounded-full bg-[#287379] text-white flex items-center justify-center text-lg leading-none hover:bg-[#252525] transition-colors cursor-pointer"
             aria-label="Increase quantity"
           >
             +
           </button>
         </div>
-        <button className="btn-primary flex-1 font-semibold lg:font-medium" onClick={handleBuyNow}>
-          Buy Now
-        </button>
-      </div>
-
-      <div className="flex gap-3 mb-6">
-        <button
-          onClick={handleAddToCart}
-          className="flex-1 inline-flex items-center justify-center gap-2 h-12 rounded-full bg-[#287379] text-white text-[0.875rem] font-semibold font-sans transition-all duration-200 hover:bg-[#B8975A] cursor-pointer"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-            <circle cx="9" cy="21" r="1" />
-            <circle cx="20" cy="21" r="1" />
-            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
-          </svg>
-          Add to Cart
-        </button>
         <button
           onClick={onToggleWishlist}
           className={`shrink-0 w-12 h-12 rounded-full border bg-white flex items-center justify-center transition-all duration-200 cursor-pointer ${
@@ -134,6 +147,19 @@ export default function ProductPurchaseBlock({ product, isWishlisted, onToggleWi
           </svg>
         </button>
       </div>
+
+      <button onClick={handleAddToCart} className="btn-primary w-full mb-3">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <circle cx="9" cy="21" r="1" />
+          <circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+        </svg>
+        Add to Cart
+      </button>
+
+      <button onClick={handleBuyNow} className="btn-secondary w-full">
+        Buy Now
+      </button>
     </div>
   );
 }

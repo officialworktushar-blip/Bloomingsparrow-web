@@ -11,9 +11,8 @@ import ProductDeliveryCheck from '@/components/ProductDeliveryCheck';
 import ProductPromoHeader from '@/components/ProductPromoHeader';
 import ProductPurchaseBlock from '@/components/ProductPurchaseBlock';
 import ProductTrustBadges from '@/components/ProductTrustBadges';
-import ProductSpecifications from '@/components/ProductSpecifications';
-import ProductInfoAccordion from '@/components/ProductInfoAccordion';
-import ProductAccordion from '@/components/ProductAccordion';
+import ProductShareRow from '@/components/ProductShareRow';
+import ProductDescriptionTabs from '@/components/ProductDescriptionTabs';
 import ProductRelated from '@/components/ProductRelated';
 import ProductReviewSection from '@/components/ProductReviewSection';
 
@@ -106,82 +105,64 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
   const imageUrls = getProductImages(p);
 
-  const accordionItems = [
-    {
-      id: 'specifications',
-      title: 'Product Specification',
-      content: [
-        p.material ? `Material: ${p.material}` : '',
-        p.dimensions ? `Dimensions: ${p.dimensions}` : '',
-        p.origin ? `Origin: ${p.origin}` : '',
-        p.artisan ? `Artisan: ${p.artisan}` : '',
-      ].filter(Boolean).join('\n'),
-    },
-  ];
-
   return (
     <main className="bg-[#fcf7f3] min-h-screen" id="main-content" aria-label="Product detail">
       <div className="max-w-[1750px] mx-auto px-5 sm:px-8 pt-8 pb-[80px] sm:pb-[100px]">
-        <nav className="flex items-center gap-1.5 text-[0.7rem] tracking-[0.08em] uppercase text-[#7e7e84] font-medium font-sans mb-8 pb-4 border-b border-[#efede8]" aria-label="Breadcrumb">
-          <Link href="/" className="hover:text-[#252525] transition-colors no-underline">Home</Link>
+        <nav className="flex flex-wrap items-center gap-1.5 text-[0.7rem] tracking-[0.08em] uppercase text-[#7e7e84] font-medium font-sans mb-8 pb-4 border-b border-[#efede8]" aria-label="Breadcrumb">
+          <Link href="/" className="hover:text-[#252525] underline-offset-4 hover:underline transition-colors no-underline">Home</Link>
           <span aria-hidden="true" className="text-[#287379]">›</span>
-          <Link href={`/categories?cat=${p.category}`} className="hover:text-[#252525] transition-colors no-underline">
+          <Link href={`/categories?cat=${p.category}`} className="hover:text-[#252525] underline-offset-4 hover:underline transition-colors no-underline">
             {p.categoryLabel}
           </Link>
           <span aria-hidden="true" className="text-[#287379]">›</span>
           <span className="text-[#252525]" aria-current="page">{p.title}</span>
         </nav>
 
-        <div id="product-content" role="region" aria-label="Product information">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_600px] gap-6 lg:gap-[70px] items-start">
-            <div className="contents lg:flex lg:flex-col lg:gap-6">
-              <div className="order-1">
-                <ProductImageGallery images={imageUrls} title={p.title} />
-              </div>
-              <div className="order-5">
-                <ProductDeliveryCheck />
-              </div>
-            </div>
-
-            <div className="contents lg:block lg:sticky lg:top-[100px]">
-              <div className="order-4">
-                <ProductPromoHeader />
-              </div>
-              <div className="order-2">
-                <ProductPurchaseBlock
-                  product={p}
-                  isWishlisted={isWL}
-                  onToggleWishlist={toggleWishlist}
-                />
-              </div>
-              <div className="order-3">
-                <ProductTrustBadges />
-              </div>
-              <div className="order-3">
-                <ProductSpecifications product={p} />
-              </div>
-              <div className="order-3">
-                <ProductInfoAccordion description={p.description} />
-              </div>
-            </div>
+        <div id="product-content" role="region" aria-label="Product information" className="grid grid-cols-1 lg:grid-cols-[1fr_600px] gap-6 lg:gap-[70px] items-start">
+          <div className="lg:col-start-1 lg:row-start-1 min-w-0">
+            <ProductImageGallery images={imageUrls} title={p.title} bestSeller={p.bestSeller} />
           </div>
 
-          <div className="mt-8">
-            <ProductAccordion items={accordionItems} />
+          <div className="lg:col-start-2 lg:row-start-1 min-w-0">
+            <ProductPurchaseBlock
+              product={p}
+              isWishlisted={isWL}
+              onToggleWishlist={toggleWishlist}
+            />
           </div>
 
-          <ProductRelated
-            products={related}
-            categoryLabel={p.categoryLabel}
-            categorySlug={p.category}
-            wishlist={wishlist}
-            onToggleWishlist={toggleRelatedWishlist}
-            onAddToCart={addRelatedToCart}
-            isInCart={isRelatedInCart}
-          />
+          <div className="lg:col-start-2 lg:row-start-2 min-w-0">
+            <ProductTrustBadges />
+          </div>
 
-          <ProductReviewSection productId={p.id} productTitle={p.title} />
+          <div className="lg:col-start-2 lg:row-start-3 min-w-0">
+            <ProductShareRow />
+          </div>
+
+          <div className="lg:col-start-2 lg:row-start-4 min-w-0">
+            <ProductPromoHeader />
+          </div>
+
+          <div className="lg:col-start-1 lg:row-start-2 min-w-0">
+            <ProductDeliveryCheck />
+          </div>
         </div>
+
+        <div className="mt-8 lg:mt-12">
+          <ProductDescriptionTabs product={p} />
+        </div>
+
+        <ProductRelated
+          products={related}
+          categoryLabel={p.categoryLabel}
+          categorySlug={p.category}
+          wishlist={wishlist}
+          onToggleWishlist={toggleRelatedWishlist}
+          onAddToCart={addRelatedToCart}
+          isInCart={isRelatedInCart}
+        />
+
+        <ProductReviewSection productId={p.id} productTitle={p.title} />
       </div>
     </main>
   );

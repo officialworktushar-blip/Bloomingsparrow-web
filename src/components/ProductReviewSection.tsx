@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useReviewStore } from '@/store/useReviewStore';
-import { ReviewCategory, CATEGORY_LABELS, CATEGORY_SHORT } from '@/lib/reviewApi';
+import { ReviewCategory, Review, ReviewSummary, CATEGORY_LABELS, CATEGORY_SHORT } from '@/lib/reviewApi';
 import ReviewSubmitForm from './ReviewSubmitForm';
 
 type Props = {
@@ -45,6 +45,54 @@ function MetricRow({ label, value, max = 5 }: { label: string; value: number; ma
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+function RatingBreakdown({ summary, loadedReviews }: { summary: ReviewSummary; loadedReviews: Review[] }) {
+  const dist: { star: number; count: number }[] = [5, 4, 3, 2, 1].map(star => ({
+    star,
+    count: summary.ratingDistribution && Object.keys(summary.ratingDistribution).length > 0
+      ? Object.values(summary.ratingDistribution).some(v => v > 0)
+        ? summary.ratingDistribution![star] || 0
+        : 0
+      : 0,
+  }));
+
+  const fromLoaded = dist.every(d => d.count === 0);
+  if (fromLoaded) {
+    const counts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    loadedReviews.forEach(r => {
+      const key = Math.max(1, Math.min(5, Math.round(r.rating)));
+      counts[key] += 1;
+    });
+    [5, 4, 3, 2, 1].forEach(star => {
+      const row = dist.find(d => d.star === star);
+      if (row) row.count = counts[star];
+    });
+  }
+
+  const distTotal = dist.reduce((s, d) => s + d.count, 0);
+  if (distTotal === 0) return null;
+
+  return (
+    <div className="mb-4">
+      <p className="text-[0.7rem] font-semibold text-[#252525] font-sans mb-1.5">Rating breakdown</p>
+      {dist.map(row => {
+        const pct = Math.round((row.count / distTotal) * 100);
+        return (
+          <div key={row.star} className="flex items-center gap-2 py-1">
+            <span className="w-7 shrink-0 text-[0.72rem] text-[#7e7e84] font-sans">{row.star}★</span>
+            <div className="flex-1 h-1.5 rounded-full bg-[#efede8] overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-500"
+                style={{ width: `${pct}%`, backgroundColor: 'var(--color-star)' }}
+              />
+            </div>
+            <span className="w-10 shrink-0 text-right text-[0.7rem] text-[#7e7e84] font-sans">{pct}%</span>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -133,7 +181,7 @@ export default function ProductReviewSection({ productId, productTitle }: Props)
 
   if (!hasReviews && !isLoading) {
     return (
-      <div className="mt-12 pt-10 border-t border-[#efede8]">
+      <div id="reviews" className="mt-12 pt-10 border-t border-[#efede8] scroll-mt-28">
         <h2 className="font-serif text-[1.6rem] font-semibold text-[#252525] mb-6">Reviews for this item</h2>
         <div className="rounded-xl border border-[#efede8] bg-white p-10 text-center">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#efede8" strokeWidth="1.5" className="mx-auto mb-4" aria-hidden="true">
@@ -159,7 +207,7 @@ export default function ProductReviewSection({ productId, productTitle }: Props)
   }
 
   return (
-    <div className="mt-12 pt-10 border-t border-[#efede8]">
+    <div id="reviews" className="mt-12 pt-10 border-t border-[#efede8] scroll-mt-28">
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-serif text-[1.6rem] font-semibold text-[#252525]">Reviews for this item</h2>
         <button
@@ -181,6 +229,8 @@ export default function ProductReviewSection({ productId, productTitle }: Props)
           </div>
           <p className="text-[0.7rem] text-[#7e7e84] font-sans underline mb-1">Item average</p>
           <p className="text-[0.7rem] text-[#7e7e84] font-sans mb-4">({summary?.totalReviews} {summary?.totalReviews === 1 ? 'review' : 'reviews'})</p>
+
+          {summary && <RatingBreakdown summary={summary} loadedReviews={reviews} />}
 
           <div className="mb-4">
             <MetricRow label="Item quality" value={summary?.categoryAverages.quality || 0} />

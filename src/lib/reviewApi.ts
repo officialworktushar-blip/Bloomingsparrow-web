@@ -20,6 +20,7 @@ export interface ReviewSummary {
   categoryAverages: Record<ReviewCategory, number>;
   recommendPercent: number;
   aiSummary: string[] | null;
+  ratingDistribution?: Record<number, number>;
 }
 
 export interface ReviewListResponse {
@@ -114,7 +115,13 @@ function computeSummary(reviews: Review[]): ReviewSummary {
     (reviews.filter(r => r.rating >= 4).length / reviews.length) * 100
   );
 
-  return { averageRating, totalReviews: reviews.length, categoryAverages, recommendPercent, aiSummary: null };
+  const ratingDistribution: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  reviews.forEach(r => {
+    const key = Math.max(1, Math.min(5, Math.round(r.rating)));
+    ratingDistribution[key] += 1;
+  });
+
+  return { averageRating, totalReviews: reviews.length, categoryAverages, recommendPercent, aiSummary: null, ratingDistribution };
 }
 
 export async function fetchReviews(
