@@ -118,12 +118,14 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           <span className="text-[#252525]" aria-current="page">{p.title}</span>
         </nav>
 
-        <div id="product-content" role="region" aria-label="Product information" className="lg:flex lg:flex-wrap lg:items-start lg:gap-x-10 lg:gap-y-10">
-          <div className="min-w-0 lg:w-[55%] lg:shrink-0 lg:self-start lg:sticky lg:top-[88px] lg:order-1">
-            <ProductImageGallery images={imageUrls} title={p.title} bestSeller={p.bestSeller} />
+        <div id="product-content" role="region" aria-label="Product information" className="lg:grid lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:gap-x-10 lg:gap-y-8">
+          <div className="lg:col-start-1 lg:row-start-1">
+            <div className="lg:sticky lg:top-[88px] lg:self-start lg:z-10 min-w-0">
+              <ProductImageGallery images={imageUrls} title={p.title} bestSeller={p.bestSeller} />
+            </div>
           </div>
 
-          <div className="mt-8 lg:mt-0 lg:w-[45%] lg:min-w-0 lg:order-2">
+          <div className="mt-8 lg:mt-0 lg:col-start-2 lg:row-start-1 lg:min-w-0">
             <ProductPurchaseBlock
               product={p}
               isWishlisted={isWL}
@@ -143,7 +145,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             </div>
           </div>
 
-          <div className="mt-8 lg:mt-0 lg:w-[55%] lg:shrink-0 lg:order-3">
+          <div className="mt-8 lg:mt-0 lg:col-start-1 lg:row-start-2">
             <ProductDeliveryCheck />
           </div>
         </div>
